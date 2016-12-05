@@ -1,4 +1,5 @@
 // UVA 10679 - AC
+// https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1620
 #include <bits/stdc++.h>
 #define pb push_back
 #define mp make_pair
