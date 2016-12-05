@@ -1,4 +1,4 @@
-// SPOJ GREED - TLE
+// SPOJ GREED - AC
 // http://www.spoj.com/problems/GREED/
 #include <bits/stdc++.h>
 #define pb push_back
@@ -84,7 +84,7 @@ int main(){
 		}
 		flow(0,1);
 		printf("%d\n",mncost);
-		fore(i,0,n)g[i].clear();
+		fore(i,0,nodes)g[i].clear();
 		e.clear();
 	}
 	return 0;

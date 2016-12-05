@@ -1,4 +1,3 @@
-// TODO compare running time with others
 typedef ll tf;const tf INFFLUJO=1e14;
 typedef ll tc;const tc INFCOSTO=1e14;
 struct edge {
