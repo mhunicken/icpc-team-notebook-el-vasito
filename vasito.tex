@@ -1,5 +1,3 @@
-% LaTeXar con :
-%  pdflatex eldiego.tex
 %"The PDF file may contain up to 25 pages of reference material, single-sided, letter or A4 size, with text and illustrations readable by a person with correctable eyesight without magnification from a distance of 1/2 meter."
 \input{preamble.tex}
 \begin{document}
@@ -8,6 +6,18 @@
 \centering{\LARGE\textbf{Gracias Demetrio}} \\[0.5cm]
 \centering{\includegraphics[width=5.5cm]{img/vasito.jpg}}
 \tableofcontents\newpage
+
+\section{Graphs}
+\subsection{Topological sort}
+\cppfile{graphs/toposort.cpp}
+\subsection{Kruskal (+ Union-Find)}
+\cppfile{graphs/kruskal.cpp}
+\subsection{Dijkstra}
+\cppfile{graphs/dijkstra.cpp}
+\subsection{Strongly connected components (+ 2-SAT)}
+\cppfile{graphs/tarjan_2sat.cpp}
+\subsection{LCA - Binary Lifting}
+\cppfile{graphs/lca.cpp}
 
 \section{Strings}
 \subsection{Aho-Corasick}
