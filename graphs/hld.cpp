@@ -25,7 +25,7 @@ int query(int x, int y, STree& rmq){
 		y=dad[head[y]];
 	}
 	if(dep[x]>dep[y])swap(x,y); // now x is lca
-	r=oper(r,rmq.query(pos[x]+1,pos[y]+1));  // pos[x]+1 for not counting lca
+	r=oper(r,rmq.query(pos[x],pos[y]+1));
 	return r;
 }
 // for updating: rmq.upd(pos[x],v);
