@@ -29,7 +29,7 @@ ll kruskal(){  // assumes graph is connected
 		int x=es[i].snd.fst,y=es[i].snd.snd;
 		if(uf_join(x,y))r+=es[i].fst; // (x,y,c) belongs to mst
 	}
-	return r;
+	return r; // total cost
 }
 
 int n,m;
