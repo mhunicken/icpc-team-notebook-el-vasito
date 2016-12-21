@@ -1,4 +1,4 @@
-vector<int> g[1<<K];int n;  // K such that 2^K<=n
+vector<int> g[1<<K];int n;  // K such that 2^K>=n
 int F[K][1<<K],D[1<<K];
 void lca_dfs(int x){
 	fore(i,0,g[x].size()){
