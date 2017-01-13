@@ -1,3 +1,16 @@
+// SPOJ VFMUL - AC
+// http://www.spoj.com/problems/VFMUL/
+#include <bits/stdc++.h>
+#define pb push_back
+#define mp make_pair
+#define fst first
+#define snd second
+#define fore(i,a,b) for(int i=a,ThxDem=b;i<ThxDem;++i)
+using namespace std;
+typedef long long ll;
+
+#define MAXN (1<<20)
+
 struct CD {  // or typedef complex<double> CD; (but 4x slower)
 	double r,i;
 	CD(double r=0, double i=0):r(r),i(i){}
@@ -40,4 +53,38 @@ vector<int> multiply(vector<int>& p1, vector<int>& p2){
 	n-=2;
 	fore(i,0,n)res.pb((ll)floor(cp1[i].real()+0.5));
 	return res;
+}
+
+char s[MAXN],t[MAXN],r[MAXN];
+
+int main(){
+	int tn;
+	scanf("%d",&tn);
+	while(tn--){
+		vector<int> a,b,c;
+		scanf("%s%s",s,t);
+		for(int i=0;s[i];++i)a.pb(s[i]-'0');reverse(a.begin(),a.end());
+		for(int i=0;t[i];++i)b.pb(t[i]-'0');reverse(b.begin(),b.end());
+		c=multiply(a,b);
+		while(!c.empty()&&!c.back())c.pop_back();
+		if(c.empty()){puts("0");continue;}
+		int n=0;
+		ll x=0;
+		fore(i,0,c.size()){
+			x+=c[i];
+			r[n++]=x%10;
+			x/=10;
+		}
+		while(x){
+			r[n++]=x%10;
+			x/=10;
+		}
+		reverse(r,r+n);
+		bool p=false;
+		fore(i,0,n){
+			putchar(r[i]+'0');
+		}
+		puts("");
+	}
+	return 0;
 }
