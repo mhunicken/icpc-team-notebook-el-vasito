@@ -9,33 +9,23 @@
 using namespace std;
 typedef long long ll;
 
-char red(char c){
-	if(c>='a'&&c<='z')return c-'a';
-	if(c>='A'&&c<='Z')return 26+c-'A';
-	return 52+c-'0';
-}
 struct vertex {
-	int next[64],go[64],p,link;
+	map<char,int> next,go;
+	int p,link;
 	char pch;
 	vector<int> leaf;
+	vertex(int p=-1, char pch=-1):p(p),pch(pch),link(-1){}
 };
-vertex t[1<<20];
-int sz;
+vector<vertex> t;
 void aho_init(){ //do not forget!!
-	t[0].p=t[0].link=-1;
-	memset(t[0].next,-1,sizeof(t[0].next));
-	memset(t[0].go,-1,sizeof(t[0].go));
-	sz=1;
+	t.clear();t.pb(vertex());
 }
-void add_string(char *s, int id){
+void add_string(string s, int id){
 	int v=0;
-	for(int i=0;s[i];++i){
-		char c=red(s[i]);
-		if(t[v].next[c]<0){
-			memset(t[sz].next,-1,sizeof(t[sz].next));
-			memset(t[sz].go,-1,sizeof(t[sz].go));
-			t[sz].p=v;t[sz].pch=c;t[sz].link=-1;
-			t[v].next[c]=sz++;
+	for(char c:s){
+		if(!t[v].next.count(c)){
+			t[v].next[c]=t.size();
+			t.pb(vertex(v,c));
 		}
 		v=t[v].next[c];
 	}
@@ -48,9 +38,9 @@ int get_link(int v){
 		else t[v].link=go(get_link(t[v].p),t[v].pch);
 	return t[v].link;
 }
-int go(int v, char c){//remember red
-	if(t[v].go[c]<0)
-		if(t[v].next[c]>=0)t[v].go[c]=t[v].next[c];
+int go(int v, char c){
+	if(!t[v].go.count(c))
+		if(t[v].next.count(c))t[v].go[c]=t[v].next[c];
 		else t[v].go[c]=v==0?0:go(get_link(v),c);
 	return t[v].go[c];
 }
@@ -77,11 +67,11 @@ int main(){
 		scanf("%s%d",s,&n);
 		fore(i,0,n){
 			scanf("%s",tt);
-			add_string(tt,i);
+			add_string(string(tt),i);
 		}
 		int k=0;
 		for(int i=0;s[i];++i){
-			k=go(k,red(s[i]));
+			k=go(k,s[i]);
 			proc(k);
 		}
 		fore(i,0,n)puts(r[i]?"y":"n");

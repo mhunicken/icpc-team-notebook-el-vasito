@@ -1,3 +1,5 @@
+// Min cut: nodes with dist>=0 vs nodes with dist<0
+// Matching MVC: left nodes with dist<0 + right nodes with dist>0
 int nodes,src,dst; // remember to init nodes
 int dist[MAXN],q[MAXN],work[MAXN];
 struct edge {int to,rev;ll f,cap;};
