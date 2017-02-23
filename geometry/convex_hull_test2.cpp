@@ -1,4 +1,4 @@
-// Codeforces 168B - AC
+// Codeforces 166B - AC
 // http://codeforces.com/problemset/problem/166/B
 #include <bits/stdc++.h>
 #define pb push_back
@@ -11,23 +11,30 @@ typedef long long ll;
 
 const double EPS=1e-12;
 
-struct pt {  // for 2D ignore z coordinate
+struct pt {  // for 3D add z coordinate
 	double x,y;int id;
-	pt(double x, double y, int id) : x(x),y(y),id(id){}
-	pt(double x, double y): x(x),y(y){}
+	pt(double x, double y, int id=-1):x(x),y(y),id(id){}
 	pt(){}
-	double norm(){return sqrt(*this**this);}
-//	pt operator+(pt p){return pt(x+p.x,y+p.y);}
+	double norm2(){return *this**this;}
+	double norm(){return sqrt(norm2());}
+	bool operator==(pt p){return abs(x-p.x)<EPS&&abs(y-p.y)<EPS;}
+	pt operator+(pt p){return pt(x+p.x,y+p.y);}
 	pt operator-(pt p){return pt(x-p.x,y-p.y);}
-//	pt operator*(double t){return pt(t*x,t*y);}
-	double operator*(pt p) {return x*p.x+y*p.y;}
+	pt operator*(double t){return pt(t*x,t*y);}
+	pt operator/(double t){return pt(x/t,y/t);}
+	double operator*(pt p){return x*p.x+y*p.y;}
 //	pt operator^(pt p){ // only for 3D
 //		return pt(y*p.z-z*p.y,z*p.x-x*p.z,x*p.y-y*p.x);}
-	double operator%(pt p){return x*p.y-y*p.x;} // for 2D
-	bool operator<(pt p){ // for convex hull
+	double angle(pt p){ // redefine acos for values out of range
+		return acos(*this*p/(norm()*p.norm()));}
+	pt unit(){return *this/norm();}
+	double operator%(pt p){return x*p.y-y*p.x;} // 2D from now on
+	bool operator<(pt p)const{ // for convex hull
 		return x<p.x-EPS||(abs(x-p.x)<EPS&&y<p.y-EPS);}
 	bool left(pt p, pt q){ // is it to the left of directed line pq?
-		return (p-*this)%(q-*this)>EPS;}
+		return (q-p)%(*this-p)>EPS;}
+	pt rot(pt r){return pt(*this%r,*this*r);}
+	pt rot(double a){return rot(pt(sin(a),cos(a)));}
 };
 // CCW order
 // Includes collinear points (change sign of EPS in left to exclude)
