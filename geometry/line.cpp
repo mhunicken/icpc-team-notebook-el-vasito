@@ -1,24 +1,24 @@
 int sgn(double x){if(x<-EPS)return -1;return x>EPS;}
 struct ln {
-	pt p,q;
-	ln(pt p, pt q):p(p),q(q){}
+	pt p,pq;
+	ln(pt p, pt q):p(p),pq(q-p){}
 	ln(){}
-	bool has(pt r){return abs((r-p)%(q-p))<EPS;}
-	bool operator/(ln l){return abs((q-p)%(l.q-l.p))<EPS;}
+	bool has(pt r){return abs((r-p)%pq)<EPS;}
+	bool operator/(ln l){return abs(pq%l.pq)<EPS;}
 	bool operator==(ln l){return *this/l&&has(l.p);}
 	pt operator^(ln l){ // intersection (2D)
-		double s=(l.q-l.p)%(q-p);
+		double s=l.pq%pq;
 		if(abs(s)<EPS)return pt(DINF,DINF);
-		return l.p+(l.q-l.p)*((p-l.p)%(q-p)/s);
+		return l.p+l.pq*((p-l.p)%pq/s);
 	}
-	double angle(ln l){return (q-p).angle(l.q-l.p);}
-	int side(pt r){return sgn((q-p)%(r-p));}
-	pt proj(pt r){return p+(q-p)*((r-p)*(q-p)/(q-p).norm2());}
+	double angle(ln l){return pq.angle(l.pq);}
+	int side(pt r){return sgn(pq%(r-p));} // 2D
+	pt proj(pt r){return p+pq*((r-p)*pq/pq.norm2());}
 	pt ref(pt r){return proj(r)*2-r;}
 	double dist(pt r){return (r-proj(r)).norm();}
-	ln rot(auto a){return ln(p,p+(q-p).rot(a));} // 2D
+	ln rot(auto a){return ln(p,p+pq.rot(a));} // 2D
 };
 ln bisector(ln l, ln m){
 	pt p=l^m;
-	return ln(p,p+(l.q-l.p).unit()+(m.q-m.p).unit());
+	return ln(p,p+l.pq.unit()+m.pq.unit());
 }
