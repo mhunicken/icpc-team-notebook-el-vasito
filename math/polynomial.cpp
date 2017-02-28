@@ -60,7 +60,7 @@ pair<poly<>,tp> ruffini(poly<> p, tp r){ // returns pair (result,rem)
 	return mp(poly<>(b),p[0]+r*b[0]);
 }
 // only for double polynomials
-poly<> interpolate(vector<tp> x, vector<tp> y){
+poly<> interpolate(vector<tp> x, vector<tp> y){ //TODO TEST
 	poly<> q={1},S={0};
 	for(tp a:x)q=poly<>({-a,1})*q;
 	fore(i,0,x.size()){
