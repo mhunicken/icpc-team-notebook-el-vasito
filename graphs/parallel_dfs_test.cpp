@@ -1,4 +1,4 @@
-// Codeforces gtm 100109K - AC
+// Codeforces gym 100109K - AC
 // http://codeforces.com/gym/100109/problem/K
 #include <bits/stdc++.h>
 #define pb push_back
