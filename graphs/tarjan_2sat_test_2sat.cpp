@@ -12,15 +12,14 @@ typedef long long ll;
 
 // MAXN: max number of nodes or 2 * max number of variables (2SAT)
 bool truth[MAXN]; // truth[cmp[i]]=value of variable i (2SAT)
-int nvar;int neg(int x){return x>=nvar?x-nvar:x+nvar;} // (2SAT)
+int nvar;int neg(int x){return MAXN-1-x;} // (2SAT)
 vector<int> g[MAXN];
 int n,lw[MAXN],idx[MAXN],qidx,cmp[MAXN],qcmp;
 stack<int> st;
 void tjn(int u){
 	lw[u]=idx[u]=++qidx;
 	st.push(u);cmp[u]=-2;
-	fore(_,0,g[u].size()){
-		int v=g[u][_];
+	for(int v:g[u]){
 		if(!idx[v]||cmp[v]==-2){
 			if(!idx[v]) tjn(v);
 			lw[u]=min(lw[u],lw[v]);
@@ -39,16 +38,22 @@ void scc(){
 	fore(i,0,n)if(!idx[i])tjn(i);
 }
 // Only for 2SAT:
-#define addor(a, b) (g[neg(a)].pb(b), g[neg(b)].pb(a))
-void init_2sat(int _nvar){nvar=_nvar;n=2*nvar;} // call before addor!
-bool satisf(){
-	scc();
+void addor(int a, int b){g[neg(a)].pb(b);g[neg(b)].pb(a);}
+bool satisf(int _nvar){
+	nvar=_nvar;n=MAXN;scc();
 	fore(i,0,nvar)if(cmp[i]==cmp[neg(i)])return false;
 	return true;
 }
 
 void verify(){
-	fore(x,0,n){
+	fore(xx,0,nvar){
+		int x=xx;
+		fore(_,0,g[x].size()){
+			int y=g[x][_];
+			assert(!truth[cmp[x]]||truth[cmp[y]]);
+		}
+		assert(truth[cmp[x]]!=truth[cmp[neg(x)]]);
+		x=neg(x);
 		fore(_,0,g[x].size()){
 			int y=g[x][_];
 			assert(!truth[cmp[x]]||truth[cmp[y]]);
@@ -63,7 +68,6 @@ int main(){
 	while(tn--){
 		int x,y;
 		scanf("%d%d",&x,&y);
-		init_2sat(x+y);
 		int m;
 		scanf("%d",&m);
 		while(m--){
@@ -81,7 +85,7 @@ int main(){
 				addor(x0,x1);addor(x0,y0);addor(y1,x1);addor(y1,y0);
 			}
 		}
-		if(satisf())verify(),puts("Yes");
+		if(satisf(x+y))verify(),puts("Yes");
 		else puts("No");
 		fore(i,0,n)g[i].clear();
 	}

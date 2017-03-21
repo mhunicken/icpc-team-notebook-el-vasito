@@ -1,3 +1,5 @@
+// Codeforces gym 101055C - AC
+// http://codeforces.com/gym/101055/problem/C
 #include <bits/stdc++.h>
 #define fore(i,a,n) for(int i = a,qwer = n;i<qwer;i++)
 #define fst first
@@ -8,14 +10,11 @@
 using namespace std;
 
 typedef long long ll;
-const int MAX = 15000000;
+const int MAXN = 1500000;
 
-char mu[MAX] = {0,1};
-
+short mu[MAXN] = {0,1};
 void mobius(){
-    for (int i=1;i<MAX;i++)
-        if (mu[i])
-            for (int j=2*i;j<MAX;j+=i) mu[j]-=mu[i];
+	fore(i,1,MAXN)if(mu[i])for(int j=i+i;j<MAXN;j+=i)mu[j]-=mu[i];
 }
 
 ll fun(ll N) {
