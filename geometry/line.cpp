@@ -8,7 +8,7 @@ struct ln {
 	bool operator/(ln l){return abs(pq.unit()%l.pq.unit())<EPS;} // 2D
 	bool operator==(ln l){return *this/l&&has(l.p);}
 	pt operator^(ln l){ // intersection
-		if(*this/l)return pt(DINF,DINF,DINF);
+		if(*this/l)return pt(DINF,DINF);
 		pt r=l.p+l.pq*((p-l.p)%pq/(l.pq%pq));
 //		if(!has(r)){return pt(NAN,NAN,NAN);} // check only for 3D
 		return r;
