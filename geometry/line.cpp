@@ -1,9 +1,10 @@
-int sgn(double x){return x<0?-1:1;}
+int sgn2(double x){return x<0?-1:1;}
 struct ln {
 	pt p,pq;
 	ln(pt p, pt q):p(p),pq(q-p){}
 	ln(){}
 	bool has(pt r){return dist(r)<EPS;}
+	bool seghas(pt r){return has(r)&&(r-p)*(r-(p+pq))-EPS<0;}
 //	bool operator /(ln l){return (pq.unit()^l.pq.unit()).norm()<EPS;} // 3D
 	bool operator/(ln l){return abs(pq.unit()%l.pq.unit())<EPS;} // 2D
 	bool operator==(ln l){return *this/l&&has(l.p);}
@@ -14,7 +15,7 @@ struct ln {
 		return r;
 	}
 	double angle(ln l){return pq.angle(l.pq);}
-	int side(pt r){return has(r)?0:sgn(pq%(r-p));} // 2D
+	int side(pt r){return has(r)?0:sgn2(pq%(r-p));} // 2D
 	pt proj(pt r){return p+pq*((r-p)*pq/pq.norm2());}
 	pt ref(pt r){return proj(r)*2-r;}
 	double dist(pt r){return (r-proj(r)).norm();}
