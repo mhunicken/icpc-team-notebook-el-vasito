@@ -29,4 +29,17 @@ struct circle {
 		double d=sqrt((p-o).norm2()-r*r);
 		return *this^circle(p,d);
 	}
+	double intertriangle(pt a, pt b){ // area of intersection with oab
+		if(abs((o-a)%(o-b))<EPS)return 0.;
+		vector<pt> q={a},w=*this^ln(a,b);
+		if(w.size()==2)for(auto p:w)if((a-p)*(b-p)<-EPS)q.pb(p);
+		q.pb(b);
+		if(q.size()==4&&(q[0]-q[1])*(q[2]-q[1])>EPS)swap(q[1],q[2]);
+		double s=0;
+		fore(i,0,q.size()-1){
+			if(!has(q[i])||!has(q[i+1]))s+=r*r*(q[i]-o).angle(q[i+1]-o)/2;
+			else s+=abs((q[i]-o)%(q[i+1]-o)/2);
+		}
+		return s;
+	}
 };
