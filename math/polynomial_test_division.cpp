@@ -1,4 +1,15 @@
-typedef int tp; // type of polynomial
+#include <bits/stdc++.h>
+#define pb push_back
+#define mp make_pair
+#define fst first
+#define snd second
+#define fore(i,a,b) for(int i=a,ThxDem=b;i<ThxDem;++i)
+using namespace std;
+typedef long long ll;
+
+const double EPS=1e-7;
+
+typedef double tp; // type of polynomial
 template<class T=tp>
 struct poly {  // poly<> : 1 variable, poly<poly<>>: 2 variables, etc.
 	vector<T> c;
@@ -35,7 +46,7 @@ struct poly {  // poly<> : 1 variable, poly<poly<>>: 2 variables, etc.
 // example: p(x,y)=2*x^2+3*x*y-y+4
 // poly<poly<>> p={{4,-1},{0,3},{2}}
 // printf("%d\n",p(2)(3)) // 27 (p(2,3))
-set<tp> roots(poly<> p){ // only for integer polynomials
+/*set<tp> roots(poly<> p){ // only for integer polynomials
 	set<tp> r;
 	while(!p.c.empty()&&!p.c.back())p.c.pop_back();
 	if(!p(0))r.insert(0);
@@ -51,7 +62,7 @@ set<tp> roots(poly<> p){ // only for integer polynomials
 		if(!p(-x))r.insert(-x);
 	}
 	return r;
-}
+}*/
 pair<poly<>,tp> ruffini(poly<> p, tp r){ // returns pair (result,rem)
 	int n=p.c.size()-1;
 	vector<tp> b(n);
@@ -82,3 +93,33 @@ poly<> interpolate(vector<tp> x, vector<tp> y){ //TODO TEST
 	}
 	return S;
 }
+
+poly<> polyder(poly<> a){
+	vector<tp> r(a.c.size()-1);
+	fore(i,0,r.size())r[i]=a[i+1]*(i+1);
+	return poly<>(r);
+}
+poly<> polygcd(poly<> a, poly<> b){
+	while(b.c.size()){
+		poly<> c=polydiv(a,b).snd;
+		a=b;
+		b=c;
+	}
+	return a;
+}
+
+int main(){
+	int tn;
+	scanf("%d",&tn);
+	while(tn--){
+		int n;
+		scanf("%d",&n);
+		vector<tp> a;
+		fore(i,0,n+1){int x;scanf("%d",&x);a.pb(x);}
+		reverse(a.begin(),a.end());
+		poly<> p(a);
+		puts(polygcd(p,polyder(p)).c.size()<2?"Yes!":"No!");
+	}
+	return 0;
+}
+
