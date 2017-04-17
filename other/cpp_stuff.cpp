@@ -7,3 +7,6 @@ struct comp {
 		return a+EPS<b;}
 };
 set<double,comp> w; // or map<double,int,comp>
+
+// Iterate over non empty subsets of bitmask
+for(int s=m;s;s=(s-1)&m)
