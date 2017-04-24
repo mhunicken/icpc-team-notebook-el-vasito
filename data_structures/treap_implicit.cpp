@@ -22,12 +22,12 @@ void push(pitem it){
 		it->add=0;*/
 	}
 }
-int cnt(pitem it){return it?it->cnt:0;}
-// int sum(pitem it){return it?push(it),it->sum:0;}
-void upd_cnt(pitem it){
-	if(it){
-		it->cnt=cnt(it->l)+cnt(it->r)+1;
-		// it->sum=it->val+sum(it->l)+sum(it->r);
+int cnt(pitem t){return t?t->cnt:0;}
+// int sum(pitem t){return t?push(t),t->sum:0;}
+void upd_cnt(pitem t){
+	if(t){
+		t->cnt=cnt(t->l)+cnt(t->r)+1;
+		// t->sum=t->val+sum(t->l)+sum(t->r);
 	}
 }
 void merge(pitem& t, pitem l, pitem r){
