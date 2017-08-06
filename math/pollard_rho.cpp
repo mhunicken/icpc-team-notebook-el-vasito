@@ -44,6 +44,5 @@ ll rho(ll n){
 void fact(ll n, map<ll,int>& f){ //O (lg n)^3
 	if(n==1)return;
 	if(rabin(n)){f[n]++;return;}
-	ll q=rho(n);
-	fact(q,f);fact(n/q,f);
+	ll q=rho(n);fact(q,f);fact(n/q,f);
 }

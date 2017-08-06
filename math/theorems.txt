@@ -1,0 +1,5 @@
+(Tutte) A graph, G = (V, E), has a perfect matching if and only if for every subset U of V, the subgraph induced by V - U has at most |U| connected components with an odd number of vertices.
+Petersens Theorem. Every cubic, bridgeless graph contains a perfect matching.
+(Dilworth) In any finite partially ordered set, the maximum number of elements in any antichain equals the minimum number of chains in any partition of the set into chains
+Pick: A=I+B/2-1  (area of polygon, points inside, points on border)
+

@@ -27,19 +27,15 @@ struct DynCon {
 	map<pair<int,int>,int> last;
 	DynCon(int n):dsu(n){}
 	void add(int x, int y){
-		if(x>y) swap(x,y);
-		q.pb((Query){ADD,x,y}),mt.pb(-1);
-		last[mp(x,y)]=q.size()-1;
+		if(x>y)swap(x,y);
+		q.pb((Query){ADD,x,y});mt.pb(-1);last[mp(x,y)]=q.size()-1;
 	}
 	void remove(int x, int y){
 		if(x>y)swap(x,y);
 		q.pb((Query){DEL,x,y});
-		int pr=last[mp(x,y)];
-		mt[pr]=q.size()-1;
-		mt.pb(pr);
+		int pr=last[mp(x,y)];mt[pr]=q.size()-1;mt.pb(pr);
 	}
-	void query(){
-		q.pb((Query){QUERY,-1,-1});mt.pb(-1);}
+	void query(){q.pb((Query){QUERY,-1,-1});mt.pb(-1);}
 	void process(){ // answers all queries in order
 		if(!q.size())return;
 		fore(i,0,q.size())if(q[i].type==ADD&&mt[i]<0)mt[i]=q.size();
@@ -53,10 +49,8 @@ struct DynCon {
 		}
 		int k=dsu.snap(),m=(s+e)/2;
 		for(int i=e-1;i>=m;--i)if(mt[i]>=0&&mt[i]<s)dsu.join(q[i].x,q[i].y);
-		go(s,m);
-		dsu.rollback(k);
+		go(s,m);dsu.rollback(k);
 		for(int i=m-1;i>=s;--i)if(mt[i]>=e)dsu.join(q[i].x,q[i].y);
-		go(m,e);
-		dsu.rollback(k);
+		go(m,e);dsu.rollback(k);
 	}
 };

@@ -73,10 +73,33 @@
 \cppfile{graphs/dynamic_connectivity.cpp}
 
 \section{Math}
+\subsection{Identities}
+{
+$C_n = \frac{2(2n-1)}{n+1} C_{n-1}$
+
+$C_n = \frac{1}{n+1} \binom{2n}{n}$
+
+$C_n \sim \frac{4^n}{n^{3/2}\sqrt{\pi}}$
+
+$\sigma(n) = O(\log(\log(n)))$ (number of divisors of $n$)
+
+$F_{2n+1} = F_{n}^2 + F_{n+1}^2$
+
+$F_{2n} = F_{n+1}^2 - F_{n-1}^2$
+
+$\sum_{i=1}^n F_i = F_{n+2}-1$
+
+$F_{n+i}F_{n+j} - F_nF_{n+i+j} = (-1)^n F_iF_j$
+
+(Möbius Inv. Formula)
+Let $g(n) = \sum_{d\mid n} f(d)$, then $f(n)=\sum{d\mid n} g(d) \mu\left(\frac{n}{d})\right)$.
+}
+\subsection{Theorems}
+\cppfile{math/theorems.txt}
 \subsection{Integer floor division}
 \cppfile{math/floor_division.cpp}
-\subsection{Extended Euclid}
-\cppfile{math/extended_euclid.cpp}
+%\subsection{Extended Euclid} % allready in diophantine
+%\cppfile{math/extended_euclid.cpp}
 \subsection{Sieve of Eratosthenes}
 \cppfile{math/sieve.cpp}
 \subsection{Generate divisors}
@@ -87,8 +110,12 @@
 \cppfile{math/simpson.cpp}
 \subsection{Polynomials}
 \cppfile{math/polynomial.cpp}
+\subsection{Bairstow}
+\cppfile{math/bairstow.cpp}
 \subsection{Fast Fourier Transform}
 \cppfile{math/fft.cpp}
+\subsection{Karatsuba}
+\cppfile{math/karatsuba.cpp}
 \subsection{Diophantine}
 \cppfile{math/diophantine.cpp}
 \subsection{Mobius}
@@ -107,6 +134,8 @@
 \cppfile{geometry/line.cpp}
 \subsection{Circle}
 \cppfile{geometry/circle.cpp}
+\subsection{Area of intersection of circles}
+\cppfile{geometry/circle_area_intersection.cpp}
 \subsection{Polygon}
 \cppfile{geometry/polygon.cpp}
 \subsection{Plane}
@@ -143,6 +172,8 @@
 \section{Flow}
 \subsection{Matching (slower)}
 \cppfile{flow/matching.cpp}
+\subsection{Matching (Hopcroft-Karp)}
+\cppfile{flow/hopcroft_karp.cpp}
 \subsection{Hungarian}
 \cppfile{flow/hungarian.cpp}
 \subsection{Dinic}
@@ -159,5 +190,9 @@
 \cppfile{other/dates.cpp}
 \subsection{C++ stuff}
 \cppfile{other/cpp_stuff.cpp}
+\subsection{Interactive problem tester template}
+\cppfile{other/interactive_tester.py}
+\subsection{Max number of divisors up to 10\textsuperscript{n}}
+\cppfile{other/hcn.txt}
 
 \end{document}

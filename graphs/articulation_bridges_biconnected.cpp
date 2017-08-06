@@ -14,8 +14,7 @@ void dfs(int u,int pe){
 	for(int ne:g[u])if(ne!=pe){
 		int v=e[ne].u^e[ne].v^u;
 		if(D[v]<0){
-			st.push(ne);
-			dfs(v,ne);
+			st.push(ne);dfs(v,ne);
 			if(B[v]>D[u])e[ne].bridge = true; // bridge
 			if(B[v]>=D[u]){
 				art[u]++; // articulation
@@ -32,8 +31,7 @@ void dfs(int u,int pe){
 	}
 }
 void doit(){
-	memset(D,-1,sizeof(D));
-	memset(art,0,sizeof(art));
+	memset(D,-1,sizeof(D));memset(art,0,sizeof(art));
 	nbc=T=0;
 	fore(i,0,n)if(D[i]<0)dfs(i,-1),art[i]--;
 }
