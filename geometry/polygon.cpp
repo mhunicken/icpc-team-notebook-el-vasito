@@ -45,6 +45,26 @@ struct pol {
 		}
 		return !q.left(p[a],p[a+1]);
 	}
+	pt farthest(pt v){ // O(log(n)) only CONVEX
+		if(n<10){
+			int k=0;
+			fore(i,1,n)if(v*(p[i]-p[k])>EPS)k=i;
+			return p[k];
+		}
+		if(n==SZ(p))p.pb(p[0]);
+		pt a=p[1]-p[0];
+		int s=0,e=n,ua=v*a>EPS;
+		if(!ua&&v*(p[n-1]-p[0])<=EPS)return p[0];
+		while(1){
+			int m=(s+e)/2;pt c=p[m+1]-p[m];
+			int uc=v*c>EPS;
+			if(!uc&&v*(p[m-1]-p[m])<=EPS)return p[m];
+			if(ua&&(!uc||v*(p[s]-p[m])>EPS))e=m;
+			else if(ua||uc||v*(p[s]-p[m])>=-EPS)s=m,a=c,ua=uc;
+			else e=m;
+			assert(e>s+1);
+		}
+	}
 	pol cut(ln l){   // cut CONVEX polygon by line l
 		vector<pt> q;  // returns part at left of l.pq
 		fore(i,0,n){
