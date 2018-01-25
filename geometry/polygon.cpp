@@ -85,3 +85,18 @@ struct pol {
 		return abs(r);
 	}
 };
+// Dynamic convex hull trick
+vector<pol> w;
+void add(pt q){ // add(q), O(log^2(n))
+	vector<pt> p={q};
+	while(!w.empty()&&SZ(w.back().p)<2*SZ(p)){
+		for(pt v:w.back().p)p.pb(v);
+		w.pop_back();
+	}
+	w.pb(pol(chull(p)));
+}
+ll query(pt v){ // max(q*v:q in w), O(log^2(n))
+	ll r=-INF;
+	for(auto& p:w)r=max(r,p.farthest(v)*v);
+	return r;
+}

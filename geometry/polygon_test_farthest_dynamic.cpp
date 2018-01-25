@@ -1,5 +1,5 @@
 // AC
-// http://codeforces.com/group/3qadGzUdR4/contest/101707/problem/H
+// http://codeforces.com/group/3qadGzUdR4/contest/101707/problem/I
 #include <bits/stdc++.h>
 #ifdef DEMETRIO
 #define deb(...) fprintf(stderr,__VA_ARGS__)
@@ -49,10 +49,12 @@ struct pt {  // for 3D add z coordinate
 pt ccw90(1,0);
 pt cw90(-1,0);
 
+ll nq,tq,ta,nit;
+
 // CCW order
 // Includes collinear points (change sign of EPS in left to exclude)
 vector<pt> chull(vector<pt> p){
-	vector<pt> r;
+	vector<pt> r;//r.reserve(SZ(p));
 	sort(p.begin(),p.end()); // first x, then y
 	fore(i,0,p.size()){ // lower hull
 		while(r.size()>=2&&r.back().left(r[r.size()-2],p[i]))r.pop_back();
@@ -65,21 +67,14 @@ vector<pt> chull(vector<pt> p){
 		r.pb(p[i]);
 	}
 	r.pop_back();
+	if(!SZ(r))return p;
 	return r;
 }
 
-int sgn(double x){return x<-EPS?-1:x>EPS;}
 struct pol {
 	int n;vector<pt> p;
 	pol(){}
 	pol(vector<pt> _p){p=_p;n=p.size();}
-	void normalize(){ // (call before haslog, remove collinear first)
-		if(p[2].left(p[0],p[1]))reverse(p.begin(),p.end());
-		int pi=min_element(p.begin(),p.end())-p.begin();
-		vector<pt> s(n);
-		fore(i,0,n)s[i]=p[(pi+i)%n];
-		p.swap(s);
-	}
 	pt farthest(pt v){ // O(log(n)) only CONVEX
 		if(n<10){
 			int k=0;
@@ -102,33 +97,45 @@ struct pol {
 	}
 };
 
-ll a[100005],b[100005],c[100005];
-int m,n;
-vector<pt> v;pol p;
 
-bool doit(ll a, ll b, ll c){
-	pt v(a,b);
-	return p.farthest(v)*v+c>=0&&p.farthest(pt(0,0)-v)*v+c<=0;
+#define INF ((1LL<<63)-1)
+
+vector<pol> w;
+void add(pt q){
+	vector<pt> p={q};
+	while(!w.empty()&&SZ(w.back().p)<2*SZ(p)){
+		for(pt v:w.back().p)p.pb(v);
+		w.pop_back();
+	}
+	w.pb(pol(chull(p)));
+}
+ll query(pt v){
+	ll r=-INF;
+	for(auto& p:w)r=max(r,p.farthest(v)*v);
+	return r;
 }
 
+int n,m;
+
 int main(){
-	scanf("%d%d",&m,&n);
-	fore(i,0,m)scanf("%lld%lld%lld",a+i,b+i,c+i);
+	scanf("%d",&n);
 	fore(i,0,n){
 		ll x,y;
 		scanf("%lld%lld",&x,&y);
-		v.pb(pt(x,y));
+		add(pt(x,y));
 	}
-	auto q=chull(v);
-	if(q.empty())q=v;
-	p=pol(q);
-	vector<int> r;
-	fore(i,0,m)if(doit(a[i],b[i],c[i]))r.pb(i);
-	printf("%d\n",SZ(r));
-	fore(i,0,SZ(r)){
-		if(i)putchar(' ');
-		printf("%d",r[i]+1);
+	scanf("%d",&m);
+	fore(i,0,m){
+		ll x,y;
+		char t[16];
+		scanf("%s%lld%lld",t,&x,&y);
+		pt p(x,y);
+		if(t[0]=='a')add(p);
+		else printf("%lld\n",query(p));
 	}
-	puts("");
+	//printf("%lld %lld\n",nq,nit);
+	//printf("%.5lf %.5lf\n",1.*tq/CLOCKS_PER_SEC,1.*ta/CLOCKS_PER_SEC);
 	return 0;
 }
+
+
