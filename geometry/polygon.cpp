@@ -84,6 +84,16 @@ struct pol {
 		}
 		return abs(r);
 	}
+	double callipers(){ // square distance of most distant points
+		double r=0;     // prereq: convex, ccw, NO COLLINEAR POINTS
+		for(int i=0,j=n<2?0:1;i<j;++i){
+			for(;;j=(j+1)%n){
+				r=max(r,(p[i]-p[j]).norm2());
+				if((p[(i+1)%n]-p[i])%(p[(j+1)%n]-p[j])<=EPS)break;
+			}
+		}
+		return r;
+	}
 };
 // Dynamic convex hull trick
 vector<pol> w;
