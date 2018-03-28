@@ -1,16 +1,17 @@
-pl extendedEuclid (ll a, ll b){ //a * x + b * y = gcd(a,b)
+pair<ll,ll> extendedEuclid (ll a, ll b){ //a * x + b * y = gcd(a,b)
 	ll x,y;
 	if (b==0) return mp(1,0);
-	pl p=extendedEuclid(b,a%b);
+	auto p=extendedEuclid(b,a%b);
 	x=p.snd;
 	y=p.fst-(a/b)*x;
 	if(a*x+b*y==-gcd(a,b)) x=-x, y=-y;
 	return mp(x,y);
 }
-pair<pl,pl> diophantine(ll a,ll b, ll r) { //a*x+b*y=r where r is multiple of gcd(a,b);
+pair<pair<ll,ll>,pair<ll,ll> > diophantine(ll a,ll b, ll r) {
+	//a*x+b*y=r where r is multiple of gcd(a,b);
 	ll d=gcd(a,b);
 	a/=d; b/=d; r/=d;
-	pl p = extendedEuclid(a,b);
+	auto p = extendedEuclid(a,b);
 	p.fst*=r; p.snd*=r;
 	assert(a*p.fst+b*p.snd==r);
 	return mp(p,mp(-b,a)); // solutions: p+t*ans.snd

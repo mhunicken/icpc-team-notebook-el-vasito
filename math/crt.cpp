@@ -1,10 +1,10 @@
 #define mod(a,m) (((a)%m+m)%m)
-pl sol(tuple<ll,ll,ll> c){ //requires inv, extEuclid, diophantine, gcd
+pair<ll,ll> sol(tuple<ll,ll,ll> c){ //requires inv, diophantine
     ll a=get<0>(c), x1=get<1>(c), m=get<2>(c), d=gcd(a,m);
     if(d==1) return mp(mod(x1*inv(a,m),m), m);
     else return x1%d ? mp(-1LL,-1LL) : sol(make_tuple(a/d,x1/d,m/d));
 }
-pl teocochino(vector< tuple<ll,ll,ll> > cond) {
+pair<ll,ll> crt(vector< tuple<ll,ll,ll> > cond) { // returns: (sol, lcm)
 	if(cond.size()==1) return sol(cond[0]);
 	ll a1,x1,m1,a2,x2,m2,n=cond.size();
 	tie(a1,x2,m1)=cond[n-1]; tie(a2,x2,m2)=cond[n-2];
@@ -17,5 +17,5 @@ pl teocochino(vector< tuple<ll,ll,ll> > cond) {
 		ll mcm=m1*(m2/gcd(m1,m2)), x=mod((__int128)m1*k+x1,mcm);
 		cond.pb(make_tuple(1,x,mcm));
 	}
-	return teocochino(cond);
-} //cond[i]={ai,bi,mi} ai*xi=bi (mi); assumes lcm fits in ll 
+	return crt(cond);
+} //cond[i]={ai,bi,mi} ai*xi=bi (mi); assumes lcm fits in ll
