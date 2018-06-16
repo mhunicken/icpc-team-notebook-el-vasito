@@ -29,3 +29,5 @@ int query(int x, int y, STree& rmq){
 	return r;
 }
 // for updating: rmq.upd(pos[x],v);
+// queries on edges: - assign values of edges to "child" node
+//                   - change pos[x] to pos[x]+1 in query (line 28)
