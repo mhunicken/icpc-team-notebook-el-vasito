@@ -11,10 +11,8 @@ void karatsura(int n, tp* p, tp* q, tp* r){
 		add(nac,a,ab,1);add(nbd,b,ab,1);
 		add(nac,c,cd,1);add(nbd,d,cd,1);
 		karatsura(nac,a,c,ac);karatsura(nbd,b,d,bd);
-		add(nac*2,ac,r+nac,-1);
-		add(nbd*2,bd,r+nac,-1);
-		add(nac*2,ac,r,1);
-		add(nbd*2,bd,r+nac*2,1);
+		add(nac*2,ac,r+nac,-1);add(nbd*2,bd,r+nac,-1);
+		add(nac*2,ac,r,1);add(nbd*2,bd,r+nac*2,1);
 		karatsura(nbd+1,ab,cd,r+nac);
 		free(ab);free(cd);free(ac);free(bd);
 	}

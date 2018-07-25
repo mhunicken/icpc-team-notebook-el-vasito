@@ -6,6 +6,7 @@
 #define fst first
 #define snd second
 #define fore(i,a,b) for(int i=a,ThxDem=b;i<ThxDem;++i)
+#define SZ(x) ((int)(x).size())
 using namespace std;
 typedef long long ll;
 
@@ -39,6 +40,7 @@ struct pt {  // for 3D add z coordinate
 // CCW order
 // Includes collinear points (change sign of EPS in left to exclude)
 vector<pt> chull(vector<pt> p){
+	if(SZ(p)<3)return p;
 	vector<pt> r;
 	sort(p.begin(),p.end()); // first x, then y
 	fore(i,0,p.size()){ // lower hull

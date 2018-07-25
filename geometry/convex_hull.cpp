@@ -1,6 +1,7 @@
 // CCW order
 // Includes collinear points (change sign of EPS in left to exclude)
 vector<pt> chull(vector<pt> p){
+	if(SZ(p)<3)return p;
 	vector<pt> r;
 	sort(p.begin(),p.end()); // first x, then y
 	fore(i,0,p.size()){ // lower hull
