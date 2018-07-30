@@ -5,6 +5,7 @@
 #define mp make_pair
 #define fst first
 #define snd second
+#define SZ(x) int((x).size())
 #define fore(i,a,b) for(int i=a,to=b;i<to;++i)
 using namespace std;
 typedef long long ll;
@@ -40,7 +41,7 @@ int main(){
 			scanf("%d%d",&x,&y);x--;y--;
 			g[x].pb(y);
 		}
-		printf("%d\n",n-(int)max_matching().size());
+		printf("%d\n",n-SZ(max_matching()));
 		fore(i,0,n)g[i].clear();
 	}
 	return 0;
