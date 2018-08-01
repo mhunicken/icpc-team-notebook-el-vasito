@@ -17,7 +17,7 @@ struct item {
 };
 int cnt(pitem t){return t?t->cnt:0;}
 void upd_cnt(pitem t){if(t)t->cnt=cnt(t->l)+cnt(t->r)+1;}
-void split(pitem t, int key, pitem& l, pitem& r){ // l: < key, r: >= key
+void split(pitem t, int key, pitem& l, pitem& r){ // l: <= key, r: > key
 	if(!t)l=r=0;
 	else if(key<t->key)split(t->l,key,l,t->l),r=t;
 	else split(t->r,key,t->r,r),l=t;
