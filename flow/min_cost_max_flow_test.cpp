@@ -5,6 +5,7 @@
 #define mp make_pair
 #define fst first
 #define snd second
+#define SZ(x) int((x).size())
 #define fore(i,a,b) for(int i=a,to=b;i<to;++i)
 using namespace std;
 typedef long long ll;
@@ -21,8 +22,8 @@ int nodes; // remember to init nodes
 vector<int> g[MAXN];
 vector<edge> e;
 void add_edge(int u, int v, tf cap, tc cost) {
-	g[u].pb(e.size());e.pb((edge){u,v,cap,0,cost});
-	g[v].pb(e.size());e.pb((edge){v,u,0,0,-cost});
+	g[u].pb(SZ(e));e.pb((edge){u,v,cap,0,cost});
+	g[v].pb(SZ(e));e.pb((edge){v,u,0,0,-cost});
 }
 tc dist[MAXN],mncost;
 int pre[MAXN];
@@ -36,9 +37,9 @@ void flow(int s, int t){
 		memset(pre,-1,sizeof(pre));pre[s]=0;
 		memset(cap,0,sizeof(cap));cap[s]=INFFLUJO;
 		queue<int> q;q.push(s);in_queue[s]=1;
-		while(q.size()){
+		while(SZ(q)){
 			int u=q.front();q.pop();in_queue[u]=0;
-			fore(_,0,g[u].size()){
+			fore(_,0,SZ(g[u])){
 				int i=g[u][_];
 				edge &E=e[i];
 				if(E.rem()&&dist[E.v]>dist[u]+E.cost+1e-9){

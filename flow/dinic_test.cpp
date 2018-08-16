@@ -5,6 +5,7 @@
 #define mp make_pair
 #define fst first
 #define snd second
+#define SZ(x) int((x).size())
 #define fore(i,a,b) for(int i=a,to=b;i<to;++i)
 using namespace std;
 typedef long long ll;
@@ -16,15 +17,15 @@ int dist[MAXN],q[MAXN],work[MAXN];
 struct edge {int to,rev;ll f,cap;};
 vector<edge> g[MAXN];
 void add_edge(int s, int t, ll cap){
-	g[s].pb((edge){t,g[t].size(),0,cap});
-	g[t].pb((edge){s,g[s].size()-1,0,0});
+	g[s].pb((edge){t,SZ(g[t]),0,cap});
+	g[t].pb((edge){s,SZ(g[s])-1,0,0});
 }
 bool dinic_bfs(){
 	fill(dist,dist+nodes,-1);dist[src]=0;
 	int qt=0;q[qt++]=src;
 	for(int qh=0;qh<qt;qh++){
 		int u=q[qh];
-		fore(i,0,g[u].size()){
+		fore(i,0,SZ(g[u])){
 			edge &e=g[u][i];int v=g[u][i].to;
 			if(dist[v]<0&&e.f<e.cap)dist[v]=dist[u]+1,q[qt++]=v;
 		}
@@ -33,7 +34,7 @@ bool dinic_bfs(){
 }
 ll dinic_dfs(int u, ll f){
 	if(u==dst)return f;
-	for(int &i=work[u];i<g[u].size();i++){
+	for(int &i=work[u];i<SZ(g[u]);i++){
 		edge &e=g[u][i];
 		if(e.cap<=e.f)continue;
 		int v=e.to;
