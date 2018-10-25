@@ -29,6 +29,13 @@ void erase(pitem& t, int key){
 	else erase(key<t->key?t->l:t->r,key);
 	upd_cnt(t);
 }
+void unite(pitem &t, pitem l, pitem r){
+	if(!l||!r){t=l?l:r;return;}
+	if(l->pr<r->pr)swap(l,r);
+	pitem p1,p2;split(r,l->key,p1,p2);
+	unite(l->l,l->l,p1);unite(l->r,l->r,p2);
+	t=l;upd_cnt(t);
+}
 pitem kth(pitem t, int k){
 	if(!t)return 0;
 	if(k==cnt(t->l))return t;
