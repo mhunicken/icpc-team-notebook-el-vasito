@@ -11,9 +11,8 @@ typedef long long ll;
 
 ll gcd(ll a, ll b){return a?gcd(b%a,a):b;}
 ll mulmod(ll a, ll b, ll m) {
-	if(!b)return 0;
-	ll q=mulmod(a,b/2,m);q=(q+q)%m;
-	return b&1?(q+a)%m:q;
+	ll r=a*b-(ll)((long double)a*b/m+.5)*m;
+	return r<0?r+m:r;
 }
 ll expmod(ll b, ll e, ll m){
 	if(!e)return 1;
