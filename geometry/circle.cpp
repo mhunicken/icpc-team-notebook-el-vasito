@@ -2,7 +2,7 @@ struct circle {
 	pt o;double r;
 	circle(pt o, double r):o(o),r(r){}
 	circle(pt x, pt y, pt z){o=bisector(x,y)^bisector(x,z);r=(o-x).norm();}
-	bool has(pt p){return (o-p).norm()<r+EPS;}
+	bool has(pt p){return (o-p).norm()<=r+EPS;}
 	vector<pt> operator^(circle c){ // ccw
 		vector<pt> s;
 		double d=(o-c.o).norm();
@@ -19,7 +19,7 @@ struct circle {
 		pt p=l.proj(o);
 		double d=(p-o).norm();
 		if(d-EPS>r)return s;
-		if(abs(d-r)<EPS){s.pb(p);return s;}
+		if(abs(d-r)<=EPS){s.pb(p);return s;}
 		d=sqrt(r*r-d*d);
 		s.pb(p+l.pq.unit()*d);
 		s.pb(p-l.pq.unit()*d);
@@ -31,10 +31,10 @@ struct circle {
 	}
 	bool in(circle c){ // non strict
 		double d=(o-c.o).norm();
-		return d+r<c.r+EPS;
+		return d+r<=c.r+EPS;
 	}
 	double intertriangle(pt a, pt b){ // area of intersection with oab
-		if(abs((o-a)%(o-b))<EPS)return 0.;
+		if(abs((o-a)%(o-b))<=EPS)return 0.;
 		vector<pt> q={a},w=*this^ln(a,b);
 		if(w.size()==2)for(auto p:w)if((a-p)*(b-p)<-EPS)q.pb(p);
 		q.pb(b);

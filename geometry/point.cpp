@@ -4,7 +4,7 @@ struct pt {  // for 3D add z coordinate
 	pt(){}
 	double norm2(){return *this**this;}
 	double norm(){return sqrt(norm2());}
-	bool operator==(pt p){return abs(x-p.x)<EPS&&abs(y-p.y)<EPS;}
+	bool operator==(pt p){return abs(x-p.x)<=EPS&&abs(y-p.y)<=EPS;}
 	pt operator+(pt p){return pt(x+p.x,y+p.y);}
 	pt operator-(pt p){return pt(x-p.x,y-p.y);}
 	pt operator*(double t){return pt(x*t,y*t);}
@@ -18,7 +18,7 @@ struct pt {  // for 3D add z coordinate
 	double operator%(pt p){return x*p.y-y*p.x;}
 	// 2D from now on
 	bool operator<(pt p)const{ // for convex hull
-		return x<p.x-EPS||(abs(x-p.x)<EPS&&y<p.y-EPS);}
+		return x<p.x-EPS||(abs(x-p.x)<=EPS&&y<p.y-EPS);}
 	bool left(pt p, pt q){ // is it to the left of directed line pq?
 		return (q-p)%(*this-p)>EPS;}
 	pt rot(pt r){return pt(*this%r,*this*r);}

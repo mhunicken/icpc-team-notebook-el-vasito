@@ -3,10 +3,10 @@ struct ln {
 	pt p,pq;
 	ln(pt p, pt q):p(p),pq(q-p){}
 	ln(){}
-	bool has(pt r){return dist(r)<EPS;}
-	bool seghas(pt r){return has(r)&&(r-p)*(r-(p+pq))-EPS<0;}
-//	bool operator /(ln l){return (pq.unit()^l.pq.unit()).norm()<EPS;} // 3D
-	bool operator/(ln l){return abs(pq.unit()%l.pq.unit())<EPS;} // 2D
+	bool has(pt r){return dist(r)<=EPS;}
+	bool seghas(pt r){return has(r)&&(r-p)*(r-(p+pq))<=EPS;}
+//	bool operator /(ln l){return (pq.unit()^l.pq.unit()).norm()<=EPS;} // 3D
+	bool operator/(ln l){return abs(pq.unit()%l.pq.unit())<=EPS;} // 2D
 	bool operator==(ln l){return *this/l&&has(l.p);}
 	pt operator^(ln l){ // intersection
 		if(*this/l)return pt(DINF,DINF);
