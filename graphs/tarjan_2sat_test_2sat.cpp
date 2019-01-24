@@ -26,9 +26,10 @@ void tjn(int u){
 		}
 	}
 	if(lw[u]==idx[u]){
-		int x;
-		do{x=st.top();st.pop();cmp[x]=qcmp;}while(x!=u);
-		truth[qcmp]=(cmp[neg(u)]<0); // (2SAT)
+		int x,l=-1;
+		do{x=st.top();st.pop();cmp[x]=qcmp;if(min(x,neg(x))<nvar)l=x;}
+		while(x!=u);
+		if(l!=-1)truth[qcmp]=(cmp[neg(u)]<0); // (2SAT)
 		qcmp++;
 	}
 }
