@@ -29,7 +29,7 @@ void tjn(int u){
 		int x,l=-1;
 		do{x=st.top();st.pop();cmp[x]=qcmp;if(min(x,neg(x))<nvar)l=x;}
 		while(x!=u);
-		if(l!=-1)truth[qcmp]=(cmp[neg(u)]<0); // (2SAT)
+		if(l!=-1)truth[qcmp]=(cmp[neg(l)]<0); // (2SAT)
 		qcmp++;
 	}
 }
