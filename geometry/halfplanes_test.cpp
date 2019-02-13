@@ -122,5 +122,6 @@ int main(){FIN;
     fore(i,0,c) cin >> p[i].x >> p[i].y;
     fore(i,0,c) v.pb(halfplane(p[i],p[(i+1)%c]));
   }
-  cout<<fixed<<setprecision(10)<<halfplanes(v).intersect().area()<<"\n";
+  pol p(halfplanes(v).intersect());
+  cout<<fixed<<setprecision(10)<<p.area()<<"\n";
 }

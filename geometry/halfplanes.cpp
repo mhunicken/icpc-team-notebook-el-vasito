@@ -21,9 +21,8 @@ struct halfplanes {
     }
     hp = v; n = hp.size();
   }
-  // polygon intersecting left side of halfplanes
-  // returns point (0,0) if area of intersection is empty
-  pol intersect(){
+  // intersection of left side of halfplanes
+  vector<pt> intersect(){
     vector<pt>bx={{DINF,DINF},{-DINF,DINF},{-DINF,-DINF},{DINF,-DINF}};
     fore(i,0,4) hp.pb(halfplane(bx[i],bx[(i+1)%4]));
     n=SZ(hp);
@@ -47,8 +46,6 @@ struct halfplanes {
       p1[st]=hp[que[st]]^hp[que[ed]];
       fore(i,st,ed+1) ans.pb(p1[i]);
     }
-    double a=pol(ans).area();
-    if(a<EPS) return pol({pt(0,0)});
     return ans;
   }
 };
