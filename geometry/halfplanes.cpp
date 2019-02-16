@@ -1,12 +1,10 @@
 int sgn3(double d){return abs(d)<EPS?0:(d>0?1:-1);}
-
 struct halfplane:public ln{
     double angle;
     halfplane(){}
     halfplane(pt a,pt b){p=a; pq=b-a; angle=atan2(pq.y,pq.x);}
     bool operator<(halfplane b)const{return angle<b.angle;}
 };
-
 struct halfplanes {
   int n;
   vector<halfplane> hp;
@@ -21,7 +19,8 @@ struct halfplanes {
     }
     hp = v; n = hp.size();
   }
-  // intersection of left side of halfplanes
+  // polygon intersecting left side of halfplanes
+  // may cause problems if EPS is too small
   vector<pt> intersect(){
     vector<pt>bx={{DINF,DINF},{-DINF,DINF},{-DINF,-DINF},{DINF,-DINF}};
     fore(i,0,4) hp.pb(halfplane(bx[i],bx[(i+1)%4]));
@@ -46,6 +45,10 @@ struct halfplanes {
       p1[st]=hp[que[st]]^hp[que[ed]];
       fore(i,st,ed+1) ans.pb(p1[i]);
     }
+    if(!SZ(ans)) return ans;
+    // change sign of EPS in point.left()
+    int f=1; for(auto x : hp) f &= ans[0].left(x.p,x.p+x.pq);
+    if(!f) ans.clear();
     return ans;
   }
 };

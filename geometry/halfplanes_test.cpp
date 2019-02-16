@@ -13,7 +13,7 @@ using namespace std;
 typedef long long ll;
 typedef pair<int,int> ii;
 
-const double EPS = 1e-10, DINF = 1e100;
+const double EPS = 1e-7, DINF = 1e100;
 
 struct pt {
   double x,y;
@@ -29,6 +29,8 @@ struct pt {
   double operator*(pt p){return x*p.x+y*p.y;}
   pt unit(){return *this/norm();}
   double operator%(pt p){return x*p.y-y*p.x;}
+  bool left(pt p, pt q){ // is it to the left of directed line pq?
+  return (q-p)%(*this-p)>-EPS;}
 };
 
 int sgn2(double x){return x<0?-1:1;}
@@ -59,14 +61,12 @@ struct pol {
 };
 
 int sgn3(double d){return abs(d)<EPS?0:(d>0?1:-1);}
-
 struct halfplane:public ln{
     double angle;
     halfplane(){}
     halfplane(pt a,pt b){p=a; pq=b-a; angle=atan2(pq.y,pq.x);}
     bool operator<(halfplane b)const{return angle<b.angle;}
 };
-
 struct halfplanes {
   int n;
   vector<halfplane> hp;
@@ -82,10 +82,10 @@ struct halfplanes {
     hp = v; n = hp.size();
   }
   // polygon intersecting left side of halfplanes
-  // returns point (0,0) if area of intersection is empty
-  pol intersect(){
-    vector<pt> box={{DINF,DINF},{-DINF,DINF},{-DINF,-DINF},{DINF,-DINF}};
-    fore(i,0,4) hp.pb(halfplane(box[i],box[(i+1)%4]));
+  // may cause problems if EPS is too small
+  vector<pt> intersect(){
+    vector<pt>bx={{DINF,DINF},{-DINF,DINF},{-DINF,-DINF},{DINF,-DINF}};
+    fore(i,0,4) hp.pb(halfplane(bx[i],bx[(i+1)%4]));
     n=SZ(hp);
     normalize();
     int st=0,ed=1;
@@ -107,8 +107,10 @@ struct halfplanes {
       p1[st]=hp[que[st]]^hp[que[ed]];
       fore(i,st,ed+1) ans.pb(p1[i]);
     }
-    double a=pol(ans).area();
-    if(a<EPS) return pol({pt(0,0)});
+    if(!SZ(ans)) return ans;
+    // change sign of EPS in point.left()
+    int f=1; for(auto x : hp) f &= ans[0].left(x.p,x.p+x.pq);
+    if(!f) ans.clear();
     return ans;
   }
 };
