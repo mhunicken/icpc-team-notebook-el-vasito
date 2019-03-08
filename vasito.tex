@@ -2,67 +2,67 @@
 \input{preamble.tex}
 \begin{document}
 % Gracias Demetrio
-\def\title{Universidad Nacional de Córdoba - Gracias Demetrio}
-.\\[0.2cm]
-\centering{\LARGE\textbf{Gracias Demetrio}} \\[0.5cm]
-\centering{\includegraphics[width=5.5cm]{img/vasito.jpg}}
-\tableofcontents\newpage
+\def\title{Universidad Nacional de Córdoba}
+%.\\[0.2cm]
+%\centering{\LARGE\textbf{UNC}} \\[0.5cm]
+%\centering{\includegraphics[width=5.5cm]{img/vasito.jpg}}
+%\tableofcontents\newpage
 
 \section{Data structures}
-\subsection{Segment tree}
-\cppfile{data_structures/segment_tree.cpp}
-\subsection{Segment tree - Lazy propagation}
-\cppfile{data_structures/segment_tree_lazy.cpp}
-\subsection{Segment tree - Persistence}
-\cppfile{data_structures/segment_tree_persistent.cpp}
+%\subsection{Segment tree}
+%\cppfile{data_structures/segment_tree.cpp}
+%\subsection{Segment tree - Lazy propagation}
+%\cppfile{data_structures/segment_tree_lazy.cpp}
+%\subsection{Segment tree - Persistence}
+%\cppfile{data_structures/segment_tree_persistent.cpp}
 \subsection{Segment tree - 2D}
 \cppfile{data_structures/segment_tree_2d.cpp}
-\subsection{Sparse table (static RMQ)}
-\cppfile{data_structures/sparse_table.cpp}
-\subsection{Fenwick tree}
-\cppfile{data_structures/fenwick_tree.cpp}
+%\subsection{Sparse table (static RMQ)}
+%\cppfile{data_structures/sparse_table.cpp}
+%\subsection{Fenwick tree}
+%\cppfile{data_structures/fenwick_tree.cpp}
 \subsection{Wavelet tree}
 \cppfile{data_structures/wavelet_tree.cpp}
 \subsection{STL extended set}
 \cppfile{data_structures/stl_extended_set.cpp}
-\subsection{STL rope}
-\cppfile{data_structures/stl_rope.cpp}
-\subsection{Treap (as BST)}
-\cppfile{data_structures/treap.cpp}
+%\subsection{STL rope}
+%\cppfile{data_structures/stl_rope.cpp}
+%\subsection{Treap (as BST)}
+%\cppfile{data_structures/treap.cpp}
 \subsection{Treap (implicit key)}
 \cppfile{data_structures/treap_implicit.cpp}
-\subsection{Treap (with node father)}
-\cppfile{data_structures/treap_implicit_father.cpp}
+%\subsection{Treap (with node father)}
+%\cppfile{data_structures/treap_implicit_father.cpp}
 \subsection{Link-Cut tree}
-\cppfile{data_structures/link_cut_tree.cpp}
+\cppfile{data_structures/linkcut2.cpp}
 \subsection{Convex hull trick (static)}
 \cppfile{data_structures/convexhull_trick.cpp}
 \subsection{Convex hull trick (dynamic)}
 \cppfile{data_structures/convexhull_trick_dynamic.cpp}
 \subsection{Gain-cost-set}
 \cppfile{data_structures/gain_cost_set.cpp}
-\subsection{Disjoint intervals}
-\cppfile{data_structures/disjoint_intervals.cpp}
+%\subsection{Disjoint intervals}
+%\cppfile{data_structures/disjoint_intervals.cpp}
 
 \section{Graphs}
-\subsection{Topological sort}
-\cppfile{graphs/toposort.cpp}
-\subsection{Kruskal (+ Union-Find)}
-\cppfile{graphs/kruskal.cpp}
-\subsection{Dijkstra}
-\cppfile{graphs/dijkstra.cpp}
-\subsection{Bellman-Ford}
-\cppfile{graphs/bellman_ford.cpp}
-\subsection{Floyd-Warshall}
-\cppfile{graphs/floyd_warshall.cpp}
+%\subsection{Topological sort}
+%\cppfile{graphs/toposort.cpp}
+%\subsection{Kruskal (+ Union-Find)}
+%\cppfile{graphs/kruskal.cpp}
+%\subsection{Dijkstra}
+%\cppfile{graphs/dijkstra.cpp}
+%\subsection{Bellman-Ford}
+%\cppfile{graphs/bellman_ford.cpp}
+%\subsection{Floyd-Warshall}
+%\cppfile{graphs/floyd_warshall.cpp}
 \subsection{Strongly connected components (+ 2-SAT)}
 \cppfile{graphs/tarjan_2sat.cpp}
 \subsection{Articulation - Bridges - Biconnected}
 \cppfile{graphs/articulation_bridges_biconnected.cpp}
 \subsection{Chu-Liu (minimum spanning arborescence)}
 \cppfile{graphs/chu_liu.cpp}
-\subsection{LCA - Binary Lifting}
-\cppfile{graphs/lca.cpp}
+%\subsection{LCA - Binary Lifting}
+%\cppfile{graphs/lca.cpp}
 \subsection{Heavy-Light decomposition}
 \cppfile{graphs/hld.cpp}
 \subsection{Centroid decomposition}
@@ -79,9 +79,7 @@
 \section{Math}
 \subsection{Identities}
 {
-$C_n = \frac{2(2n-1)}{n+1} C_{n-1}$
-
-$C_n = \frac{1}{n+1} \binom{2n}{n}$
+$C_n = \frac{2(2n-1)}{n+1} C_{n-1} = \frac{1}{n+1} \binom{2n}{n}$
 
 $C_n \sim \frac{4^n}{n^{3/2}\sqrt{\pi}}$
 
@@ -96,26 +94,26 @@ $\sum_{i=1}^n F_i = F_{n+2}-1$
 $F_{n+i}F_{n+j} - F_nF_{n+i+j} = (-1)^n F_iF_j$
 
 (Möbius Inv. Formula)
-Let $g(n) = \sum_{d\mid n} f(d)$, then $f(n)=\sum{d\mid n} g(d) \mu\left(\frac{n}{d})\right)$.
+Let $g(n) = \sum_{d\mid n} f(d)$, then $f(n)=\sum_{d\mid n} g(d) \mu\left(\frac{n}{d})\right)$.
 }
 \subsection{Theorems}
 \cppfile{math/theorems.txt}
 \subsection{Integer floor division}
 \cppfile{math/floor_division.cpp}
-%\subsection{Extended Euclid} % allready in diophantine
+%\subsection{Extended Euclid} % already in diophantine
 %\cppfile{math/extended_euclid.cpp}
-\subsection{Sieve of Eratosthenes}
-\cppfile{math/sieve.cpp}
-\subsection{Generate divisors}
-\cppfile{math/divisors.cpp}
+%\subsection{Sieve of Eratosthenes}
+%\cppfile{math/sieve.cpp}
+%\subsection{Generate divisors}
+%\cppfile{math/divisors.cpp}
 \subsection{Pollard's rho}
 \cppfile{math/pollard_rho.cpp}
 \subsection{Simpson's rule}
 \cppfile{math/simpson.cpp}
 \subsection{Polynomials}
 \cppfile{math/polynomial.cpp}
-\subsection{Bairstow}
-\cppfile{math/bairstow.cpp}
+%\subsection{Bairstow}
+%\cppfile{math/bairstow.cpp}
 \subsection{Fast Fourier Transform}
 \cppfile{math/fft.cpp}
 \subsection{Fast Hadamard Transform}
@@ -130,14 +128,18 @@ Let $g(n) = \sum_{d\mid n} f(d)$, then $f(n)=\sum{d\mid n} g(d) \mu\left(\frac{n
 \cppfile{math/crt.cpp}
 \subsection{Mobius}
 \cppfile{math/mobius.cpp}
-\subsection{Matrix exponentiation}
-\cppfile{math/matrix_fast_pow.cpp}
+%\subsection{Matrix exponentiation}
+%\cppfile{math/matrix_fast_pow.cpp}
 \subsection{Matrix reduce and determinant}
 \cppfile{math/matrix_reduce.cpp}
 \subsection{Simplex}
 \cppfile{math/simplex.cpp}
 \subsection{Discrete log}
 \cppfile{math/discrete_log.cpp}
+\subsection{Berlekamp Massey}
+\cppfile{math/berlekamp_massey.cpp}
+\subsection{Linear Rec}
+\cppfile{math/linear_rec.cpp}
 
 \section{Geometry}
 \subsection{Point}
@@ -172,22 +174,22 @@ Let $g(n) = \sum_{d\mid n} f(d)$, then $f(n)=\sum{d\mid n} g(d) \mu\left(\frac{n
 \cppfile{strings/suffix_automaton.cpp}
 \subsection{Palindromic Tree}
 \cppfile{strings/palindromic_tree.cpp}
-\subsection{Suffix array (shorter but slower)}
-\cppfile{strings/suffix_array_slow.cpp}
+%\subsection{Suffix array (shorter but slower)}
+%\cppfile{strings/suffix_array_slow.cpp}
 \subsection{Suffix array}
 \cppfile{strings/suffix_array.cpp}
 \subsection{LCP (Longest Common Prefix)}
 \cppfile{strings/lcp.cpp}
 \subsection{Suffix Tree (Ukkonen's algorithm)}
 \cppfile{strings/suffix_tree.cpp}
-\subsection{Hashing}
-\cppfile{strings/hashing.cpp}
+%\subsection{Hashing}
+%\cppfile{strings/hashing.cpp}
 \subsection{Hashing with ll (using \_\_int128)}
 \cppfile{strings/hashing_128.cpp}
 
 \section{Flow}
-\subsection{Matching (slower)}
-\cppfile{flow/matching.cpp}
+%\subsection{Matching (slower)}
+%\cppfile{flow/matching.cpp}
 \subsection{Matching (Hopcroft-Karp)}
 \cppfile{flow/hopcroft_karp.cpp}
 \subsection{Hungarian}
@@ -198,20 +200,22 @@ Let $g(n) = \sum_{d\mid n} f(d)$, then $f(n)=\sum{d\mid n} g(d) \mu\left(\frac{n
 \cppfile{flow/min_cost_max_flow.cpp}
 
 \section{Other}
-\subsection{Mo's algorithm}
-\cppfile{other/mos_algorithm.cpp}
+%\subsection{Mo's algorithm}
+%\cppfile{other/mos_algorithm.cpp}
 \subsection{Divide and conquer DP optimization}
 \cppfile{other/divide_and_conquer_dp.cpp}
 \subsection{Dates}
 \cppfile{other/dates.cpp}
 \subsection{C++ stuff}
-\cppfile{other/cpp_stuff.cpp}
-\subsection{Interactive problem tester template}
-\cppfile{other/interactive_tester.py}
+\cppfile{other/cpp_stuff_short.cpp}
+%\subsection{Interactive problem tester template}
+%\cppfile{other/interactive_tester.py}
 \subsection{Max number of divisors up to 10\textsuperscript{n}}
 \cppfile{other/hcn.txt}
-\subsection{Template}
-\cppfile{other/template.cpp}
+\subsection{Other}
+\cppfile{other/other.cpp}
+%\subsection{Template}
+%\cppfile{other/template.cpp}
 
 \end{document}
 
