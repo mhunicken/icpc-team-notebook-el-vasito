@@ -12,13 +12,9 @@ typedef long long ll;
 struct state {int len,link;map<char,int> next;}; //clear next!!
 state st[100005];
 int sz,last;
-void sa_init(){
-	last=st[0].len=0;sz=1;
-	st[0].link=-1;
-}
+void sa_init(){last=st[0].len=0;sz=1;st[0].link=-1;}
 void sa_extend(char c){
-	int k=sz++,p;
-	st[k].len=st[last].len+1;
+	int k=sz++,p;st[k].len=st[last].len+1;
 	for(p=last;p!=-1&&!st[p].next.count(c);p=st[p].link)st[p].next[c]=k;
 	if(p==-1)st[k].link=0;
 	else {
