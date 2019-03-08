@@ -25,8 +25,7 @@ struct WT {
 	}
 	int query0(int k, int s, int e, int a, int b, int i){
 		if(s+1==e)return s;
-		int m=(s+e)/2;
-		int q=(b-a)-(wt[k][b]-wt[k][a]);
+		int m=(s+e)/2, q=(b-a)-(wt[k][b]-wt[k][a]);
 		if(i<q)return query0(2*k,s,m,a-wt[k][a],b-wt[k][b],i);
 		else return query0(2*k+1,m,e,wt[k][a],wt[k][b],i-q);
 	}
@@ -41,12 +40,9 @@ struct WT {
 	}
 	void init(int _n){n=_n;init(1,0,n);} // (values in range [0,n))
 	void add(int v){add(1,0,n,v);}
-	int query0(int a, int b, int i){ // ith element in range [a,b)
-		return query0(1,0,n,a,b,i);    // (if it was sorted)
-	}
-	void upd(int i){ // swap positions i,i+1
-		upd(1,0,n,i);
-	}
+	//ith element in range [a,b) (if it was sorted)
+	int query0(int a, int b, int i){return query0(1,0,n,a,b,i);}
+	void upd(int i){upd(1,0,n,i);} // swap positions i,i+1
 };
 
 vector<int> z[1<<20];
