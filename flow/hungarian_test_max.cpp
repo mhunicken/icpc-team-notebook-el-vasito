@@ -1,65 +1,69 @@
 // SPOJ SCITIES - AC
-// http://www.spoj.com/problems/SCITIES/
+// https://www.spoj.com/problems/SCITIES/
 #include <bits/stdc++.h>
-#define pb push_back
-#define mp make_pair
+#ifdef DBP
+#define deb(...) fprintf(stderr,__VA_ARGS__)
+#else
+#define deb(...) 0
+#endif
 #define fst first
 #define snd second
-#define fore(i,a,b) for(int i=a,to=b;i<to;++i)
+#define fore(x,a,b) for(int x=(a), qwerty=(b); x<qwerty; x++)
+#define pb push_back
+#define mset(a,v) memset((a),(v),sizeof(a))
+#define ALL(a) (a).begin(), (a).end()
+#define SZ(a) int((a).size())
+#define FIN ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)
 using namespace std;
 typedef long long ll;
 
-typedef int th;
-const th INF=1;
-struct Hungarian {
-	int n,m;
-	vector<vector<th> > a;
-	vector<th> u,v;vector<int> p,way;  // p: assignment
-	Hungarian(int n, int m):
-	n(n),m(m),a(n+1,vector<th>(m+1,INF-1)),u(n+1),v(m+1),p(m+1),way(m+1){}
-	void set(int x, int y, th v){a[x+1][y+1]=v;}
-	th assign(){
-		fore(i,1,n+1){
-			int j0=0;p[0]=i;
-			vector<th> minv(m+1,INF);
-			vector<char> used(m+1,false);
-			do {
-				used[j0]=true;
-				int i0=p[j0],j1;th delta=INF;
-				fore(j,1,m+1)if(!used[j]){
-					th cur=a[i0][j]-u[i0]-v[j];
-					if(cur<minv[j])minv[j]=cur,way[j]=j0;
-					if(minv[j]<delta)delta=minv[j],j1=j;
-				}
-				fore(j,0,m+1)
-					if(used[j])u[p[j]]+=delta,v[j]-=delta;
-					else minv[j]-=delta;
-				j0=j1;
-			} while(p[j0]);
-			do {
-				int j1=way[j0];p[j0]=p[j1];j0=j1;
-			} while(j0);
+typedef int td; typedef vector<int> vi; typedef vector<td> vd;
+const td INF=0;//for maximum set INF to 0, and negate costs
+bool zero(td x){return x==0;}//change to x==0, for ints/ll
+struct Hungarian{
+    int n; vector<vd> cs; vi L, R;
+    Hungarian(int N, int M):n(max(N,M)),cs(n,vd(n)),L(n),R(n){
+        fore(x,0,N)fore(y,0,M)cs[x][y]=INF;
+    }
+    void set(int x,int y,td c){cs[x][y]=c;}
+	td assign() {
+		int mat = 0; vd ds(n), u(n), v(n); vi dad(n), sn(n);
+		fore(i,0,n)u[i]=*min_element(ALL(cs[i]));
+		fore(j,0,n){v[j]=cs[0][j]-u[0];fore(i,1,n)v[j]=min(v[j],cs[i][j]-u[i]);}
+		L=R=vi(n, -1);
+		fore(i,0,n)fore(j,0,n)
+			if(R[j]==-1&&zero(cs[i][j]-u[i]-v[j])){L[i]=j;R[j]=i;mat++;break;}
+		for(;mat<n;mat++){
+		    int s=0, j=0, i;
+		    while(L[s] != -1)s++;
+		    fill(ALL(dad),-1);fill(ALL(sn),0);
+		    fore(k,0,n)ds[k]=cs[s][k]-u[s]-v[k];
+		    for(;;){
+		        j = -1;
+		        fore(k,0,n)if(!sn[k]&&(j==-1||ds[k]<ds[j]))j=k;
+		        sn[j] = 1; i = R[j];
+		        if(i == -1) break;
+		        fore(k,0,n)if(!sn[k]){
+		            auto new_ds=ds[j]+cs[i][k]-u[i]-v[k];
+		            if(ds[k] > new_ds){ds[k]=new_ds;dad[k]=j;}
+		        }
+		    }
+		    fore(k,0,n)if(k!=j&&sn[k]){auto w=ds[k]-ds[j];v[k]+=w,u[R[k]]-=w;}
+		    u[s] += ds[j];
+		    while(dad[j]>=0){int d = dad[j];R[j]=R[d];L[R[j]]=j;j=d;}
+		    R[j]=s;L[s]=j;
 		}
-		return -v[0];  // cost
+		td value=0;fore(i,0,n)value+=cs[i][L[i]];
+		return value;
 	}
 };
 
-int n,m;
-
-int main(){
-	int tn;
-	scanf("%d",&tn);
-	while(tn--){
-		bool rev=false;
-		scanf("%d%d",&n,&m);
-		if(n>m){swap(n,m);rev=true;}
-		Hungarian w(n,m);
-		int x,y,c;
-		while(scanf("%d%d%d",&x,&y,&c),x){
-			if(rev)swap(x,y);
-			w.set(x-1,y-1,-c);
-		}
-		printf("%d\n",-w.assign());
-	}
-	return 0;
+int main(){FIN;
+    int T; cin>>T;
+    while(T--){
+        int c1, c2,a,b,c; cin>>c1>>c2;
+		Hungarian h(c1,c2);
+        while(cin>>a>>b>>c&&a){h.set(a-1,b-1,-c);}
+        cout<<-h.assign()<<"\n";
+    }
 }
