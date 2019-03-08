@@ -1,8 +1,6 @@
 int d1[MAXN];//d1[i] = max odd palindrome centered on i
 int d2[MAXN];//d2[i] = max even palindrome centered on i
-//s  aabbaacaabbaa
-//d1 1111117111111
-//d2 0103010010301
+//s  aabbaacaabbaa; d1 1111117111111; d2 0103010010301
 void manacher(string& s){
 	int l=0,r=-1,n=s.size();
 	fore(i,0,n){
