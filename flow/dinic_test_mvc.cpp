@@ -1,5 +1,5 @@
 // Codeforces gym 100269H - AC
-// http://codeforces.com/gym/100269/problem/G
+// http://codeforces.com/gym/100269/problem/H
 #include <bits/stdc++.h>
 #define fst first
 #define snd second
@@ -9,6 +9,7 @@
 #define snd second
 #define MAXN 10005
 #define pb push_back
+#define SZ(x) int((x).size())
 #define iter(it,c) for(__typeof((c).begin()) it = (c).begin(); it != (c).end(); ++it)
 using namespace std;
 const int INF = ~(1<<31);
@@ -20,15 +21,15 @@ int dist[MAXN],q[MAXN],work[MAXN];
 struct edge {int to,rev;ll f,cap;};
 vector<edge> g[MAXN];
 void add_edge(int s, int t, ll cap){
-	g[s].pb((edge){t,g[t].size(),0,cap});
-	g[t].pb((edge){s,g[s].size()-1,0,0});
+	g[s].pb((edge){t,SZ(g[t]),0,cap});
+	g[t].pb((edge){s,SZ(g[s])-1,0,0});
 }
 bool dinic_bfs(){
 	fill(dist,dist+nodes,-1);dist[src]=0;
 	int qt=0;q[qt++]=src;
 	for(int qh=0;qh<qt;qh++){
 		int u=q[qh];
-		fore(i,0,g[u].size()){
+		fore(i,0,SZ(g[u])){
 			edge &e=g[u][i];int v=g[u][i].to;
 			if(dist[v]<0&&e.f<e.cap)dist[v]=dist[u]+1,q[qt++]=v;
 		}
@@ -37,7 +38,7 @@ bool dinic_bfs(){
 }
 ll dinic_dfs(int u, ll f){
 	if(u==dst)return f;
-	for(int &i=work[u];i<g[u].size();i++){
+	for(int &i=work[u];i<SZ(g[u]);i++){
 		edge &e=g[u][i];
 		if(e.cap<=e.f)continue;
 		int v=e.to;
@@ -115,26 +116,26 @@ int main(){
 	}
 	max_flow(0,1);
 	vector<int> res = mvc();
-	printf("%d\n",(int)res.size());
+	printf("%d\n",SZ(res));
 	memset(u,false,sizeof(u));
 	int s=0;
-	fore(i,0,res.size()){
+	fore(i,0,SZ(res)){
 		int x=res[i],k=0;
 		if(x>=l){
 			x-=l;k=1;
 		}
 		vector<int> sol;
-		fore(i,0,cc[k][x].size()){
+		fore(i,0,SZ(cc[k][x])){
 			int w=cc[k][x][i];
 			if(u[w])continue;
 			else sol.pb(w);
 			s++;
 			u[w]=true;
 		}
-		assert(sol.size());
-		if(sol.size()>1)swap(sol[0],sol[1]);
-		printf("%d",(int)sol.size());
-		fore(i,0,sol.size())printf(" %d",sol[i]+1);
+		assert(SZ(sol));
+		if(SZ(sol)>1)swap(sol[0],sol[1]);
+		printf("%d",SZ(sol));
+		fore(i,0,SZ(sol))printf(" %d",sol[i]+1);
 		puts("");
 	}
 	assert(s==n);
