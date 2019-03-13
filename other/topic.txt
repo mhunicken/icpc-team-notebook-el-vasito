@@ -1,0 +1,4 @@
+Meet in the Middle; Gauss Elimination (Z_p); Interpolate; Centroid; HLD;
+SQRT/Mos; Biconnected/AP/Bridge; Matrix Exp;
+
+!!! LEER COMPENTARIOS E INICIALIZAR !!!
