@@ -1,4 +1,5 @@
 Meet in the Middle; Gauss Elimination (Z_p); Interpolate; Centroid; HLD;
-SQRT/Mos; Biconnected/AP/Bridge; Matrix Exp; Offline;
+SQRT/Mos; Biconnected/AP/Bridge; Matrix Exp; Offline; D&C; EulerTour;
+DP Optimization(Aliens,Knuth,etc); SparseTable; Strings;
 
 !!! LEER COMPENTARIOS E INICIALIZAR !!!
