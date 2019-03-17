@@ -3,3 +3,5 @@ Petersens Theorem. Every cubic, bridgeless graph contains a perfect matching.
 (Dilworth) In any finite partially ordered set, the maximum number of elements in any antichain equals the minimum number of chains in any partition of the set into chains
 Pick: A=I+B/2-1  (area of polygon, points inside, points on border)
 Euler Formula: v-e+f=2
+RecHom: t(n)=sum{i=0 j} sum{k=0 mi-1} c(.)n^k r_j^n
+
