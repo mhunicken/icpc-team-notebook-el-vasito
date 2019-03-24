@@ -1,0 +1,23 @@
+primitive root: a is pr of P if $a^{(P-1)/p} \mod P!=1$ $\forall p \mid (P-1)$
+
+$a^n = a^{\phi(m)+n \mod \phi(m)}$ (mod m) if $n > lg(m)$
+
+Misere Nim:$ai>=1$;if $\exists a_i > 1$ then normal nim; else if $n$ impar iff lose
+
+Choose proper subset and move in them: losing iff grundy are all =
+
+Erdos-Gallai: ${d1,...,dn}$ $n-1>=d1>= >=dn>=0$ is degree seq of some
+undirected graph iff ($\sum_i di$) par and $d1+ ... +dk<=k*(k-1)+\sum_{i=k+1}^{n} min(k,di) \forall k=1, ,n-1$
+
+Wilson's: n is prime iff $(n-1)! \equiv -1 \mod n$
+
+Derangements: Num of permutations of $n=0,1,2,...$ elements without fixed points is
+$1,0,1,2,9,44,265,1854,14833,...$. Recurrence: $D_n = (n-1)(D_{n-1}+D_{n-2}) = n*D_{n-1}+(-1)^n$.
+Collary: number of permutations with exactly k fixed points $nCk D_{n-k}$
+
+Stirling numbers of 1 kind: $s_{n,k}$ is $(-1)^{n-k}$ times the numbers of permutations of n elements
+with exactly k premutation cycles. $|s_{n,k}|=|s_{n-1,k-1}|+(n-1)|s_{n-1,k}|$
+
+Eulerian numbers: $E(n,k)$ is the number of permutations with exactly k descents ($i:\pi_{i} < \pi_{i+1}$),
+ascents ($\pi_i > \pi_{i+1}$) / excedances ($\pi > i$) / $k+1$ weak excedances ($\pi \geq i$).
+$E_{n,k} = (k+1)E_{n-1,k)} + (n-k)E_{n-1,k-1}$
