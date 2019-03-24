@@ -17,3 +17,4 @@ int v=uniform_int_distribution<int>(a, b)(rng);
 
 //B_k=A^-1%x^a; B_k+1 = B_k(2 - A*B_k)%x^(2a); B0=a0^-1
 //D^R=A^R*(B^R)^-1 % (x^(n-m+1)); A=B*D+R
+//A(xi)=A(xi) mod (x-xi); Apply D&C (MultiEval)
