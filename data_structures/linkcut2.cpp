@@ -62,5 +62,14 @@ Node lca(Node x, Node y){exv(x); return exv(y);}
 bool connected(Node x, Node y){exv(x);exv(y); return x==y?1:x->p!=0;}
 void link(Node x, Node y){mkR(x); x->p=y;}
 void cut(Node x, Node y){mkR(x); exv(y); y->c[1]->p=0; y->c[1]=0;}
+Node father(Node x){
+	exv(x);
+	Node r=x->c[1];
+	if(!r)return 0;
+	while(r->c[0])r=r->c[0];
+	return r;
+}
+void cut(Node x){ // cuts x from father keeping tree root
+	exv(father(x));x->p=0;}
 int query(Node x, Node y){mkR(x); exv(y); return getPV(y);}
 void modify(Node x, Node y, int d){mkR(x);exv(y);y->d=joinD(y->d,d);}
