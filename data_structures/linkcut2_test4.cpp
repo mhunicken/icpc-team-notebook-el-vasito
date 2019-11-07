@@ -1,3 +1,21 @@
+// https://www.spoj.com/problems/DYNALCA/
+#include <bits/stdc++.h>
+#ifdef DEMETRIO
+#define deb(...) fprintf(stderr,__VA_ARGS__)
+#define deb1(x) cerr << #x << " = " << x << endl
+#else
+#define deb(...) 0
+#define deb1(x) 0
+#endif
+#define pb push_back
+#define mp make_pair
+#define fst first
+#define snd second
+#define fore(i,a,b) for(int i=a,ThxDem=b;i<ThxDem;++i)
+#define SZ(x) ((int)x.size())
+using namespace std;
+typedef long long ll;
+
 const int N_DEL = 0, N_VAL = 0; //delta, value
 inline int mOp(int x, int y){return x+y;}//modify
 inline int qOp(int lval, int rval){return lval + rval;}//query
@@ -86,4 +104,52 @@ Node lift(Node x, int t){
 int depth(Node x){
 	exv(x);
 	return getSize(x)-1;
+}
+
+Node x[100005];
+int n,m;
+
+int main(){
+	scanf("%d%d",&n,&m);
+	fore(i,0,n)x[i]=new Node_t(i);
+	while(m--){
+		char s[8];
+		scanf("%s",s);
+		if(s[1]=='i'){
+			int a,b;
+			scanf("%d%d",&a,&b);a--;b--;
+			link(x[a],x[b]);
+		}
+		else if(s[1]=='u'){
+			int a;
+			scanf("%d",&a);a--;
+			cut(x[a]);
+		}
+		else {
+			// Alternative inefficient version of LCA, just to test lift and depth
+			int aa,bb,r;
+			scanf("%d%d",&aa,&bb);aa--;bb--;
+			Node a=x[aa],b=x[bb];
+			int da=depth(a),db=depth(b);
+			if(da<db){swap(da,db);swap(a,b);}
+			for(int k=16;k>=0;--k)if(da-(1<<k)>=db){
+				a=lift(a,1<<k);
+				da-=1<<k;
+			}
+			if(a==b)r=a->nVal;
+			else {
+				for(int k=16;k>=0;--k){
+					Node aa=lift(a,1<<k);
+					Node bb=lift(b,1<<k);
+					if(aa!=bb){
+						a=aa;
+						b=bb;
+					}
+				}
+				r=father(a)->nVal;
+			}
+			printf("%d\n",r+1);
+		}
+	}
+	return 0;
 }
