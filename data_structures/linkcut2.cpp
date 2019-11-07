@@ -79,11 +79,7 @@ Node lift_rec(Node x, int t){
 	if(t<getSize(x->c[0]))return lift_rec(x->c[0],t);
 	return lift_rec(x->c[1],t-getSize(x->c[0])-1);
 }
-Node lift(Node x, int t){
-	exv(x);
-	return lift_rec(x,t);
-}
-int depth(Node x){
-	exv(x);
-	return getSize(x)-1;
-}
+Node lift(Node x, int t){ // t-th ancestor of x (lift(x,1) is x's father)
+	exv(x);return lift_rec(x,t);}
+int depth(Node x){ // distance from x to its tree root
+	exv(x);return getSize(x)-1;}
