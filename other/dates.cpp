@@ -9,3 +9,8 @@ void intToDate(int jd, int& y, int& m, int& d){
 	j=80*x/2447;d=x-2447*j/80;
 	x=j/11;m=j+2-12*x;y=100*(n-49)+i+x;
 }
+int DayOfWeek(int d, int m, int y){	//starting on Sunday
+	static int ttt[]={0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
+	y-=m<3;
+	return (y+y/4-y/100+y/400+ttt[m-1]+d)%7;
+}
