@@ -16,7 +16,7 @@ struct LinearRec{
     return res;
   }
   LinearRec(vi &terms, vi &trans):terms(terms),trans(trans){
-    vi a(n+1);a[1]=1;n=SZ(terms);
+    n=SZ(trans);vi a(n+1);a[1]=1;
     bin.pb(a);
     fore(i,1,LOG)bin.pb(add(bin[i-1],bin[i-1]));
   }
