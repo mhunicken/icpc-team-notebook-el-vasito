@@ -115,7 +115,7 @@ int main(){
 		int q=nt-2*k,r=0;
 		fore(i,nt-1,ns){
 			if(R[i]>=q){
-				w.insert(mp(gh(0,i-nt+1,i+1),gh(1,i-nt+1,i+1)));
+				w.insert({gh(0,i-nt+1,i+1),gh(1,i-nt+1,i+1)});
 			}
 		}
 		printf("Case %d: %d\n",tc++,(int)w.size());

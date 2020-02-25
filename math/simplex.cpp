@@ -46,5 +46,5 @@ pair<double,vector<double> > simplex( // maximize c^T x s.t. Ax<=b, x>=0
 	}
 	vector<double> r(m);
 	fore(i,0,n)if(Y[i]<m)r[Y[i]]=b[i];
-	return mp(z,r);
+	return {z,r};
 }

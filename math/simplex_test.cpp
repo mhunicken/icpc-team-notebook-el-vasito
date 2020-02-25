@@ -60,7 +60,7 @@ pair<double,vector<double> > simplex( // maximize c^T x s.t. Ax<=b, x>=0
 	}
 	vector<double> r(m);
 	fore(i,0,n)if(Y[i]<m)r[Y[i]]=b[i];
-	return mp(z,r);
+	return {z,r};
 }
 }
 
@@ -70,8 +70,8 @@ map<pair<int,int>,int> ids;
 int na;
 
 int id(int x, int y){
-	if(!ids.count(mp(x,y)))ids[mp(x,y)]=na++;
-	return ids[mp(x,y)];
+	if(!ids.count({x,y}))ids[{x,y}]=na++;
+	return ids[{x,y}];
 }
 
 int n,m;
@@ -143,7 +143,7 @@ int main(){
 			{vector<double> r(na,0.);
 			fore(i,0,p.size()-1){
 				int x=p[i],y=p[i+1];
-				assert(ids.count(mp(x,y)));
+				assert(ids.count({x,y}));
 				r[id(x,y)]=d[x][y];
 			}
 			A.pb(r);
@@ -156,7 +156,7 @@ int main(){
 		{vector<double> r(na,0.);
 		fore(i,0,p.size()-1){
 			int x=p[i],y=p[i+1];
-			assert(ids.count(mp(x,y)));
+			assert(ids.count({x,y}));
 			r[id(x,y)]=d[x][y];
 		}
 		c=r;}

@@ -28,12 +28,12 @@ struct DynCon {
 	DynCon(int n):dsu(n){}
 	void add(int x, int y){
 		if(x>y)swap(x,y);
-		q.pb((Query){ADD,x,y});mt.pb(-1);last[mp(x,y)]=q.size()-1;
+		q.pb((Query){ADD,x,y});mt.pb(-1);last[{x,y}]=q.size()-1;
 	}
 	void remove(int x, int y){
 		if(x>y)swap(x,y);
 		q.pb((Query){DEL,x,y});
-		int pr=last[mp(x,y)];mt[pr]=q.size()-1;mt.pb(pr);
+		int pr=last[{x,y}];mt[pr]=q.size()-1;mt.pb(pr);
 	}
 	void query(){q.pb((Query){QUERY,-1,-1});mt.pb(-1);}
 	void process(){ // answers all queries in order

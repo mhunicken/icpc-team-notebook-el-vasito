@@ -36,13 +36,13 @@ int main(){
 	fore(i,0,n){
 		int x;
 		scanf("%d",&x);
-		e.pb(mp(-x,mp(i,mp(-1,-1))));
+		e.pb({-x,{i,{-1,-1}}});
 	}
 	scanf("%d",&q);
 	fore(qi,0,q){
 		int i,j,k;
 		scanf("%d%d%d",&i,&j,&k);i--;
-		e.pb(mp(-k,mp(-qi-1,mp(i,j))));
+		e.pb({-k,{-qi-1,{i,j}}});
 	}
 	sort(e.begin(),e.end());
 	fore(i,0,e.size()){
@@ -60,5 +60,3 @@ int main(){
 	fore(i,0,q)printf("%d\n",r[i]);
 	return 0;
 }
-
-

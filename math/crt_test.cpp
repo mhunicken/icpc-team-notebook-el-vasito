@@ -6,16 +6,17 @@
 #define mp make_pair
 using namespace std;
 typedef long long ll;
+typedef pair<ll,ll> ii;
 
 ll gcd(ll a, ll b){while(b){ll t=a%b;a=b;b=t;}return a;}
 pair<ll,ll> extendedEuclid (ll a, ll b){ //a * x + b * y = gcd(a,b)
 	ll x,y;
-	if (b==0) return mp(1,0);
+	if (b==0) return {1,0};
 	auto p=extendedEuclid(b,a%b);
 	x=p.snd;
 	y=p.fst-(a/b)*x;
 	if(a*x+b*y==-gcd(a,b)) x=-x, y=-y;
-	return mp(x,y);
+	return {x,y};
 }
 pair<pair<ll,ll>,pair<ll,ll> > diophantine(ll a,ll b, ll r) {
 	//a*x+b*y=r where r is multiple of gcd(a,b);
@@ -24,7 +25,7 @@ pair<pair<ll,ll>,pair<ll,ll> > diophantine(ll a,ll b, ll r) {
 	auto p = extendedEuclid(a,b);
 	p.fst*=r; p.snd*=r;
 	assert(a*p.fst+b*p.snd==r);
-	return mp(p,mp(-b,a)); // solutions: p+t*ans.snd
+	return {p,{-b,a}}; // solutions: p+t*ans.snd
 }
 
 ll inv(ll a, ll m) {
@@ -36,14 +37,14 @@ ll inv(ll a, ll m) {
 #define mod(a,m) (((a)%m+m)%m)
 pair<ll,ll> sol(tuple<ll,ll,ll> c){ //requires inv, diophantine
     ll a=get<0>(c), x1=get<1>(c), m=get<2>(c), d=gcd(a,m);
-    if(d==1) return mp(mod(x1*inv(a,m),m), m);
-    else return x1%d ? mp(-1LL,-1LL) : sol(make_tuple(a/d,x1/d,m/d));
+    if(d==1) return {mod(x1*inv(a,m),m), m};
+    else return x1%d ? ii({-1LL,-1LL}) : sol(make_tuple(a/d,x1/d,m/d));
 }
 pair<ll,ll> crt(vector< tuple<ll,ll,ll> > cond) { // returns: (sol, lcm)
 	ll x1=0,m1=1,x2,m2;
 	for(auto t:cond){
 		tie(x2,m2)=sol(t);
-		if((x1-x2)%gcd(m1,m2))return mp(-1,-1);
+		if((x1-x2)%gcd(m1,m2))return {-1,-1};
 		if(m1==m2)continue;
 		ll k=diophantine(m2,-m1,x1-x2).fst.snd,l=m1*(m2/gcd(m1,m2));
 		x1=mod((__int128)m1*k+x1,l);m1=l;

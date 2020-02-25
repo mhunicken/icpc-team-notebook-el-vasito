@@ -61,7 +61,7 @@ pair<poly<>,poly<> > polydiv(poly<> p, poly<> q){ // returns pair (result,rem)
 		p.c.pop_back();
 	}
 	while(!p.c.empty()&&abs(p.c.back())<EPS)p.c.pop_back();
-	return mp(poly<>(b),p);
+	return {poly<>(b),p};
 }
 
 #define ITER 250

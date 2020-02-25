@@ -60,7 +60,7 @@ int main(){
 	fore(i,0,n){
 		int k;
 		scanf("%d",&k);
-		xx[i]=mp(k,i);
+		xx[i]={k,i};
 	}
 	sort(xx,xx+n);
 	c=0;

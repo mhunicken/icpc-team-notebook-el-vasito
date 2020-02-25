@@ -8,19 +8,19 @@ void get_dual(vector<pt> p){ // p: points corresponding to nodes
 		Cmp pc(p[x]); // (radial order of points)
 		auto comp=[&](int a, int b){return pc(p[a],p[b]);};
 		sort(g[x].begin(),g[x].end(),comp);
-		fore(i,0,g[x].size())ps[mp(x,g[x][i])]=i;
+		fore(i,0,g[x].size())ps[{x,g[x][i]}]=i;
 	}
 	nd=0;
-	fore(xx,0,n)for(auto yy:g[xx])if(!es.count(mp(xx,yy))){
+	fore(xx,0,n)for(auto yy:g[xx])if(!es.count({xx,yy})){
 		int x=xx,y=yy;gd[nd].clear();nodes[nd].clear();
-		while(!es.count(mp(x,y))){
-			es[mp(x,y)]=nd;nodes[nd].pb(y);
-			int z=g[y][(ps[mp(y,x)]+1)%g[y].size()];x=y;y=z;
+		while(!es.count({x,y})){
+			es[{x,y}]=nd;nodes[nd].pb(y);
+			int z=g[y][(ps[{y,x}]+1)%g[y].size()];x=y;y=z;
 		}
 		nd++;
 	}
 	for(auto p:es){
-		pair<int,int> q=mp(p.fst.snd,p.fst.fst);
+		pair<int,int> q={p.fst.snd,p.fst.fst};
 		assert(es.count(q));
 		if(es[q]!=p.snd)gd[p.snd].pb(es[q]);
 	}

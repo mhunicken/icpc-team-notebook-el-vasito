@@ -19,7 +19,7 @@ vector<int> constructSA(string& s){
 	vector<int> sa(n),r(n);
 	fore(i,0,n)r[i]=s[i];
 	for(int m=1;m<n;m*=2){
-		fore(i,0,n)sa[i]=i,sf[i]=mp(r[i],i+m<n?r[i+m]:-1);
+		fore(i,0,n)sa[i]=i,sf[i]={r[i],i+m<n?r[i+m]:-1};
 		stable_sort(sa.begin(),sa.end(),sacomp);
 		r[sa[0]]=0;
 		fore(i,1,n)r[sa[i]]=sf[sa[i]]!=sf[sa[i-1]]?i:r[sa[i-1]];
@@ -77,7 +77,7 @@ int main(){
 			if(!LCP[i])continue;
 			if(st.empty()||st.top().fst<LCP[i]){
 				assert(w[SA[i-1]]>=0&&w[SA[i]]>=0);
-				st.push(mp(LCP[i],r|(1LL<<w[SA[i-1]])|(1LL<<w[SA[i]])));
+				st.push({LCP[i],r|(1LL<<w[SA[i-1]])|(1LL<<w[SA[i]])});
 			}
 			else {
 				assert(st.top().fst==LCP[i]);

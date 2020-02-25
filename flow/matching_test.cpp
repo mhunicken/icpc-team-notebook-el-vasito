@@ -26,7 +26,7 @@ vector<pair<int,int> > max_matching(){
 	vector<pair<int,int> > r;
 	memset(mat,-1,sizeof(mat));
 	fore(i,0,n)memset(vis,false,sizeof(vis)),match(i);
-	fore(i,0,m)if(mat[i]>=0)r.pb(mp(mat[i],i));
+	fore(i,0,m)if(mat[i]>=0)r.pb({mat[i],i});
 	return r;
 }
 

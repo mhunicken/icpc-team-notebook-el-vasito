@@ -41,8 +41,8 @@ int main(){
 		fore(i,1,n){
 			int j,l;
 			scanf("%d%d",&j,&l);
-			g[i].pb(mp(j,l));
-			g[j].pb(mp(i,l));
+			g[i].pb({j,l});
+			g[j].pb({i,l});
 		}
 		lca_init();
 		int q;

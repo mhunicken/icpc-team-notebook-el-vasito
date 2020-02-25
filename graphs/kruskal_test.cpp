@@ -39,7 +39,7 @@ int main(){
 	while(m--){
 		int x,y;ll c;
 		scanf("%d%d%lld",&x,&y,&c);x--;y--;
-		es.pb(mp(c,mp(x,y)));
+		es.pb({c,{x,y}});
 	}
 	printf("%lld\n",kruskal());
 	return 0;

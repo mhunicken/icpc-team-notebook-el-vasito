@@ -90,7 +90,7 @@ int main(){
 			if(!LCP[i])continue;
 			if(st.empty()||st.top().fst<LCP[i]){
 				assert(w[SA[i-1]]>=0&&w[SA[i]]>=0);
-				st.push(mp(LCP[i],r|(1LL<<w[SA[i-1]])|(1LL<<w[SA[i]])));
+				st.push({LCP[i],r|(1LL<<w[SA[i-1]])|(1LL<<w[SA[i]])});
 			}
 			else {
 				assert(st.top().fst==LCP[i]);

@@ -42,7 +42,7 @@ pitem kth(pitem t, int k){
 	return k<cnt(t->l)?kth(t->l,k):kth(t->r,k-cnt(t->l)-1);
 }
 pair<int,int> lb(pitem t, int key){ // position and value of lower_bound
-	if(!t)return mp(0,1<<30); // (special value)
+	if(!t)return {0,1<<30}; // (special value)
 	if(key>t->key){
 		auto w=lb(t->r,key);w.fst+=cnt(t->l)+1;return w;
 	}

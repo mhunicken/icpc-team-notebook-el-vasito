@@ -112,17 +112,17 @@ int main(){
 		fore(i,0,m){
 			int x,y,k;
 			scanf("%d%d%d",&x,&y,&k);x--;y--;k--;
-			w[mp(x,y)]=k;
+			w[{x,y}]=k;
 			assert(join(k,x,y));
 		}
 		while(q--){
 			int x,y,k;
 			scanf("%d%d%d",&x,&y,&k);x--;y--;k--;
-			if(!w.count(mp(x,y))){puts("No such cable.");continue;}
-			int kk=w[mp(x,y)];
+			if(!w.count({x,y})){puts("No such cable.");continue;}
+			int kk=w[{x,y}];
 			if(kk==k){puts("Already owned.");continue;}
 			if(join(k,x,y)){
-				w[mp(x,y)]=k;
+				w[{x,y}]=k;
 				disjoin(kk,x,y);
 				puts("Sold.");
 			}

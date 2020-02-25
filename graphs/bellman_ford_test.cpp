@@ -45,12 +45,12 @@ int main(){
 	scanf("%d",&tn);
 	fore(tc,1,tn+1){
 		scanf("%d%d",&n,&m);
-		fore(i,0,n)g[n].pb(mp(i,0));
+		fore(i,0,n)g[n].pb({i,0});
 		n++;
 		while(m--){
 			int x,y,c;
 			scanf("%d%d%d",&x,&y,&c);
-			g[y].pb(mp(x,c));
+			g[y].pb({x,c});
 		}
 		bford(n-1);
 		memset(vis,false,sizeof(vis));

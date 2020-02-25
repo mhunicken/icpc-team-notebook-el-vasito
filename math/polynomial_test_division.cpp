@@ -68,7 +68,7 @@ pair<poly<>,tp> ruffini(poly<> p, tp r){ // returns pair (result,rem)
 	vector<tp> b(n);
 	b[n-1]=p[n];
 	for(int k=n-2;k>=0;--k)b[k]=p[k+1]+r*b[k+1];
-	return mp(poly<>(b),p[0]+r*b[0]);
+	return {poly<>(b),p[0]+r*b[0]};
 }
 // only for double polynomials
 pair<poly<>,poly<> > polydiv(poly<> p, poly<> q){ // returns pair (result,rem)
@@ -80,7 +80,7 @@ pair<poly<>,poly<> > polydiv(poly<> p, poly<> q){ // returns pair (result,rem)
 		p.c.pop_back();
 	}
 	while(!p.c.empty()&&abs(p.c.back())<EPS)p.c.pop_back();
-	return mp(poly<>(b),p);
+	return {poly<>(b),p};
 }
 // only for double polynomials
 poly<> interpolate(vector<tp> x, vector<tp> y){ //TODO TEST

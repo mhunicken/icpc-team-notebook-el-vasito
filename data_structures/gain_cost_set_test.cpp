@@ -15,7 +15,7 @@ typedef long long ll;
 struct GCS {
 	set<pair<int,int> > s;
 	void add(int g, int c){
-		auto x=mp(g,c);
+		pair<int,int> x={g,c};
 		auto p=s.lower_bound(x);
 		if(p!=s.end()&&p->snd<=x.snd)return;
 		if(p!=s.begin()){ // erase pairs with less benefit
@@ -28,7 +28,7 @@ struct GCS {
 		s.insert(x);
 	}
 	int get(int gain){ // min cost for some benefit
-		auto p=s.lower_bound(mp(gain,-INF));
+		auto p=s.lower_bound((pair<int,int>){gain,-INF});
 		int r=p==s.end()?INF:p->snd;
 		return r;
 	}

@@ -52,15 +52,15 @@ vector<double> intercircles(vector<circle> c){
 	fore(i,0,SZ(c)){           // O(n^2 log n) (high constant)
 		int k=1;Cmp s(c[i].o);
 		vector<pair<pt,int> > p={
-			mp(c[i].o+pt(1,0)*c[i].r,0),
-			mp(c[i].o-pt(1,0)*c[i].r,0)};
+			{c[i].o+pt(1,0)*c[i].r,0},
+			{c[i].o-pt(1,0)*c[i].r,0}};
 		fore(j,0,SZ(c))if(j!=i){
 			bool b0=c[i].in(c[j]),b1=c[j].in(c[i]);
 			if(b0&&(!b1||i<j))k++;
 			else if(!b0&&!b1){
 				auto v=c[i]^c[j];
 				if(SZ(v)==2){
-					p.pb(mp(v[0],1));p.pb(mp(v[1],-1));
+					p.pb({v[0],1});p.pb({v[1],-1});
 					if(s(v[1],v[0]))k++;
 				}
 			}

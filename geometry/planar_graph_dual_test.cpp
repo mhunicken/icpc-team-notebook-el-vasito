@@ -100,20 +100,20 @@ void get_dual(vector<pt> p){ // p: points corresponding to nodes
 		Cmp pc(p[x]); // (radial order of points)
 		auto comp=[&](int a, int b){return pc(p[a],p[b]);};
 		sort(g[x].begin(),g[x].end(),comp);
-		fore(i,0,g[x].size())ps[mp(x,g[x][i])]=i;
+		fore(i,0,g[x].size())ps[{x,g[x][i]}]=i;
 	}
 	nd=0;
-	fore(xx,0,n)for(auto yy:g[xx])if(!es.count(mp(xx,yy))){
+	fore(xx,0,n)for(auto yy:g[xx])if(!es.count({xx,yy})){
 		int x=xx,y=yy;nodes[nd].clear();
-		while(!es.count(mp(x,y))){
-			es[mp(x,y)]=nd;nodes[nd].pb(y);
-			int z=g[y][(ps[mp(y,x)]+1)%g[y].size()];x=y;y=z;
+		while(!es.count({x,y})){
+			es[{x,y}]=nd;nodes[nd].pb(y);
+			int z=g[y][(ps[{y,x}]+1)%g[y].size()];x=y;y=z;
 		}
 		nd++;
 	}
 	D::nodes=nd;
 	for(auto p:es){
-		pair<int,int> q=mp(p.fst.snd,p.fst.fst);
+		pair<int,int> q={p.fst.snd,p.fst.fst};
 		assert(es.count(q));
 		int i=ei[p.fst],c=ec[p.fst];
 		if(es[q]!=p.snd)D::add_edge(p.snd,es[q],c,i);
@@ -146,11 +146,11 @@ struct pol {
 vector<pt> p;
 map<pair<int,int>,int> ids;
 int id(int x, int y){
-	if(!ids.count(mp(x,y))){
+	if(!ids.count({x,y})){
 		p.pb(pt(x,y));
-		ids[mp(x,y)]=n++;
+		ids[{x,y}]=n++;
 	}
-	return ids[mp(x,y)];
+	return ids[{x,y}];
 }
 
 int m;
@@ -162,8 +162,8 @@ int main(){
 		scanf("%d%d%d%d%d",&x0,&y0,&x1,&y1,&c);
 		int x=id(x0,y0),y=id(x1,y1);
 		g[x].pb(y);g[y].pb(x);
-		ei[mp(x,y)]=ei[mp(y,x)]=i;
-		ec[mp(x,y)]=ec[mp(y,x)]=c;
+		ei[{x,y}]=ei[{y,x}]=i;
+		ec[{x,y}]=ec[{y,x}]=c;
 	}
 	int x,y;
 	scanf("%d%d",&x,&y);

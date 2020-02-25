@@ -23,7 +23,7 @@ bool tk[MAXN];
 void dfs0(int x, int iv, int p, int f, int c){
 	if(!iv)res++;
 	ci[iv]++;
-	ci2[mp(iv,c)]++;
+	ci2[{iv,c}]++;
 	for(auto z:g[x]){
 		int y=z.fst,w=z.snd;
 		if(y==f||tk[y])continue;
@@ -35,7 +35,7 @@ void dfs1(int x, int v, int p, int f, int c){
 	if(!v)res++;
 	int kk=(1LL*(m-v)*p)%m;
 	res+=ci[kk];
-	res-=ci2[mp(kk,c)];
+	res-=ci2[{kk,c}];
 	for(auto z:g[x]){
 		int y=z.fst,w=z.snd;
 		if(y==f||tk[y])continue;
@@ -105,7 +105,7 @@ int main(){
 	fore(_,1,n){
 		int x,y,w;
 		scanf("%d%d%d",&x,&y,&w);
-		g[x].pb(mp(y,w));g[y].pb(mp(x,w));
+		g[x].pb({y,w});g[y].pb({x,w});
 	}
 	centroid();
 	printf("%lld\n",res);

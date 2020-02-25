@@ -44,11 +44,11 @@ char w[MAXN][2];
 
 map<pair<char,char>,int> ids;
 int id(char a, char b){
-	if(!ids.count(mp(a,b))){
+	if(!ids.count({a,b})){
 		w[n][0]=a;w[n][1]=b;
-		ids[mp(a,b)]=n++;
+		ids[{a,b}]=n++;
 	}
-	return ids[mp(a,b)];
+	return ids[{a,b}];
 }
 
 int main(){

@@ -73,7 +73,7 @@ int main(){
 		fore(i,0,n){
 			int x;
 			scanf("%d",&x);
-			w[i]=mp(x,i);
+			w[i]={x,i};
 		}
 		sort(w,w+n);
 		fore(i,0,n)x[w[i].snd]=i;

@@ -66,7 +66,7 @@ pair<poly<>,tp> ruffini(poly<> p, tp r){ // returns pair (result,rem)
 	vector<tp> b(n);
 	b[n-1]=p[n];
 	for(int k=n-2;k>=0;--k)b[k]=p[k+1]+r*b[k+1];
-	return mp(poly<>(b),p[0]+r*b[0]);
+	return {poly<>(b),p[0]+r*b[0]};
 }
 // only for double polynomials
 poly<> interpolate(vector<tp> x, vector<tp> y){

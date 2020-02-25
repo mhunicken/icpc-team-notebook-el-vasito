@@ -29,7 +29,7 @@ int main(){
 		z.s.clear();
 		fore(_,0,100){
 			int a=rand()%1000,b=min(a-1+rand()%50,1000);
-			z.insert(mp(a,b));
+			z.insert({a,b});
 			fore(i,a,b)w[i]=true;
 			vector<pair<int,int> > v;
 			int i=0;
@@ -37,7 +37,7 @@ int main(){
 				if(!w[i]){i++;continue;}
 				int j=i;
 				while(j<1000&&w[j])j++;
-				v.pb(mp(i,j));
+				v.pb({i,j});
 				i=j;
 			}
 			vector<pair<int,int> > vs(z.s.begin(),z.s.end());

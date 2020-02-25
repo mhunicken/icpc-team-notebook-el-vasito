@@ -70,7 +70,7 @@ int main(){
 		fore(i,0,n){
 			int x,y;
 			scanf("%d%d",&x,&y);
-			if(!pp.count(mp(x,y)))pp[mp(x,y)]=i;
+			if(!pp.count({x,y}))pp[{x,y}]=i;
 		}
 		for(auto a:pp){
 			p.pb(pt(a.fst.fst,a.fst.snd,a.snd));
