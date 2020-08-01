@@ -75,7 +75,7 @@ int query(Node x, Node y){mkR(x); exv(y); return getPV(y);}
 void modify(Node x, Node y, int d){mkR(x);exv(y);y->d=joinD(y->d,d);}
 Node lift_rec(Node x, int t){
 	if(!x)return 0;
-	if(t==getSize(x->c[0]))return x;
+	if(t==getSize(x->c[0])){spa(x);return x;}
 	if(t<getSize(x->c[0]))return lift_rec(x->c[0],t);
 	return lift_rec(x->c[1],t-getSize(x->c[0])-1);
 }
