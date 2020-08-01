@@ -26,9 +26,9 @@ struct CD {
 CD operator*(const CD& a, const CD& b){return CD(mulmod(a.x,b.x));}
 CD operator+(const CD& a, const CD& b){return CD(addmod(a.x,b.x));}
 CD operator-(const CD& a, const CD& b){return CD(submod(a.x,b.x));}
-vector<int> rts(MAXN+9,-1);
+vector<tf> rts(MAXN+9,-1);
 CD root(int n, bool inv){
-	int r=rts[n]<0?rts[n]=pm(RT,(MOD-1)/n):rts[n];
+	tf r=rts[n]<0?rts[n]=pm(RT,(MOD-1)/n):rts[n];
 	return CD(inv?pm(r,MOD-2):r);
 }
 */
