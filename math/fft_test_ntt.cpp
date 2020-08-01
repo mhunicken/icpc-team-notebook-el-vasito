@@ -1,61 +1,65 @@
 #include <bits/stdc++.h>
-#ifdef DEMETRIO
-#define deb(...) fprintf(stderr,__VA_ARGS__)
-#define deb1(x) cerr << #x << " = " << x << endl
-#else
-#define deb(...) 0
-#define deb1(x) 0
-#endif
-#define pb push_back
-#define mp make_pair
 #define fst first
 #define snd second
 #define fore(i,a,b) for(int i=a,ThxDem=b;i<ThxDem;++i)
-#define SZ(x) ((int)(x).size())
-#define mset(a,v) memset(a,v,sizeof(a))
-#define mcopy(a,b) memcpy(a,b,sizeof(a))
-#define MOD 998244353
+#define pb push_back
+#define ALL(s) s.begin(),s.end()
+#define FIN ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)
+#define SZ(s) int(s.size())
 using namespace std;
 typedef long long ll;
+typedef pair<int,int> ii;
 
-#define RT 3
-#define MAXN (1<<18)
-ll mulmod(ll a, ll b){
-	return (a*b)%MOD;
-	/*ll r=0;
-	while(b){
-		if(b&1)r=(r+a)%MOD;
-		b>>=1;a=(a+a)%MOD;
-	}
-	return r;*/
-}
-ll pm(ll a, ll e){
-	ll r=1;
+// MAXN must be power of 2 !!
+// MOD-1 needs to be a multiple of MAXN !!
+// big mod and primitive root for NTT:
+const int MOD=998244353,RT=3,MAXN=1<<18;
+typedef vector<ll> poly;
+// FFT
+/*
+struct CD {
+	double r,i;
+	CD(double r=0, double i=0):r(r),i(i){}
+	double real()const{return r;}
+	void operator/=(const int c){r/=c, i/=c;}
+};
+CD operator*(const CD& a, const CD& b){
+	return CD(a.r*b.r-a.i*b.i,a.r*b.i+a.i*b.r);}
+CD operator+(const CD& a, const CD& b){return CD(a.r+b.r,a.i+b.i);}
+CD operator-(const CD& a, const CD& b){return CD(a.r-b.r,a.i-b.i);}
+const double pi=acos(-1.0);
+*/
+
+int mulmod(ll a, ll b){return a*b%MOD;}
+int addmod(int a, int b){int r=a+b;if(r>=MOD)r-=MOD;return r;}
+int submod(int a, int b){int r=a-b;if(r<0)r+=MOD;return r;}
+int pm(ll a, ll e){
+	int r=1;
 	while(e){
 		if(e&1)r=mulmod(r,a);
 		e>>=1;a=mulmod(a,a);
 	}
 	return r;
 }
-ll inv(ll a){return pm(a,MOD-2);}
-// big mod and primitive root for NTT:
-//#define MOD 2305843009255636993
-//#define RT 5
+int inv(int a){return pm(a,MOD-2);}
+
+// NTT
 struct CD {
-	ll x;
-	CD(ll x):x(x){}
+	int x;
+	CD(int x):x(x){}
 	CD(){}
-	ll get()const{return x;}
+	int get()const{return x;}
 };
 CD operator*(const CD& a, const CD& b){return CD(mulmod(a.x,b.x));}
-CD operator+(const CD& a, const CD& b){return CD((a.x+b.x)%MOD);}
-CD operator-(const CD& a, const CD& b){return CD((a.x+MOD-b.x)%MOD);}
-CD cp1[MAXN+9],cp2[MAXN+9];  // MAXN must be power of 2 !!
-int R[MAXN+9];
-CD root(int n, bool inv){ // NTT
-	ll r=pm(RT,(MOD-1)/n); // pm: modular exponentiation
+CD operator+(const CD& a, const CD& b){return CD(addmod(a.x,b.x));}
+CD operator-(const CD& a, const CD& b){return CD(submod(a.x,b.x));}
+vector<int> rts(MAXN+9,-1);
+CD root(int n, bool inv){
+	int r=rts[n]<0?rts[n]=pm(RT,(MOD-1)/n):rts[n];
 	return CD(inv?pm(r,MOD-2):r);
 }
+CD cp1[MAXN+9],cp2[MAXN+9];
+int R[MAXN+9];
 void dft(CD* a, int n, bool inv){
 	fore(i,0,n)if(R[i]<i)swap(a[R[i]],a[i]);
 	for(int m=2;m<=n;m*=2){
@@ -75,7 +79,7 @@ void dft(CD* a, int n, bool inv){
 		fore(i,0,n)a[i]=a[i]*z;
 	}
 }
-vector<ll> multiply(vector<ll>& p1, vector<ll>& p2){
+poly multiply(poly& p1, poly& p2){
 	int n=p1.size()+p2.size()+1;
 	int m=1,cnt=0;
 	while(m<=n)m+=m,cnt++;
@@ -86,9 +90,10 @@ vector<ll> multiply(vector<ll>& p1, vector<ll>& p2){
 	dft(cp1,m,false);dft(cp2,m,false);
 	fore(i,0,m)cp1[i]=cp1[i]*cp2[i];
 	dft(cp1,m,true);
-	vector<ll> res;
+	poly res;
 	n-=2;
-	fore(i,0,n)res.pb((ll)floor(cp1[i].get())); // change for NTT
+	//fore(i,0,n)res.pb((ll)floor(cp1[i].real()+0.5)); // FFT
+	fore(i,0,n)res.pb(cp1[i].x); // NTT
 	return res;
 }
 
