@@ -1,4 +1,4 @@
-//Polynomial division: O(n*log^2(n))
+//Polynomial division: O(n*log(n))
 //Multi-point polynomial evaluation: O(n*log^2(n))
 //Polynomial interpolation: O(n*log^2(n))
 
@@ -15,14 +15,18 @@ poly add(poly &a, poly &b){
 }
 
 poly invert(poly &b, int d){
-	if(!d) return {inv(b[0])};
-	poly c=invert(b,d/2);
-	poly cb=multiply(c,b);
-	fore(i,0,SZ(cb)) cb[i]=submod(0,cb[i]);
-	cb[0]=addmod(cb[0],2);
-	poly q=multiply(c,cb);
-	q.resize(d+1);
-	return q;
+ poly c = {inv(b[0])};
+ while(SZ(c)<=d){
+ 	int j=2*SZ(c);
+  auto bb=b; bb.resize(j);
+  poly cb=multiply(c,bb);
+  fore(i,0,SZ(cb)) cb[i]=submod(0,cb[i]);
+  cb[0]=addmod(cb[0],2);
+  c=multiply(c,cb);
+  c.resize(j);
+ }
+ c.resize(d+1);
+ return c;
 }
 
 pair<poly,poly> divslow(poly &a, poly &b){

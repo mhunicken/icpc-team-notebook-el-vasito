@@ -66,7 +66,7 @@ poly multiply(poly& p1, poly& p2){
 	dft(cp1,m,true);
 	poly res;
 	n-=2;
-	fore(i,0,n)res.pb((ll)floor(cp1[i].real()+0.5)); // FFT
+	fore(i,0,n)res.pb((tf)floor(cp1[i].real()+0.5)); // FFT
 	//fore(i,0,n)res.pb(cp1[i].x); // NTT
 	return res;
 }
