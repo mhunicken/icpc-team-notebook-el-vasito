@@ -78,7 +78,7 @@ struct halfplane:public ln{
 	halfplane(){}
 	halfplane(pt a,pt b){p=a; pq=b-a; angle=atan2(pq.y,pq.x);}
 	bool operator<(halfplane b)const{return angle<b.angle;}
-	bool out(pt p){return side(p)==-1;}
+	bool out(pt q){return pq%(q-p)<-EPS;}
 };
 vector<pt> intersect(vector<halfplane> b){
 	vector<pt>bx={{DINF,DINF},{-DINF,DINF},{-DINF,-DINF},{DINF,-DINF}};
