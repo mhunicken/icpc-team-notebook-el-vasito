@@ -78,31 +78,31 @@ struct halfplane:public ln{
 	halfplane(){}
 	halfplane(pt a,pt b){p=a; pq=b-a; angle=atan2(pq.y,pq.x);}
 	bool operator<(halfplane b)const{return angle<b.angle;}
+	bool out(pt p){return side(p)==-1;}
 };
-vector<pt> intersect(vector<halfplane> &v){
+vector<pt> intersect(vector<halfplane> b){
 	vector<pt>bx={{DINF,DINF},{-DINF,DINF},{-DINF,-DINF},{DINF,-DINF}};
-	fore(i,0,4) v.pb(halfplane(bx[i],bx[(i+1)%4]));
-	sort(ALL(v));
-	int first=0,last=0,n=SZ(v);
-	vector<pt> p(n);
-	vector<halfplane> q(n);
-	q[first]=v[0];
-	fore(i,1,n){
-		while(first<last&&v[i].side(p[last-1])<0) last--;
-		while(first<last&&v[i].side(p[first])<0) first++;
-		q[++last]=v[i];
-		if(abs(q[last].pq%q[last-1].pq)<EPS){
-			last--;
-			if(q[last].side(v[i].p)>=0) q[last]=v[i];
+	fore(i,0,4) b.pb(halfplane(bx[i],bx[(i+1)%4]));
+	sort(ALL(b));
+	int n=SZ(b),q=1,h=0;
+	vector<halfplane> c(SZ(b)+10);
+	fore(i,0,n){
+		while(q<h&&b[i].out(c[h]^c[h-1])) h--;
+		while(q<h&&b[i].out(c[q]^c[q+1])) q++;
+		c[++h]=b[i];
+		if(q<h&&abs(c[h].pq%c[h-1].pq)<EPS){
+			if(c[h].pq*c[h-1].pq<=0) return {};
+			h--;
+			if(b[i].out(c[h].p)) c[h]=b[i];
 		}
-		if(first<last) p[last-1]=q[last-1]^q[last];
 	}
-	while(first<last&&q[first].side(p[last-1])<0) last--;
-	if(last-first<=1) return {};
-	p[last]=q[last]^q[first];
-	vector<pt> ans;
-	fore(i,first,last+1) ans.pb(p[i]);
-	return ans;
+	while(q<h-1&&c[q].out(c[h]^c[h-1]))h--;
+	while(q<h-1&&c[h].out(c[q]^c[q+1]))q++;
+	if(h-q<=1)return {};
+	c[h+1]=c[q];
+	vector<pt> s;
+	fore(i,q,h+1) s.pb(c[i]^c[i+1]);
+	return s;
 }
 
 int main(){FIN;
