@@ -1,3 +1,7 @@
+#Easier method with bash commands:
+#mkfifo fifo
+#(./solution < fifo) | (./interactor > fifo)
+
 # tester for cf 101021A (guess a number, queries: is it >=k?)
 import random
 import subprocess as sp
