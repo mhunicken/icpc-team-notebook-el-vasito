@@ -1,12 +1,6 @@
-ll gcd(ll a, ll b){return a?gcd(b%a,a):b;}
 ll mulmod(ll a, ll b, ll m) {
 	ll r=a*b-(ll)((long double)a*b/m+.5)*m;
 	return r<0?r+m:r;
-}
-ll expmod(ll b, ll e, ll m){
-	if(!e)return 1;
-	ll q=expmod(b,e/2,m);q=mulmod(q,q,m);
-	return e&1?mulmod(b,q,m):q;
 }
 bool is_prime_prob(ll n, int a){
 	if(n==a)return true;
@@ -33,10 +27,9 @@ ll rho(ll n){
 	ll c=rand()%n+1;
 	while(d==1){
 		x=(mulmod(x,x,n)+c)%n;
-		y=(mulmod(y,y,n)+c)%n;
-		y=(mulmod(y,y,n)+c)%n;
-		if(x>=y)d=gcd(x-y,n);
-		else d=gcd(y-x,n);
+		fore(it,0,2) y=(mulmod(y,y,n)+c)%n;
+		if(x>=y)d=__gcd(x-y,n);
+		else d=__gcd(y-x,n);
 	}
 	return d==n?rho(n):d;
 }
@@ -58,27 +51,19 @@ ll rho(ll n){
 			*py++=y=add(mulmod(y,y,n),c,n);
 			*py++=y=add(mulmod(y,y,n),c,n);
 			if((x=*px++)==y)break;
-			ll t=p;
-			p=mulmod(p,abs(y-x),n);
-			if(!p)return gcd(t,n);
+			ll t=p; p=mulmod(p,abs(y-x),n);
+			if(!p)return __gcd(t,n);
 			if(++v==26){
-				if((p=gcd(p,n))>1&&p<n)return p;
+				if((p=__gcd(p,n))>1&&p<n)return p;
 				v=0;
 			}
 		}
-		if(v&&(p=gcd(p,n))>1&&p<n)return p;
+		if(v&&(p=__gcd(p,n))>1&&p<n)return p;
 	}
 }
-void init_sv(){
-	fore(i,2,MAXP)if(!sv[i])for(ll j=i;j<MAXP;j+=i)sv[j]=i;
-}
+void init_sv(){ fore(i,2,MAXP)if(!sv[i])for(ll j=i;j<MAXP;j+=i)sv[j]=i; }
 void fact(ll n, map<ll,int>& f){ // call init_sv first!!!
-	for(auto&& p:f){
-		while(n%p.fst==0){
-			p.snd++;
-			n/=p.fst;
-		}
-	}
+	for(auto&& p:f) while(n%p.fst==0) p.snd++, n/=p.fst;
 	if(n<MAXP)while(n>1)f[sv[n]]++,n/=sv[n];
 	else if(rabin(n))f[n]++;
 	else {ll q=rho(n);fact(q,f);fact(n/q,f);}

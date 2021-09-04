@@ -5,7 +5,7 @@ struct ln {
 	ln(){}
 	bool has(pt r){return dist(r)<=EPS;}
 	bool seghas(pt r){return has(r)&&(r-p)*(r-(p+pq))<=EPS;}
-//	bool operator /(ln l){return (pq.unit()^l.pq.unit()).norm()<=EPS;} // 3D
+//bool operator /(ln l){return (pq.unit()^l.pq.unit()).norm()<=EPS;}//3D
 	bool operator/(ln l){return abs(pq.unit()%l.pq.unit())<=EPS;} // 2D
 	bool operator==(ln l){return *this/l&&has(l.p);}
 	pt operator^(ln l){ // intersection
@@ -26,8 +26,7 @@ struct ln {
 	ln rot(auto a){return ln(p,p+pq.rot(a));} // 2D
 };
 ln bisector(ln l, ln m){ // angle bisector
-	pt p=l^m;
-	return ln(p,p+l.pq.unit()+m.pq.unit());
+	pt p=l^m; return ln(p,p+l.pq.unit()+m.pq.unit());
 }
 ln bisector(pt p, pt q){ // segment bisector (2D)
 	return ln((p+q)*.5,p).rot(ccw90);

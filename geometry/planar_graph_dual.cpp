@@ -20,8 +20,7 @@ void get_dual(vector<pt> p){ // p: points corresponding to nodes
 		nd++;
 	}
 	for(auto p:es){
-		pair<int,int> q={p.fst.snd,p.fst.fst};
-		assert(es.count(q));
+		pair<int,int> q={p.fst.snd,p.fst.fst}; assert(es.count(q));
 		if(es[q]!=p.snd)gd[p.snd].pb(es[q]);
 	}
 	fore(i,0,nd){

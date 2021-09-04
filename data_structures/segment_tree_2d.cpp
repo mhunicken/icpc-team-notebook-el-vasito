@@ -1,5 +1,4 @@
-int n,m;
-int a[MAXN][MAXN],st[2*MAXN][2*MAXN];
+int n,m; int a[MAXN][MAXN],st[2*MAXN][2*MAXN];
 void build(){
 	fore(i,0,n)fore(j,0,m)st[i+n][j+m]=a[i][j];
 	fore(i,0,n)for(int j=m-1;j;--j)

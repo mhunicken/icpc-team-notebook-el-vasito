@@ -21,6 +21,7 @@ struct HullDynamic : public multiset<Line> { // for maximum
 		}
 		iterator x=prev(y);
 		if(z==end())return y->m==x->m&&y->b<=x->b;
+		//WARNING: MAY OVERFLOW
 		return (x->b-y->b)*(z->m-y->m)>=(y->b-z->b)*(y->m-x->m);
 	}
 	iterator next(iterator y){return ++y;}
@@ -33,7 +34,6 @@ struct HullDynamic : public multiset<Line> { // for maximum
 		while(y!=begin()&&bad(prev(y)))erase(prev(y));
 	}
 	tc eval(tc x){
-		Line l=*lower_bound((Line){x,is_query});
-		return l.m*x+l.b;
+		Line l=*lower_bound((Line){x,is_query}); return l.m*x+l.b;
 	}
 };

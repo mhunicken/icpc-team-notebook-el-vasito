@@ -1,7 +1,6 @@
 // Directed version (uncomment commented code for undirected)
 struct edge {
-	int y;
-//	list<edge>::iterator rev;
+	int y; //	list<edge>::iterator rev;
 	edge(int y):y(y){}
 };
 list<edge> g[MAXN];
@@ -13,10 +12,8 @@ void add_edge(int a, int b){
 vector<int> p;
 void go(int x){
 	while(g[x].size()){
-		int y=g[x].front().y;
-		//g[y].erase(g[x].front().rev);
-		g[x].pop_front();
-		go(y);
+		int y=g[x].front().y; //g[y].erase(g[x].front().rev);
+		g[x].pop_front(); go(y);
 	}
 	p.push_back(x);
 }

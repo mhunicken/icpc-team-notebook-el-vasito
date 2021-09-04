@@ -16,13 +16,10 @@ struct pt {  // for 3D add z coordinate
 		return acos(*this*p/(norm()*p.norm()));}
 	pt unit(){return *this/norm();}
 	double operator%(pt p){return x*p.y-y*p.x;}
-	// 2D from now on
 	bool operator<(pt p)const{ // for convex hull
 		return x<p.x-EPS||(abs(x-p.x)<=EPS&&y<p.y-EPS);}
-	bool left(pt p, pt q){ // is it to the left of directed line pq?
-		return (q-p)%(*this-p)>EPS;}
+	bool left(pt p, pt q){return (q-p)%(*this-p)>EPS;}
 	pt rot(pt r){return pt(*this%r,*this*r);}
 	pt rot(double a){return rot(pt(sin(a),cos(a)));}
 };
-pt ccw90(1,0);
-pt cw90(-1,0);
+pt ccw90(1,0), cw90(-1,0);

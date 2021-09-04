@@ -4,8 +4,7 @@ void upd(int i0, int v){ // add v to i0th element (0-based)
 	for(int i=i0+1;i<=MAXN;i+=i&-i)ft[i]+=v;
 }
 int get(int i0){ // get sum of range [0,i0)
-	int r=0;
-	// add extra fors for more dimensions
+	int r=0; // add extra fors for more dimensions
 	for(int i=i0;i;i-=i&-i)r+=ft[i];
 	return r;
 }

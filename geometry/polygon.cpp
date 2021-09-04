@@ -3,11 +3,6 @@ struct pol {
 	int n;vector<pt> p;
 	pol(){}
 	pol(vector<pt> _p){p=_p;n=p.size();}
-	double area(){
-		double r=0.;
-		fore(i,0,n)r+=p[i]%p[(i+1)%n];
-		return abs(r)/2; // negative if CW, positive if CCW
-	}
 	pt centroid(){ // (barycenter)
 		pt r(0,0);double t=0;
 		fore(i,0,n){
@@ -20,8 +15,7 @@ struct pol {
 		fore(i,0,n)if(ln(p[i],p[(i+1)%n]).seghas(q))return true;
 		int cnt=0;
 		fore(i,0,n){
-			int j=(i+1)%n;
-			int k=sgn((q-p[j])%(p[i]-p[j]));
+			int j=(i+1)%n, k=sgn((q-p[j])%(p[i]-p[j]));
 			int u=sgn(p[i].y-q.y),v=sgn(p[j].y-q.y);
 			if(k>0&&u<0&&v>=0)cnt++;
 			if(k<0&&v<0&&u>=0)cnt--;
@@ -47,17 +41,14 @@ struct pol {
 	}
 	pt farthest(pt v){ // O(log(n)) only CONVEX
 		if(n<10){
-			int k=0;
-			fore(i,1,n)if(v*(p[i]-p[k])>EPS)k=i;
+			int k=0; fore(i,1,n)if(v*(p[i]-p[k])>EPS)k=i;
 			return p[k];
 		}
 		if(n==SZ(p))p.pb(p[0]);
-		pt a=p[1]-p[0];
-		int s=0,e=n,ua=v*a>EPS;
+		pt a=p[1]-p[0]; int s=0,e=n,ua=v*a>EPS;
 		if(!ua&&v*(p[n-1]-p[0])<=EPS)return p[0];
 		while(1){
-			int m=(s+e)/2;pt c=p[m+1]-p[m];
-			int uc=v*c>EPS;
+			int m=(s+e)/2;pt c=p[m+1]-p[m], uc=v*c>EPS;
 			if(!uc&&v*(p[m-1]-p[m])<=EPS)return p[m];
 			if(ua&&(!uc||v*(p[s]-p[m])>EPS))e=m;
 			else if(ua||uc||v*(p[s]-p[m])>=-EPS)s=m,a=c,ua=uc;

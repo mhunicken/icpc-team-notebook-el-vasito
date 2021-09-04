@@ -1,4 +1,4 @@
-//idom[i]=parent of i in dominator tree with root=rt, or -1 if not exists
+//idom[i]=par of i in dominator tree with root=rt, or -1 if not exists
 int n,rnk[MAXN],pre[MAXN],anc[MAXN],idom[MAXN],semi[MAXN],low[MAXN];
 vector<int> g[MAXN],rev[MAXN],dom[MAXN],ord;
 void dfspre(int pos){
@@ -31,8 +31,7 @@ void dominators(int rt){
 		}
 		dom[semi[w]].pb(w); anc[w]=pre[w];
 		for(int v:dom[pre[w]]){
-			int u=eval(v);
-			idom[v]=(rnk[pre[w]]>rnk[semi[u]]?u:pre[w]);
+			int u=eval(v); idom[v]=(rnk[pre[w]]>rnk[semi[u]]?u:pre[w]);
 		}
 		dom[pre[w]].clear();
 	}

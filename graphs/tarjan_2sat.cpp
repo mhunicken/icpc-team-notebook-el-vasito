@@ -5,8 +5,7 @@ vector<int> g[MAXN];
 int n,lw[MAXN],idx[MAXN],qidx,cmp[MAXN],qcmp;
 stack<int> st;
 void tjn(int u){
-	lw[u]=idx[u]=++qidx;
-	st.push(u);cmp[u]=-2;
+	lw[u]=idx[u]=++qidx; st.push(u); cmp[u]=-2;
 	for(int v:g[u]){
 		if(!idx[v]||cmp[v]==-2){
 			if(!idx[v]) tjn(v);

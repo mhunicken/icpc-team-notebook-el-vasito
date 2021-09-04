@@ -1,8 +1,7 @@
 struct UnionFind {
 	int n,comp;
 	vector<int> uf,si,c;
-	UnionFind(int n=0):n(n),comp(n),uf(n),si(n,1){
-		fore(i,0,n)uf[i]=i;}
+	UnionFind(int n=0):n(n),comp(n),uf(n),si(n,1){ fore(i,0,n)uf[i]=i; }
 	int find(int x){return x==uf[x]?x:find(uf[x]);}
 	bool join(int x, int y){
 		if((x=find(x))==(y=find(y)))return false;
@@ -13,17 +12,14 @@ struct UnionFind {
 	int snap(){return c.size();}
 	void rollback(int snap){
 		while(c.size()>snap){
-			int x=c.back();c.pop_back();
-			si[uf[x]]-=si[x];uf[x]=x;comp++;
+			int x=c.back();c.pop_back(); si[uf[x]]-=si[x]; uf[x]=x;comp++;
 		}
 	}
 };
 enum {ADD,DEL,QUERY};
 struct Query {int type,x,y;};
 struct DynCon {
-	vector<Query> q;
-	UnionFind dsu;
-	vector<int> mt;
+	vector<Query> q; UnionFind dsu; vector<int> mt;
 	map<pair<int,int>,int> last;
 	DynCon(int n):dsu(n){}
 	void add(int x, int y){

@@ -7,8 +7,7 @@ inline int joinD(int d1, int d2){
   if(d1==N_DEL)return d2;if(d2==N_DEL)return d1;return mOp(d1, d2);}
 inline int joinVD(int v, int d){return d==N_DEL ? v : mOp(v, d);}
 struct Node_t{
-  int sz, nVal, tVal, d;
-  bool rev;
+  int sz, nVal, tVal, d; bool rev;
   Node_t *c[2], *p;
   Node_t(int v) : sz(1), nVal(v), tVal(v), d(N_DEL), rev(0), p(0){
     c[0]=c[1]=0;
@@ -16,8 +15,7 @@ struct Node_t{
   bool isRoot(){return !p || (p->c[0] != this && p->c[1] != this);}
   void push(){
     if(rev){
-      rev=0; swap(c[0], c[1]);
-      fore(x,0,2)if(c[x])c[x]->rev^=1;
+      rev=0; swap(c[0], c[1]); fore(x,0,2)if(c[x])c[x]->rev^=1;
     }
     nVal=joinVD(nVal, d); tVal=joinVD(tVal, dOnSeg(d, sz));
     fore(x,0,2)if(c[x])c[x]->d=joinD(c[x]->d, d);
@@ -63,8 +61,7 @@ bool connected(Node x, Node y){exv(x);exv(y); return x==y?1:x->p!=0;}
 void link(Node x, Node y){mkR(x); x->p=y;}
 void cut(Node x, Node y){mkR(x); exv(y); y->c[1]->p=0; y->c[1]=0;}
 Node father(Node x){
-	exv(x);
-	Node r=x->c[1];
+	exv(x); Node r=x->c[1];
 	if(!r)return 0;
 	while(r->c[0])r=r->c[0];
 	return r;

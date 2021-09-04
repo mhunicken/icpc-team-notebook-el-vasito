@@ -1,7 +1,7 @@
 //init O(n^2log) query(n^2 logk)
-//input: terms: first n term; trans: transition function; MOD; LOG=mxlog of k
+//terms: first n term; trans: transition function; MOD; LOG=mxlog of k
 //output calc(k): kth term mod MOD
-//example: {1,1} {2,1} an=2*a_(n-1)+a_(n-2); calc(3)=3 calc(10007)=71480733
+//ej: {1,1} {2,1} an=2*a_(n-1)+a_(n-2); calc(3)=3 calc(10007)=71480733
 struct LinearRec{
   typedef vector<int> vi;
   int n; vi terms, trans; vector<vi> bin;
@@ -16,8 +16,7 @@ struct LinearRec{
     return res;
   }
   LinearRec(vi &terms, vi &trans):terms(terms),trans(trans){
-    n=SZ(trans);vi a(n+1);a[1]=1;
-    bin.pb(a);
+    n=SZ(trans);vi a(n+1);a[1]=1; bin.pb(a);
     fore(i,1,LOG)bin.pb(add(bin[i-1],bin[i-1]));
   }
   int calc(int k){

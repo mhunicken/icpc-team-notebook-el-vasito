@@ -12,7 +12,6 @@ void cdfs(int x=0, int f=-1, int sz=-1){ // O(nlogn)
 	for(auto y:g[x])if(!tk[y]&&szt[y]*2>=sz){
 		szt[x]=0;cdfs(y,f,sz);return;
 	}
-	tk[x]=true;fat[x]=f;
-	for(auto y:g[x])if(!tk[y])cdfs(y,x);
+	tk[x]=true;fat[x]=f; for(auto y:g[x])if(!tk[y])cdfs(y,x);
 }
 void centroid(){memset(tk,false,sizeof(tk));cdfs();}

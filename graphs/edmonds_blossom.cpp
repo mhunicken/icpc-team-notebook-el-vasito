@@ -15,9 +15,7 @@ int lca(int root, int x, int y){
 }
 void mark(int z, int x){
 	while(bs[x]!=z){
-		int y=mt[x];
-		inb[bs[x]]=inb[bs[y]]=true;
-		x=ft[y];
+		int y=mt[x]; inb[bs[x]]=inb[bs[y]]=true; x=ft[y];
 		if(bs[x]!=z)ft[x]=y;
 	}
 }
@@ -52,17 +50,11 @@ int findp(int s){
 }
 int aug(int s, int t){
 	int x=t,y,z;
-	while(x>=0){
-		y=ft[x];
-		z=mt[y];
-		mt[y]=x;mt[x]=y;
-		x=z;
-	}
+	while(x>=0) y=ft[x], z=mt[y], mt[y]=x, mt[x]=y, x=z;
 	return t>=0;
 }
 int edmonds(){ // O(n^2 m)
-	int r=0;
-	memset(mt,-1,sizeof(mt));
+	int r=0; memset(mt,-1,sizeof(mt));
 	fore(x,0,n)if(mt[x]<0)r+=aug(x,findp(x));
 	return r;
 }
