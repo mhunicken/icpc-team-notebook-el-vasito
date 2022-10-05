@@ -2,9 +2,9 @@
 \input{preamble.tex}
 \begin{document}
 % Gracias Demetrio
-\def\title{Universidad Nacional de Cordoba - Gracias Demetrio}
+\def\title{Universidad Nacional de Cordoba - Alt4F}
 .\\[0.2cm]
-\centering{\LARGE\textbf{GG Dem}} \\[0.5cm]
+\centering{\LARGE\textbf{Alt4F}} \\[0.5cm]
 
 \addtocontents{toc}{\setcounter{tocdepth}{1}} % Set depth to 1
 \tableofcontents
@@ -85,6 +85,9 @@
 
 
 \section{Math}
+
+\subsection{Sieve}
+\cppfile{math/sieve.cpp}
 
 \subsection{Pollard's rho}
 \cppfile{math/pollard_rho.cpp}
@@ -178,6 +181,9 @@
 \subsection{Z function}
 \cppfile{strings/z_function.cpp}
 
+\subsection{Hashing}
+\cppfile{strings/hashing_128.cpp}
+
 \subsection{Manacher}
 \cppfile{strings/manacher.cpp}
 
@@ -196,7 +202,8 @@
 \subsection{LCP (Longest Common Prefix)}
 \cppfile{strings/lcp.cpp}
 
-
+\subsection{Minimum Lexicographic rotation}
+\cppfile{strings/get_min_lex.cpp}
 
 \section{Flow}
 
@@ -215,7 +222,8 @@
 \subsection{Min cost max flow}
 \cppfile{flow/min_cost_max_flow.cpp}
 
-
+\subsection{Min cost max flow cycles}
+\cppfile{flow/min_cost_max_flow_cycle.cpp}
 
 \section{Other}
 

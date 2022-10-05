@@ -3,5 +3,8 @@ vasito.aux
 vasito.log
 vasito.out
 vasito.toc
+vasito.fls
+vasito.fdb_latexmk
+vasito.synctex.gz
 **/a.out
 
