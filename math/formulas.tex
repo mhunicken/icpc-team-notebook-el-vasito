@@ -10,4 +10,14 @@ ${\displaystyle \left\{{n+1 \atop k}\right\}=k\left\{{n \atop k}\right\}+\left\{
 $\text {Integers } d_{1}\geq \cdots \geq d_{n} \geq 0 \text { can be the degree sequence of }$ \\
 $\text { a finite simple graph on n vertices }\iff d_{1}+\cdots +d_{n} \text { is even and for every } k \text { in } 1\leq k\leq n $ \\
 ${\displaystyle \sum _{i=1}^{k}d_{i}\leq k(k-1)+\sum _{i=k+1}^{n}\min(d_{i},k)}$
+$a^n = a^{\varphi(m)+n \mod \varphi(m)}$ (mod m) if $n > lg(m)$
 
+Misere Nim: $ai>=1$;if $\exists a_i > 1$ then normal nim; else if $n$ impar iff lose
+
+Derangements: Num of permutations of $n=0,1,2,...$ elements without fixed points is
+$1,0,1,2,9,44,265,1854,14833,...$. Recurrence: $D_n = (n-1)(D_{n-1}+D_{n-2}) = n*D_{n-1}+(-1)^n$.
+Collary: number of permutations with exactly k fixed points $nCk D_{n-k}$
+
+Eulerian numbers: $E(n,k)$ is the number of permutations with exactly k descents ($i:\pi_{i} < \pi_{i+1}$),
+ascents ($\pi_i > \pi_{i+1}$) / excedances ($\pi > i$) / $k+1$ weak excedances ($\pi \geq i$).
+$E_{n,k} = (k+1)E_{n-1,k)} + (n-k)E_{n-1,k-1}$

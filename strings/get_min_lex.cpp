@@ -1,20 +1,17 @@
-vector<ll> getminlex(vector<ll> v){
-    int n=SZ(v);
-    fore(i,0,n)v.pb(v[i]);
-    vector<ll> f(2*n,-1),ans;
-    int k=0;
-    fore(j,1,2*n){
-        ll sj=v[j],i=f[j-k-1];
-        while(i>=0&&sj!=v[k+i+1]){
-            if(sj<v[k+i+1]) k=j-i-1;
-            i=f[i];
-        }
-        if(sj!=v[k+i+1]){
-            if(sj<v[k])k=j;
-            f[j-k]=-1;
-        }
-        else f[j-k]=i+1;
-    }
-    fore(i,0,n) ans.pb(v[k+i]);
-    return ans;
+vector<ll> getminlex(vector<ll> s){
+	int n=SZ(s),k=0; fore(i,0,n) s.pb(s[i]);
+	vector<int> f(2*n,-1);
+	fore(j,1,2*n){
+		int i=f[j-k-1];
+		while(i>=0&&s[j]!=s[k+i+1]){
+			if(s[j]<s[k+i+1]) k=j-i-1;
+			i=f[i];
+		}
+		if(s[j]!=s[k+i+1]){
+			if(s[j]<s[k])k=j;
+			f[j-k]=-1;
+		} else f[j-k]=i+1;
+	}
+	vector<ll> ans; fore(i,0,n) ans.pb(s[k+i]);
+	return ans;
 }
