@@ -93,7 +93,7 @@ auto area(pt p, pt q, pt r){return (q-p)%(r-q);}
 bool in_c(pt a, pt b, pt c, pt p){
 	// Warning: this number is O(max_coord^4).
 	// Consider using int128 or using an alternative method for this function
-	long double p2=p*p,A=a*a-p2,B=b*b-p2,C=c*c-p2;
+	__int128 p2=p*p,A=a*a-p2,B=b*b-p2,C=c*c-p2;
 	return area(p,a,b)*C+area(p,b,c)*A+area(p,c,a)*B>EPS;
 }
 
