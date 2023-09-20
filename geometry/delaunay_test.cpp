@@ -45,8 +45,7 @@ pt cw90(-1,0);
 
 // Returns planar graph representing Delaunay's triangulation.
 // Edges for each vertex are in ccw order.
-// Works fine with integers.
-
+// It can work with doubles, but also integers (replace long double in line 51)
 typedef struct QuadEdge* Q;
 struct QuadEdge {
 	int id,used;
@@ -88,13 +87,13 @@ Q conn(Q a, Q b){
 	return e;
 }
 
-ll area(pt p, pt q, pt r){return (q-p)%(r-q);} 
+auto area(pt p, pt q, pt r){return (q-p)%(r-q);}
 
 // is p in circunference formed by (a,b,c)?
 bool in_c(pt a, pt b, pt c, pt p){
 	// Warning: this number is O(max_coord^4).
 	// Consider using int128 or using an alternative method for this function
-	__int128 p2=p*p,A=a*a-p2,B=b*b-p2,C=c*c-p2;
+	long double p2=p*p,A=a*a-p2,B=b*b-p2,C=c*c-p2;
 	return area(p,a,b)*C+area(p,b,c)*A+area(p,c,a)*B>EPS;
 }
 
@@ -103,7 +102,7 @@ pair<Q,Q> build_tr(vector<pt>& p, int l, int r){
 		Q a=edge(p[l],p[l+1],l,l+1),b=edge(p[l+1],p[r],l+1,r);
 		if(r-l+1==2) return {a,a->rev()};
 		splice(a->rev(),b);
-		ll ar=area(p[l],p[l+1],p[r]);
+		auto ar=area(p[l],p[l+1],p[r]);
 		Q c=abs(ar)>EPS?conn(b,a):0;
 		if(ar>=-EPS) return {a,b->rev()};
 		return {c->rev(),c};
