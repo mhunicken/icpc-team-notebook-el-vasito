@@ -49,7 +49,7 @@ bool r[1024];
 bool vis[1<<20];
 
 void proc(int x){
-	if(vis[x])return;
+	if(x==-1||vis[x])return;
 	vis[x]=true;
 	fore(i,0,t[x].leaf.size())r[t[x].leaf[i]]=true;
 	proc(t[x].link);
