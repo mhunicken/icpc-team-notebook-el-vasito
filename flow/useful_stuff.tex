@@ -1,0 +1,34 @@
+\begin{itemize}
+  \item \# of disjoint s-t paths = min-cut
+  \item $\forall X: |Vecinos(X)| >= |X| \iff$ perfect matching
+  \item $|\text{Largest antichain}|$ = $|\text{smallest chain decomposition}|$
+  \item $|Max Matching| = |min Vertex Cover|$
+  \item Rebuild cover $(A-Z)\cup(B\cap Z)$ Z = unmatched from $L$ + reachable by alternating paths
+  \begin{code}
+  vector<bool> L, R;
+  void dfs2(int x, int part) {
+    if(!part&&L[x]){L[x]=0;for(auto v:g[x])dfs2(v,!part);}
+    else if(part&&!R[x])R[x]=1,dfs2(mt[x],!part);
+  }
+  void cover() {L.assign(n, 1); R.assign(m, 0);
+    fore(i,0,n)if(mt2[i]<0)dfs2(i,0);
+  }\end{code}
+  \item Vertices in all matchings. Orient matched edges L $\to$ R, and others R $\to$ L, $v$ can be omitted if:
+    \begin{itemize}
+      \item v is unmatched
+      \item v can be reached from an unmatched vertex ON ITS SIDE
+      \item v can reach an unmatched vertex ON ITS SIDE
+    \end{itemize}
+  \item Circulation with demands
+  \begin{itemize}
+    \item add new source $s$ and sink $t$
+    \item if $d(v) < 0$, $add\_edge(s, v, -d(v))$
+    \item if $d(v) > 0$, $add\_edge(v, t, d(v))$
+    \item There is circulation if the all s,t arcs saturate
+  \end{itemize}
+  \item Circulation with demans and lowerbounds ($l$)
+  \begin{itemize}
+    \item new $cap(e)$ = $cap(e)$ - $l(e)$
+    \item new $d(v)$ = $d(v)$ + sum of $l(e)$ out - sum of $l(e)$ in
+  \end{itemize}
+\end{itemize}

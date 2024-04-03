@@ -1,7 +1,7 @@
 %"The PDF file may contain up to 25 pages of reference material, single-sided, letter or A4 size, with text and illustrations readable by a person with correctable eyesight without magnification from a distance of 1/2 meter."
 \input{preamble.tex}
 \begin{document}
-% Gracias Demetrio
+% Overflowed
 \def\title{Universidad Nacional de Cordoba - Overflowed}
 .\\[0.2cm]
 \centering{\LARGE\textbf{Overflowed}} \\[0.5cm]
@@ -45,7 +45,7 @@
 \subsection{Convex hull trick (dynamic)}
 \cppfile{data_structures/convexhull_trick_dynamic.cpp}
 
-\subsection{RMQ construcción O(n) y query O(1)}
+\subsection{RMQ O(n) / O(1)}
 \cppfile{data_structures/rmq_constant.cpp}
 
 \subsection{Disjoint intervals}
@@ -56,7 +56,7 @@
 \subsection{Bellman-Ford}
 \cppfile{graphs/bellman_ford.cpp}
 
-\subsection{Strongly connected components (+ 2-SAT)}
+\subsection{SCC (+ 2-SAT)}
 \cppfile{graphs/tarjan_2sat.cpp}
 
 \subsection{Articulation - Bridges - Biconnected}
@@ -186,6 +186,12 @@
 \subsection{Closest points}
 \cppfile{geometry/closest.cpp}
 
+\subsection{Minkowski Sum}
+\cppfile{geometry/minkowski_sum.cpp}
+
+\subsection{Delaunay Triangulation}
+\cppfile{geometry/delaunay.cpp}
+
 \subsection{Theorems and Formulas}
 \input{geometry/formulas.tex}
 
@@ -242,41 +248,7 @@
 \cppfile{flow/min_cost_max_flow_cycle.cpp}
 
 \subsection{Useful stuff}
-
-\begin{itemize}
-  \item \# of disjoint s-t paths = min-cut
-  \item $\forall X: |Vecinos(X)| >= |X| \iff$ perfect matching
-  \item $|\text{Largest antichain}|$ = $|\text{smallest chain decomposition}|$
-  \item $|Max Matching| = |min Vertex Cover|$
-  \item Rebuild cover $(A-Z)\cup(B\cap Z)$ Z = unmatched from $L$ + reachable by alternating paths
-  \begin{code}
-  vector<bool> L, R;
-  void dfs2(int x, int part) {
-    if(!part&&L[x]){L[x]=0;for(auto v:g[x])dfs2(v,!part);}
-    else if(part&&!R[x])R[x]=1,dfs2(mt[x],!part);
-  }
-  void cover() {L.assign(n, 1); R.assign(m, 0);
-    fore(i,0,n)if(mt2[i]<0)dfs2(i,0);
-  }\end{code}
-  \item Vertices in all matchings. Orient matched edges L->R, and others R->L, $v$ can be omitted if:
-    \begin{itemize}
-      \item v is unmatched
-      \item v can be reached from an unmatched vertex ON ITS SIDE
-      \item v can reach an unmatched vertex ON ITS SIDE
-    \end{itemize}
-  \item Circulation with demands
-  \begin{itemize}
-    \item add new source $s$ and sink $t$
-    \item if $d(v) < 0$, $add\_edge(s, v, -d(v))$
-    \item if $d(v) > 0$, $add\_edge(v, t, d(v))$
-    \item There is circulation if the all s,t arcs saturate
-  \end{itemize}
-  \item Circulation with demans and lowerbounds ($l$)
-  \begin{itemize}
-    \item new $cap(e)$ = $cap(e)$ - $l(e)$
-    \item new $d(v)$ = $d(v)$ + sum of $l(e)$ out - sum of $l(e)$ in
-  \end{itemize}
-\end{itemize}
+\input{flow/useful_stuff.tex}
 
 
 \section{Other}
@@ -299,7 +271,8 @@ Small-to-large;randomize;ver diferencias;berlekamp;
 
 !!! INICIALIZAR, REVISAR COMENTARIOS, COTAS, INT128/LL, VER N=1 !!!
 
-\includegraphics[scale=.7]{vasito.jpg}
+%Vasito picture
+%\includegraphics[scale=.7]{vasito.jpg}
 
 %\subsection{All HCN}
 %\cppfile{other/hcn_all.txt}
