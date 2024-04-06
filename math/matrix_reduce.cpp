@@ -1,4 +1,4 @@
-double reduce(vector<vector<double> >& x){ // returns determinant
+double reduce(vector<vector<double> >& x){
 	int n=x.size(),m=x[0].size();
 	int i=0,j=0;double r=1.;
 	while(i<n&&j<m){
@@ -14,5 +14,5 @@ double reduce(vector<vector<double> >& x){ // returns determinant
 		}
 		i++;j++;
 	}
-	return r;
+	return r; // returns determinant
 }

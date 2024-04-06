@@ -1,4 +1,4 @@
-int n,sq,nq; // array size, sqrt(array size), #queries
+int n,sq,nq; // size, sqrt(size), #queries
 struct qu{int l,r,id;};
 qu qs[MAXN]; ll ans[MAXN]; // ans[i] = answer to ith query
 bool qcomp(const qu &a, const qu &b){

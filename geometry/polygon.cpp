@@ -56,8 +56,8 @@ struct pol {
 			assert(e>s+1);
 		}
 	}
-	pol cut(ln l){   // cut CONVEX polygon by line l
-		vector<pt> q;  // returns part at left of l.pq
+	pol cut(ln l){//cut CONVEX polygon by line l
+		vector<pt> q;//returns part at left of l.pq
 		fore(i,0,n){
 			int d0=sgn(l.pq%(p[i]-l.p)),d1=sgn(l.pq%(p[(i+1)%n]-l.p));
 			if(d0>=0)q.pb(p[i]);

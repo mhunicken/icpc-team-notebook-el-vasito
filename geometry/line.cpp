@@ -23,7 +23,7 @@ struct ln {
 //		if(*this/l)return dist(l.p);
 //		return abs((l.p-p)*(pq^l.pq))/(pq^l.pq).norm();
 //	}
-	ln rot(auto a){return ln(p,p+pq.rot(a));} // 2D
+	ln rot(auto a){return ln(p,p+pq.rot(a));}//2D
 };
 ln bisector(ln l, ln m){ // angle bisector
 	pt p=l^m; return ln(p,p+l.pq.unit()+m.pq.unit());

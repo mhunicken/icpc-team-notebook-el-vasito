@@ -40,7 +40,7 @@ struct circle {
 };
 vector<double> intercircles(vector<circle> c){
 	vector<double> r(SZ(c)+1); // r[k]: area covered by at least k circles
-	fore(i,0,SZ(c)){           // O(n^2 log n) (high constant)
+	fore(i,0,SZ(c)){//O(n^2 log n) high constant!
 		int k=1;Cmp s(c[i].o);
 		vector<pair<pt,int> > p={
 			{c[i].o+pt(1,0)*c[i].r,0}, {c[i].o-pt(1,0)*c[i].r,0}};

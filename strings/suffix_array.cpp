@@ -6,7 +6,7 @@ void csort(vector<int>& sa, vector<int>& r, int k){
 	fore(i,0,n)t[f[RB(sa[i]+k)]++]=sa[i];
 	sa=t;
 }
-vector<int> constructSA(string& s){ // O(n logn)
+vector<int> constructSA(string& s){ //O(n logn)
 	int n=s.size(),rank; vector<int> sa(n),r(n),t(n);
 	fore(i,0,n)sa[i]=i,r[i]=s[i];
 	for(int k=1;k<n;k*=2){
