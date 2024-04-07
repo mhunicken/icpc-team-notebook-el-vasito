@@ -21,7 +21,7 @@ struct mcSFlow{
     back.f += f; ex[back.to] -= f;
   }
   tf max_flow() {
-    ex.assign(n, 0), h.assign(n, 0), co.assign(2*n, 0), cur.assign(n, 0), hs.resize(2*n);
+    ex.assign(n,0),h.assign(n,0),co.assign(2*n,0),cur.assign(n,0),hs.resize(2*n);
     h[s] = n, ex[t] = 1, co[0] = n - 1;
     for(auto &e:g[s]) add_flow(e, e.f);
     if(hs[0].size()) for (int hi=0;hi>=0;) {
@@ -34,17 +34,16 @@ struct mcSFlow{
             if (e.f && h[u] > h[e.to]+1) h[u] = h[e.to]+1, cur[u] = i;
           }
           if(hi==n)break;
-          if (++co[h[u]] && !--co[hi] && hi < n) {
-            fore(i,0,n) if (hi < h[i] && h[i] < n){
-              --co[h[i]];
-              h[i] = n + 1;
+          if(++co[h[u]] && !--co[hi] && hi<n){
+            fore(i,0,n)if(hi < h[i] && h[i] < n){
+              --co[h[i]]; h[i] = n + 1;
             }
           }
           hi = h[u];
         } else if (g[u][cur[u]].f && h[u] == h[g[u][cur[u]].to]+1) {
           add_flow(g[u][cur[u]], min(ex[u], g[u][cur[u]].f));
         } else ++cur[u];
-			    }
+			}
       while (hi>=0 && hs[hi].empty()) --hi;
     }
     return -ex[s];
@@ -52,22 +51,22 @@ struct mcSFlow{
   void push(edge &e, tf amt){
     if(e.f < amt) amt=e.f;
     e.f-=amt; ex[e.to]+=amt;
-    g[e.to][e.rev].f+=amt; ex[g[e.to][e.rev].to]-=amt;
+    g[e.to][e.rev].f+=amt;
+    ex[g[e.to][e.rev].to]-=amt;
   }
   void relabel(int vertex){
     tc newHeight = -INFCOST;
 		fore(i,0,SZ(g[vertex])){
       edge const&e = g[vertex][i];
       if(e.f && newHeight < h[e.to]-e.c){
-        newHeight = h[e.to] - e.c;
-        cur[vertex] = i;
+        newHeight=h[e.to]-e.c; cur[vertex]=i;
       }
     }
     h[vertex] = newHeight - eps;
   }
   pair<tf, tc> minCostMaxFlow(){
     tc retCost = 0;
-    fore(i,0,n) for(edge &e:g[i]) retCost += e.c*(e.f);
+    fore(i,0,n)for(edge &e:g[i])retCost+=e.c*(e.f);
     tf retFlow = max_flow(); 
     h.assign(n, 0); ex.assign(n, 0); isq.assign(n, 0); cur.assign(n,0);
     queue<int> q;
@@ -91,7 +90,7 @@ struct mcSFlow{
           }
         }
       }
-      if(eps>1 && eps>>scale==0) eps = 1<<scale;
+      if(eps>1 && eps>>scale==0)eps = 1<<scale;
     }
     fore(i,0,n) for(edge &e:g[i])retCost -= e.c*(e.f);
     return make_pair(retFlow, retCost/2/n);

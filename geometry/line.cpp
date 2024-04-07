@@ -28,6 +28,6 @@ struct ln {
 ln bisector(ln l, ln m){ // angle bisector
 	pt p=l^m; return ln(p,p+l.pq.unit()+m.pq.unit());
 }
-ln bisector(pt p, pt q){ // segment bisector (2D)
+ln bisector(pt p, pt q){//segment bisector (2D)
 	return ln((p+q)*.5,p).rot(ccw90);
 }

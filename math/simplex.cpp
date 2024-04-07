@@ -15,7 +15,7 @@ void pivot(int x,int y){
 }
 pair<double,vector<double> > simplex( // maximize c^T x s.t. Ax<=b, x>=0
 		vector<vector<double> > _A, vector<double> _b, vector<double> _c){
-	// returns pair (maximum value, solution vector)
+	// returns pair (max value, solution vector)
 	A=_A;b=_b;c=_c; n=b.size();m=c.size();z=0.;
 	X=vector<int>(m);Y=vector<int>(n);
 	fore(i,0,m)X[i]=i;

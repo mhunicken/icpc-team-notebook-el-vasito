@@ -26,7 +26,7 @@ struct MCF{
 					if(prio[v]>nprio) {
 						prio[v]=nprio; q.push({nprio, v});
 						prevnode[v]=u; prevedge[v]=i;
-						curflow[v]=min(curflow[u], e.cap-e.f);
+						curflow[v]=min(curflow[u],e.cap-e.f);
 					}
 				}
 			}

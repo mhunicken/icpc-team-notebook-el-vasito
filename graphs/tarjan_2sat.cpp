@@ -1,6 +1,6 @@
 // MAXN: max number of nodes or 2 * max number of variables (2SAT)
 bool truth[MAXN]; // truth[cmp[i]]=value of variable i (2SAT)
-int nvar;int neg(int x){return MAXN-1-x;} // (2SAT)
+int nvar;int neg(int x){return MAXN-1-x;}//(2SAT)
 vector<int> g[MAXN];
 int n,lw[MAXN],idx[MAXN],qidx,cmp[MAXN],qcmp;
 stack<int> st;
@@ -16,7 +16,7 @@ void tjn(int u){
 		int x,l=-1;
 		do{x=st.top();st.pop();cmp[x]=qcmp;if(min(x,neg(x))<nvar)l=x;}
 		while(x!=u);
-		if(l!=-1)truth[qcmp]=(cmp[neg(l)]<0); // (2SAT)
+		if(l!=-1)truth[qcmp]=(cmp[neg(l)]<0);//(2SAT)
 		qcmp++;
 	}
 }
