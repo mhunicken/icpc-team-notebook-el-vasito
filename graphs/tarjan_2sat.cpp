@@ -29,6 +29,6 @@ void scc(){
 void addor(int a, int b){g[neg(a)].pb(b);g[neg(b)].pb(a);}
 bool satisf(int _nvar){
 	nvar=_nvar;n=MAXN;scc();
-	fore(i,0,nvar)if(cmp[i]==cmp[neg(i)])return false;
-	return true;
+	fore(i,0,nvar)if(cmp[i]==cmp[neg(i)])return 0;
+	return 1;
 }

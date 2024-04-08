@@ -16,17 +16,17 @@ struct Node_t{
   bool rev;
   Node_t *ch[2], *p;
   Node_t(int v) : sz(1), nVal(v), stVal(v), d(N_DELTA), rev(0), p(0){
-    ch[0]=ch[1]=0;
+  ch[0]=ch[1]=0;
   }
   bool isRoot(){return !p || (p->ch[0] != this && p->ch[1] != this);}
   void push(){
-    if(rev){
-      rev=0; swap(ch[0], ch[1]);
-      fore(x,0,2)if(ch[x])ch[x]->rev^=1;
-    }
-    nVal=joinVD(nVal, d); stVal=joinVD(stVal, dOnSeg(d, sz));
-    fore(x,0,2)if(ch[x])ch[x]->d=joinDeltas(ch[x]->d, d);
-    d=N_DELTA;
+  if(rev){
+    rev=0; swap(ch[0], ch[1]);
+    fore(x,0,2)if(ch[x])ch[x]->rev^=1;
+  }
+  nVal=joinVD(nVal, d); stVal=joinVD(stVal, dOnSeg(d, sz));
+  fore(x,0,2)if(ch[x])ch[x]->d=joinDeltas(ch[x]->d, d);
+  d=N_DELTA;
   }
   void upd();
 };
@@ -47,11 +47,11 @@ void rotate(Node x){
 }
 void splay(Node x){
   while(!x->isRoot()){
-    Node p = x->p, g = p->p;
-    if(!p->isRoot())g->push();
-    p->push(); x->push();
-    if(!p->isRoot())rotate((x==p->ch[0])==(p==g->ch[0])? p : x);
-    rotate(x);
+  Node p = x->p, g = p->p;
+  if(!p->isRoot())g->push();
+  p->push(); x->push();
+  if(!p->isRoot())rotate((x==p->ch[0])==(p==g->ch[0])? p : x);
+  rotate(x);
   }
   x->push(); x->upd();
 }
@@ -75,16 +75,16 @@ int n;
 Node x[N];
 
 int main(){ios_base::sync_with_stdio(0);cout.tie(0);cin.tie(0);
-    cin >> n;
+  cin >> n;
 	fore(i,0,n)x[i]=new Node_t(0);
-    fore(i,0,n-1){
-        int a, b; cin >> a >> b;a--;b--;
-        link(x[a],x[b]);
-    }
-    int q; cin >> q;
-    while(q--){
-        char c; int a, b; cin >> c >> a >> b; a--; b--;
-        if(c=='G') cout << query(x[a],x[b]) << "\n";
-        else if(c=='I') b++, modify(x[a],x[a],b);
-    }
+  fore(i,0,n-1){
+    int a, b; cin >> a >> b;a--;b--;
+    link(x[a],x[b]);
+  }
+  int q; cin >> q;
+  while(q--){
+    char c; int a, b; cin >> c >> a >> b; a--; b--;
+    if(c=='G') cout << query(x[a],x[b]) << "\n";
+    else if(c=='I') b++, modify(x[a],x[a],b);
+  }
 }

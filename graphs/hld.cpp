@@ -1,5 +1,5 @@
 vector<int> g[MAXN];
-int wg[MAXN],dad[MAXN],dep[MAXN]; // weight,father,depth
+int wg[MAXN],dad[MAXN],dep[MAXN];
 void dfs1(int x){
 	wg[x]=1;
 	for(int y:g[x])if(y!=dad[x]){
@@ -25,6 +25,6 @@ int query(int x, int y, STree& rmq){
 	r=oper(r,rmq.query(pos[x],pos[y]+1));
 	return r;
 }
-// for updating: rmq.upd(pos[x],v);
-// queries on edges: - assign values of edges to "child" node
-//                   - change pos[x] to pos[x]+1 in query (line 28)
+// rmq.upd(pos[x],v);
+// edge query: - assign edge-value to "child" node
+// - change pos[x] to pos[x]+1 in query (line 25)

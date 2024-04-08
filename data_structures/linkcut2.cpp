@@ -10,16 +10,16 @@ struct Node_t{
   int sz, nVal, tVal, d; bool rev;
   Node_t *c[2], *p;
   Node_t(int v) : sz(1), nVal(v), tVal(v), d(N_DEL), rev(0), p(0){
-    c[0]=c[1]=0;
+  c[0]=c[1]=0;
   }
   bool isRoot(){return !p || (p->c[0] != this && p->c[1] != this);}
   void push(){
-    if(rev){
-      rev=0; swap(c[0], c[1]); fore(x,0,2)if(c[x])c[x]->rev^=1;
-    }
-    nVal=joinVD(nVal, d); tVal=joinVD(tVal, dOnSeg(d, sz));
-    fore(x,0,2)if(c[x])c[x]->d=joinD(c[x]->d, d);
-    d=N_DEL;
+  if(rev){
+    rev=0; swap(c[0], c[1]); fore(x,0,2)if(c[x])c[x]->rev^=1;
+  }
+  nVal=joinVD(nVal, d); tVal=joinVD(tVal, dOnSeg(d, sz));
+  fore(x,0,2)if(c[x])c[x]->d=joinD(c[x]->d, d);
+  d=N_DEL;
   }
   void upd();
 };
@@ -40,11 +40,11 @@ void rotate(Node x){
 }
 void spa(Node x){//splay
   while(!x->isRoot()){
-    Node p = x->p, g = p->p;
-    if(!p->isRoot())g->push();
-    p->push(); x->push();
-    if(!p->isRoot())rotate((x==p->c[0])==(p==g->c[0])? p : x);
-    rotate(x);
+  Node p = x->p, g = p->p;
+  if(!p->isRoot())g->push();
+  p->push(); x->push();
+  if(!p->isRoot())rotate((x==p->c[0])==(p==g->c[0])? p : x);
+  rotate(x);
   }
   x->push(); x->upd();
 }

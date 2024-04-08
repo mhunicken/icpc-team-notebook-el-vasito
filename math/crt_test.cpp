@@ -36,9 +36,9 @@ ll inv(ll a, ll m) {
 
 #define mod(a,m) (((a)%m+m)%m)
 pair<ll,ll> sol(tuple<ll,ll,ll> c){ //requires inv, diophantine
-    ll a=get<0>(c), x1=get<1>(c), m=get<2>(c), d=gcd(a,m);
-    if(d==1) return {mod(x1*inv(a,m),m), m};
-    else return x1%d ? ii({-1LL,-1LL}) : sol(make_tuple(a/d,x1/d,m/d));
+  ll a=get<0>(c), x1=get<1>(c), m=get<2>(c), d=gcd(a,m);
+  if(d==1) return {mod(x1*inv(a,m),m), m};
+  else return x1%d ? ii({-1LL,-1LL}) : sol(make_tuple(a/d,x1/d,m/d));
 }
 pair<ll,ll> crt(vector< tuple<ll,ll,ll> > cond) { // returns: (sol, lcm)
 	ll x1=0,m1=1,x2,m2;
@@ -53,13 +53,13 @@ pair<ll,ll> crt(vector< tuple<ll,ll,ll> > cond) { // returns: (sol, lcm)
 } //cond[i]={ai,bi,mi} ai*xi=bi (mi); assumes lcm fits in ll
 
 int main(){
-    int T; cin >> T;
-    while(T--){
-        #define mt make_tuple
-        int a, n, b, m; cin >> a >> n >> b >> m;
-        vector<tuple<ll,ll,ll> > cond = {mt(1,a,n),mt(1,b,m)};
-        auto ans = crt(cond);
-        if(ans.fst==-1&&ans.snd==-1)cout<<"no solution\n";
-        else cout<<ans.fst<<" " <<ans.snd << "\n";
-    }
+  int T; cin >> T;
+  while(T--){
+    #define mt make_tuple
+    int a, n, b, m; cin >> a >> n >> b >> m;
+    vector<tuple<ll,ll,ll> > cond = {mt(1,a,n),mt(1,b,m)};
+    auto ans = crt(cond);
+    if(ans.fst==-1&&ans.snd==-1)cout<<"no solution\n";
+    else cout<<ans.fst<<" " <<ans.snd << "\n";
+  }
 }

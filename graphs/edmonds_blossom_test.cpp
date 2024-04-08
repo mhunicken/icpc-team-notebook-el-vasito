@@ -89,6 +89,6 @@ int main()
   }
   cout<<edmonds()*2<<endl;
   for (int i=0;i<n;i++)
-    if (i<mt[i])
-      cout<<i+1<<" "<<mt[i]+1<<endl;
+  if (i<mt[i])
+    cout<<i+1<<" "<<mt[i]+1<<endl;
 }

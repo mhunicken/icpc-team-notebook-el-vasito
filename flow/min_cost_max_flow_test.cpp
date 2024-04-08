@@ -36,7 +36,7 @@ struct MCF{
 			while(!q.empty()) {
 				auto cur=q.top();
 				tc d=cur.fst;
-        int u=cur.snd;
+    int u=cur.snd;
 				q.pop();
 				if(d!=prio[u]) continue;
 				for(int i=0; i<SZ(g[u]); ++i) {

@@ -126,8 +126,8 @@ int main(){
 		scanf("%d%d",&s,&dd);
 		printf("%d %d",s,dd);
 		if(s==dd){
-		    puts(" 0.0 0.0");
-		    continue;
+		  puts(" 0.0 0.0");
+		  continue;
 		}
 		fore(i,0,na){
 			{vector<double> p(na,0.);

@@ -83,7 +83,7 @@ pair<poly<>,poly<> > polydiv(poly<> p, poly<> q){ // returns pair (result,rem)
 	return {poly<>(b),p};
 }
 // only for double polynomials
-poly<> interpolate(vector<tp> x, vector<tp> y){ //TODO TEST
+poly<> interpolate(vector<tp> x, vector<tp> y){
 	poly<> q={1},S={0};
 	for(tp a:x)q=poly<>({-a,1})*q;
 	fore(i,0,x.size()){

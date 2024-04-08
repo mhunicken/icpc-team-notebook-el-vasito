@@ -1,8 +1,8 @@
 #define mod(a,m) (((a)%m+m)%m)
 pair<ll,ll> sol(tuple<ll,ll,ll> c){ //requires inv, diophantine
-    ll a=get<0>(c), x1=get<1>(c), m=get<2>(c), d=gcd(a,m);
-    if(d==1) return {mod(x1*inv(a,m),m), m};
-    else return x1%d ? ii({-1LL,-1LL}) : sol(make_tuple(a/d,x1/d,m/d));
+  ll a=get<0>(c), x1=get<1>(c), m=get<2>(c), d=gcd(a,m);
+  if(d==1) return {mod(x1*inv(a,m),m), m};
+  else return x1%d ? ii({-1LL,-1LL}) : sol(make_tuple(a/d,x1/d,m/d));
 }
 pair<ll,ll> crt(vector< tuple<ll,ll,ll> > cond) { // returns: (sol, lcm)
 	ll x1=0,m1=1,x2,m2;

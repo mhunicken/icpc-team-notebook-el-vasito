@@ -1,6 +1,6 @@
 double pget(poly<>& p, int k){return k<p.c.size()?p[k]:0;}
 poly<> bairstow(poly<> p){ // returns polynomial of degree 2 that
-	int n=p.c.size()-1;    // divides p
+	int n=p.c.size()-1;  // divides p
 	assert(n>=3&&abs(p.c.back())>EPS);
 	double u=p[n-1]/p[n],v=p[n-2]/p[n];
 	fore(_,0,ITER){

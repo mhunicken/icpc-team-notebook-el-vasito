@@ -16,12 +16,8 @@ CD operator*(const CD& a, const CD& b){
 CD operator+(const CD& a, const CD& b){return CD(a.r+b.r,a.i+b.i);}
 CD operator-(const CD& a, const CD& b){return CD(a.r-b.r,a.i-b.i);}
 const double pi=acos(-1.0);
-// NTT
-/*
-struct CD {
-	tf x;
-	CD(tf x):x(x){}
-	CD(){}
+/* NTT: struct CD {
+	tf x; CD(tf x):x(x){} CD(){}
 };
 CD operator*(const CD& a, const CD& b){return CD(mulmod(a.x,b.x));}
 CD operator+(const CD& a, const CD& b){return CD(addmod(a.x,b.x));}

@@ -1,6 +1,6 @@
 \begin{itemize}
   \item \# of disjoint s-t paths = min-cut
-  \item $\forall X: |Vecinos(X)| >= |X| \iff$ perfect matching
+  \item $\forall X: |Vecinos(X)| \geq |X| \iff$ perfect matching
   \item $|\text{Largest antichain}|$ = $|\text{smallest chain decomposition}|$
   \item $|Max Matching| = |min Vertex Cover|$
   \item Rebuild cover $(A-Z)\cup(B\cap Z)$ Z = unmatched from $L$ + reachable by alternating paths
@@ -16,15 +16,14 @@
   \item Vertices in all matchings. Orient matched edges L $\to$ R, and others R $\to$ L, $v$ can be omitted if:
     \begin{itemize}
       \item v is unmatched
-      \item v can be reached from an unmatched vertex ON ITS SIDE
       \item v can reach an unmatched vertex ON ITS SIDE
     \end{itemize}
   \item Circulation with demands
   \begin{itemize}
     \item add new source $s$ and sink $t$
-    \item if $d(v) < 0$, $add\_edge(s, v, -d(v))$
-    \item if $d(v) > 0$, $add\_edge(v, t, d(v))$
-    \item There is circulation if the all s,t arcs saturate
+    \item if $d(v) < 0$, $\text{add\_edge}(s, v, -d(v))$
+    \item if $d(v) > 0$, $\text{add\_edge}(v, t, d(v))$
+    \item There is circulation if all s,t arcs saturate
   \end{itemize}
   \item Circulation with demans and lowerbounds ($l$)
   \begin{itemize}

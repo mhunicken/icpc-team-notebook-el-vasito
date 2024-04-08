@@ -66,9 +66,9 @@ struct pol {
   pol(){}
   pol(vector<pt> _p){p=_p;n=p.size();}
   double area(){
-    double r=0.;
-    for(int i = 0; i < n; i++)r+=p[i]%p[(i+1)%n];
-    return abs(r)/2;
+  double r=0.;
+  for(int i = 0; i < n; i++)r+=p[i]%p[(i+1)%n];
+  return abs(r)/2;
   }
 };
 
@@ -109,10 +109,10 @@ int main(){FIN;
   int n; cin >> n;
   vector<halfplane> v;
   fore(i,0,n){
-    int c; cin >> c;
-    vector<pt> p(c);
-    fore(i,0,c) cin >> p[i].x >> p[i].y;
-    fore(i,0,c) v.pb(halfplane(p[i],p[(i+1)%c]));
+  int c; cin >> c;
+  vector<pt> p(c);
+  fore(i,0,c) cin >> p[i].x >> p[i].y;
+  fore(i,0,c) v.pb(halfplane(p[i],p[(i+1)%c]));
   }
   pol p(intersect(v));
   cout<<fixed<<setprecision(10)<<p.area()<<"\n";

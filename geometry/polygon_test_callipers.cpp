@@ -74,7 +74,7 @@ struct pol {
 	pol(){}
 	pol(vector<pt> _p){p=_p;n=p.size();}
 	double callipers(){ // square distance of most distant points
-		double r=0;     // prereq: convex, ccw, NO COLLINEAR POINTS
+		double r=0;   // prereq: convex, ccw, NO COLLINEAR POINTS
 		for(int i=0,j=n<2?0:1;i<j;++i){
 			for(;;j=(j+1)%n){
 				r=max(r,(p[i]-p[j]).norm2());

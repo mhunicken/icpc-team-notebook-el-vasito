@@ -14,7 +14,7 @@ typedef long long ll;
 pair<int, int> sf[MAXN];
 bool sacomp(int lhs, int rhs) {return sf[lhs]<sf[rhs];}
 vector<int> constructSA(string& s){ // O(n log^2(n))
-	int n=s.size();                 // (sometimes fast enough) -> not in this example :P
+	int n=s.size();         // (sometimes fast enough) -> not in this example :P
 	vector<int> sa(n),r(n);
 	fore(i,0,n)r[i]=s[i];
 	for(int m=1;m<n;m*=2){

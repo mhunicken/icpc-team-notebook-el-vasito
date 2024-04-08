@@ -19,7 +19,7 @@ struct GCS {
 		auto p=s.lower_bound(x);
 		if(p!=s.end()&&p->snd<=x.snd)return;
 		if(p!=s.begin()){ // erase pairs with less benefit
-			--p;            // and more cost
+			--p;      // and more cost
 			while(p->snd>=x.snd){
 				if(p==s.begin()){s.erase(p);break;}
 				s.erase(p--);

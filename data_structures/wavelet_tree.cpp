@@ -31,7 +31,7 @@ struct WT {
 	void init(int _n){n=_n;init(1,0,n);} // (values in range [0,n))
 	void add(int v){add(1,0,n,v);}
 	int query0(int a, int b, int i){ // ith element in range [a,b)
-		return query0(1,0,n,a,b,i);    // (if it was sorted)
+		return query0(1,0,n,a,b,i);  // (if it was sorted)
 	}
 	void upd(int i){ // swap positions i,i+1
 		upd(1,0,n,i);

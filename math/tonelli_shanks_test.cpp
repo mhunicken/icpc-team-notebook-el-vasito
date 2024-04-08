@@ -23,11 +23,11 @@ ll tonelli_shanks(ll n, ll p){
   while(legendre(z,p)!=p-1)z=rnd(1,p-1);
   ll c=fpow(z,q,p), r=fpow(n,(q+1)/2,p), t=fpow(n,q,p), m=s;
   while(t!=1){
-    ll i=1, ts=(t*t)%p;
-    while(ts!=1)i++,ts=(ts*ts)%p;
-    ll b=c; 
-    fore(_,0,m-i-1)b=(b*b)%p;
-    r=r*b%p;c=b*b%p;t=t*c%p;m=i;
+  ll i=1, ts=(t*t)%p;
+  while(ts!=1)i++,ts=(ts*ts)%p;
+  ll b=c; 
+  fore(_,0,m-i-1)b=(b*b)%p;
+  r=r*b%p;c=b*b%p;t=t*c%p;m=i;
   }
   return r;
 }
@@ -39,16 +39,16 @@ bool is_prime(ll a){
 }
 int main(){
   vector<pair<ll,ll> > queries = {
-    {93,97}, {10,13}, {56,101}, {1030,10009}, {44402,100049},
-    {665820697,1000000009}
+  {93,97}, {10,13}, {56,101}, {1030,10009}, {44402,100049},
+  {665820697,1000000009}
   };
   while(queries.size()<MAX_TEST){
-    ll p=rnd(2, 2e9);
-    while(!is_prime(p))p++;
-    queries.push_back({fpow(rnd(1,p-1),2,p),p});
+  ll p=rnd(2, 2e9);
+  while(!is_prime(p))p++;
+  queries.push_back({fpow(rnd(1,p-1),2,p),p});
   }
   for(auto p:queries){
-    ll r=tonelli_shanks(p.fst,p.snd);
-    assert(r*r%p.snd==p.fst&&(p.snd-r)*(p.snd-r)%p.snd==p.fst);
+  ll r=tonelli_shanks(p.fst,p.snd);
+  assert(r*r%p.snd==p.fst&&(p.snd-r)*(p.snd-r)%p.snd==p.fst);
   }
 }

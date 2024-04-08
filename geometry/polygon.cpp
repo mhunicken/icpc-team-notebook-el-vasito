@@ -32,8 +32,8 @@ struct pol {
 	bool haslog(pt q){ // O(log(n)) only CONVEX. Call normalize first
 		if(q.left(p[0],p[1])||q.left(p.back(),p[0]))return false;
 		int a=1,b=p.size()-1;  // returns true if point on boundary
-		while(b-a>1){          // (change sign of EPS in left
-			int c=(a+b)/2;       //  to return false in such case)
+		while(b-a>1){      // (change sign of EPS in left
+			int c=(a+b)/2;     //  to return false in such case)
 			if(!q.left(p[0],p[c]))a=c;
 			else b=c;
 		}
@@ -76,7 +76,7 @@ struct pol {
 		return abs(r);
 	}
 	double callipers(){ // square distance of most distant points
-		double r=0;     // prereq: convex, ccw, NO COLLINEAR POINTS
+		double r=0;   // prereq: convex, ccw, NO COLLINEAR POINTS
 		for(int i=0,j=n<2?0:1;i<j;++i){
 			for(;;j=(j+1)%n){
 				r=max(r,(p[i]-p[j]).norm2());

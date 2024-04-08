@@ -7,24 +7,9 @@ struct poly {  // poly<> : 1 variable, poly<poly<>>: 2 variables, etc.
 	poly(initializer_list<T> c):c(c){}
 	poly(int k):c(k){}
 	poly(){}
-	poly operator+(poly<T> o){
-		int m=c.size(),n=o.c.size();
-		poly res(max(m,n));
-		fore(i,0,m)res[i]=res[i]+c[i];
-		fore(i,0,n)res[i]=res[i]+o.c[i];
-		return res;
-	}
-	poly operator*(tp k){
-		poly res(c.size());
-		fore(i,0,c.size())res[i]=c[i]*k;
-		return res;
-	}
-	poly operator*(poly o){
-		int m=c.size(),n=o.c.size();
-		poly res(m+n-1);
-		fore(i,0,m)fore(j,0,n)res[i+j]=res[i+j]+c[i]*o.c[j];
-		return res;
-	}
+	poly operator+(poly<T> o);
+	poly operator*(tp k);
+	poly operator*(poly o);
 	poly operator-(poly<T> o){return *this+(o*-1);}
 	T operator()(tp v){
 		T sum(0);
@@ -72,7 +57,7 @@ pair<poly<>,poly<> > polydiv(poly<> p, poly<> q){ // returns pair (result,rem)
 	return {poly<>(b),p};
 }
 // only for double polynomials
-poly<> interpolate(vector<tp> x, vector<tp> y){ //TODO TEST
+poly<> interpolate(vector<tp> x, vector<tp> y){
 	poly<> q={1},S={0};
 	for(tp a:x)q=poly<>({-a,1})*q;
 	fore(i,0,x.size()){

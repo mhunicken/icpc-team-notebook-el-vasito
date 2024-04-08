@@ -102,7 +102,7 @@ void dfs(int u,int pe){
 					last=st.top();st.pop();
 					e[last].comp=nbc;
 				} while(last!=ne);
-				nbc++;    // end biconnected
+				nbc++;  // end biconnected
 			}
 			B[u]=min(B[u],B[v]);
 		}
