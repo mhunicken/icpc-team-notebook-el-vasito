@@ -7,7 +7,7 @@ struct Tree {
 		p.pb(g[x].size());g[x].pb(ex.size());ex.pb(x);ey.pb(y);
 		p.pb(g[y].size());g[y].pb(ex.size());ex.pb(y);ey.pb(x);
 	}
-	bool go(int k){ // returns true if it finds new node
+	bool go(int k){//returns 1 if it finds new node
 		int& x=z[k];
 		while(x>=0&&
 			(w[x]==g[x].size()||w[x]==g[x].size()-1&&(g[x].back()^1)==f[x]))
@@ -18,7 +18,7 @@ struct Tree {
 		return true;
 	}
 	vector<int> erase_edge(int e){
-		e*=2; // erases eth edge, returns smaller component
+		e*=2;//erases eth edge, returns smaller comp
 		int x=ex[e],y=ey[e]; p[g[x].back()]=p[e];
 		g[x][p[e]]=g[x].back(); g[x].pop_back();
 		p[g[y].back()]=p[e^1]; g[y][p[e^1]]=g[y].back(); g[y].pop_back();
