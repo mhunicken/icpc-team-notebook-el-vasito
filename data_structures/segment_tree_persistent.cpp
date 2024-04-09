@@ -1,4 +1,4 @@
-struct STree { // persistent segment tree for min over integers
+struct STree {//persistent segment tree for min
 	vector<int> st, L, R; int n,sz,rt;
 	STree(int n): st(1,NEUT),L(1,0),R(1,0),n(n),rt(0),sz(1){}
 	int new_node(int v, int l=0, int r=0){

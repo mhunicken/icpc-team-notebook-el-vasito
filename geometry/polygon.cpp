@@ -31,9 +31,9 @@ struct pol {
 	}
 	bool haslog(pt q){ // O(log(n)) only CONVEX. Call normalize first
 		if(q.left(p[0],p[1])||q.left(p.back(),p[0]))return false;
-		int a=1,b=p.size()-1;  // returns true if point on boundary
-		while(b-a>1){      // (change sign of EPS in left
-			int c=(a+b)/2;     //  to return false in such case)
+		int a=1,b=p.size()-1;//returns true if point on boundary
+		while(b-a>1){//(change sign of EPS in left
+			int c=(a+b)/2;//to return false in such case)
 			if(!q.left(p[0],p[c]))a=c;
 			else b=c;
 		}

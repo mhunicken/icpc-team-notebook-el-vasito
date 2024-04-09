@@ -1,9 +1,9 @@
 typedef int tf;
 struct rmq{
-	int n; tf INF=1e9;	//change sign of INF for maximum
+	int n; tf INF=1e9;//change sign of INF for MAX
 	vector<unsigned int> mk; vector<tf> bk,v;
 	rmq(){}
-	tf op(tf a, tf b){return min(a,b);}	//change for maximum
+	tf op(tf a, tf b){return min(a,b);}//change for maximum
 	int f(int x){return x>>5;}
 	rmq(vector<tf> &vv):n(SZ(vv)),mk(n),bk(n,INF),v(vv){
 		unsigned int lst=0;

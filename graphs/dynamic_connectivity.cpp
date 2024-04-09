@@ -39,7 +39,7 @@ struct DynCon {
 	}
 	void go(int s, int e){
 		if(s+1==e){
-			if(q[s].type==QUERY) // answer query using DSU
+			if(q[s].type==QUERY)//answer query using DSU
 				printf("%d\n",dsu.comp);
 			return;
 		}

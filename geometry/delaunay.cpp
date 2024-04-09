@@ -1,6 +1,6 @@
 // Returns planar graph representing Delaunay's triangulation.
 // Edges for each vertex are in ccw order.
-// It can work with doubles, but also integers (replace long double in line 51)
+// It can work with doubles, but also integers (replace long double in line 45)
 typedef struct QuadEdge* Q;
 struct QuadEdge {
 	int id,used;
@@ -12,7 +12,6 @@ struct QuadEdge {
 	Q prev(){return rot->next()->rot;}
 	pt dest(){return rev()->o;}
 };
-
 Q edge(pt a, pt b, int ida, int idb){
 	Q e1=new QuadEdge(ida,a);
   Q e2=new QuadEdge(idb,b);
@@ -22,28 +21,23 @@ Q edge(pt a, pt b, int ida, int idb){
   tie(e1->nxt,e2->nxt,e3->nxt,e4->nxt)={e1,e2,e4,e3};
   return e1;
 }
-
 void splice(Q a, Q b){
 	swap(a->nxt->rot->nxt,b->nxt->rot->nxt);
 	swap(a->nxt,b->nxt);
 }
-
 void del_edge(Q& e, Q ne){
 	splice(e,e->prev()); splice(e->rev(),e->rev()->prev());
 	delete e->rev()->rot; delete e->rev();
 	delete e->rot; delete e;
 	e=ne;
 }
-
 Q conn(Q a, Q b){
 	Q e=edge(a->dest(),b->o,a->rev()->id,b->id);
 	splice(e,a->rev()->prev());
 	splice(e->rev(),b);
 	return e;
 }
-
 auto area(pt p, pt q, pt r){return (q-p)%(r-q);}
-
 // is p in circunference formed by (a,b,c)?
 bool in_c(pt a, pt b, pt c, pt p){
 	// Warning: this number is O(max_coord^4).
@@ -51,7 +45,6 @@ bool in_c(pt a, pt b, pt c, pt p){
 	long double p2=p*p,A=a*a-p2,B=b*b-p2,C=c*c-p2;
 	return area(p,a,b)*C+area(p,b,c)*A+area(p,c,a)*B>EPS;
 }
-
 pair<Q,Q> build_tr(vector<pt>& p, int l, int r){
 	if(r-l+1<=3){
 		Q a=edge(p[l],p[l+1],l,l+1),b=edge(p[l+1],p[r],l+1,r);
@@ -85,7 +78,6 @@ pair<Q,Q> build_tr(vector<pt>& p, int l, int r){
 	}
 	return {la,rb};
 }
-
 vector<vector<int>> delaunay(vector<pt> v){
 	int n=SZ(v); auto tmp=v;
 	vector<int> id(n); iota(ALL(id),0);

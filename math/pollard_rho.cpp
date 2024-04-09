@@ -62,8 +62,8 @@ ll rho(ll n){
 	}
 }
 void init_sv(){ fore(i,2,MAXP)if(!sv[i])for(ll j=i;j<MAXP;j+=i)sv[j]=i; }
-void fact(ll n, map<ll,int>& f){ // call init_sv first!!!
-	for(auto&& p:f) while(n%p.fst==0) p.snd++, n/=p.fst;
+void fact(ll n,map<ll,int>&f){//call init_sv first!
+	for(auto&& p:f)while(n%p.fst==0)p.snd++,n/=p.fst;
 	if(n<MAXP)while(n>1)f[sv[n]]++,n/=sv[n];
 	else if(rabin(n))f[n]++;
 	else {ll q=rho(n);fact(q,f);fact(n/q,f);}

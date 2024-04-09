@@ -8,7 +8,7 @@ ll discrete_log(ll a,ll b,ll m) {
     m/=g, b/=g; tmp = tmp*a/g%m; ++cnt;
     if(b == tmp) return cnt;
   }
-  map<ll,int> w; int s = ceil(sqrt(m)); ll base = b;
+  map<ll,int> w; int s=ceil(sqrt(m)); ll base=b;
   fore(i,0,s) w[base] = i, base=base*a%m;
   base=fastpow(a,s,m); ll key=tmp;
   fore(i,1,s+2) {

@@ -11,11 +11,11 @@ struct palindromic_tree{
 	void add(int i, string &s){
 		int p=last, c=s[i]-'a';
 		while(s[i-ns[p].len-1]!=s[i])p=ns[p].link;
-		if(ns[p].to[c]) last=ns[p].to[c], ns[last].cnt++;
+		if(ns[p].to[c])last=ns[p].to[c],ns[last].cnt++;
 		else{
 			int q=ns[p].link;
 			while(s[i-ns[q].len-1]!=s[i])q=ns[q].link;
-			q=max(1,ns[q].to[c]); last=ns[p].to[c]=SZ(ns);
+			q=max(1,ns[q].to[c]);last=ns[p].to[c]=SZ(ns);
 			ns.pb(Node(ns[p].len+2,q,1));
 		}
 	}

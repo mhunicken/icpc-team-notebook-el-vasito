@@ -92,7 +92,7 @@ struct mcSFlow{
     }
     if(eps>1 && eps>>scale==0)eps = 1<<scale;
   }
-  fore(i,0,n) for(edge &e:g[i])retCost -= e.c*(e.f);
+  fore(i,0,n) for(edge &e:g[i])retCost-=e.c*(e.f);
   return make_pair(retFlow, retCost/2/n);
   }
   tf getFlow(edge const &e){

@@ -51,8 +51,8 @@ poly derivate(poly &p){
 	return ans;
 }
 poly interpolate(vector<tf> &x, vector<tf> &y){
-	filltree(x); poly p=derivate(tree[1]); int k=SZ(y);
-	vector<tf> d=evaluate(p,x); vector<poly> intree(2*k);
+	filltree(x);poly p=derivate(tree[1]);int k=SZ(y);
+	vector<tf>d=evaluate(p,x);vector<poly>intree(2*k);
 	fore(i,k,2*k) intree[i]={mulmod(y[i-k],inv(d[i-k]))};
 	for(int i=k-1;i;i--){
 		poly p1=multiply(tree[2*i],intree[2*i+1]);

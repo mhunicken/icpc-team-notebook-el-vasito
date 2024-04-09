@@ -13,7 +13,7 @@ struct plane {
 	}
 	bool inter(plane w, ln& r){
 		pt nn=n^w.n;pt v=n^nn;double d=w.n*v;
-		if(abs(d)<=EPS)return false;
-		pt p=a+v*(w.n*(w.a-a)/d); r=ln(p,p+nn); return true;
+		if(abs(d)<=EPS)return 0;
+		pt p=a+v*(w.n*(w.a-a)/d);r=ln(p,p+nn);return 1;
 	}
 };

@@ -1,5 +1,5 @@
 typedef ll tc;
-const tc is_query=-(1LL<<62); // special value for query
+const tc is_query=-(1LL<<62);//special value for query
 struct Line {
 	tc m,b;
 	mutable multiset<Line>::iterator it,end;
@@ -12,7 +12,7 @@ struct Line {
 		return b-s->b<(s->m-m)*rhs.m;
 	}
 };
-struct HullDynamic : public multiset<Line> { // for maximum
+struct HullDynamic: public multiset<Line>{//for MAX
 	bool bad(iterator y){
 		iterator z=next(y);
 		if(y==begin()){

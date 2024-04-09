@@ -6,6 +6,10 @@ mkfifo fifo; (./solution < fifo) | (./interactor > fifo)
 //en un generador, printear el caso entre estas dos lineas
 sys.stdout=open("in","w")
 sys.stdout=sys.__stdout__
+//generator
+from os import system
+system("./a<in>o")
+x=open("o","r").read().strip().split()
 //dp optimizations
 d&c: opt(i,j) <= opt(i,j+1)
 knuth: opt(i,j-1) <= opt(i,j) <= opt(i+1,j)

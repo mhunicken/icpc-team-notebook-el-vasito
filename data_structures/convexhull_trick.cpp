@@ -4,7 +4,7 @@ struct CHT { // for minimum (for maximum just change the sign of lines)
 	vector<Line> c; int pos=0;
 	tc in(Line a, Line b){
 		tc x=b.h-a.h,y=a.m-b.m;
-		return x/y+(x%y?!((x>0)^(y>0)):0); // ==ceil(x/y)
+		return x/y+(x%y?!((x>0)^(y>0)):0);//==ceil(x/y)
 	}
 	void add(tc m, tc h){ // m's should be non increasing
 		Line l=(Line){m,h};

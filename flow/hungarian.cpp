@@ -8,7 +8,7 @@ struct Hungarian{
 	}
 	void set(int x,int y,td c){cs[x][y]=c;}
 	td assign() {
-		int mat = 0; vd ds(n), u(n), v(n); vi dad(n), sn(n);
+		int mat=0; vd ds(n),u(n),v(n); vi dad(n),sn(n);
 		fore(i,0,n)u[i]=*min_element(ALL(cs[i]));
 		fore(j,0,n){
 			v[j]=cs[0][j]-u[0];fore(i,1,n)v[j]=min(v[j],cs[i][j]-u[i]);
@@ -28,7 +28,7 @@ struct Hungarian{
 				if(i == -1) break;
 				fore(k,0,n)if(!sn[k]){
 					auto new_ds=ds[j]+cs[i][k]-u[i]-v[k];
-					if(ds[k] > new_ds){ds[k]=new_ds;dad[k]=j;}
+					if(ds[k]>new_ds){ds[k]=new_ds;dad[k]=j;}
 				}
 			}
 			fore(k,0,n)if(k!=j&&sn[k]){auto w=ds[k]-ds[j];v[k]+=w,u[R[k]]-=w;}

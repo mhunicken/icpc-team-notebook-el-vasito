@@ -4,8 +4,7 @@ bool inq[MAXN],inb[MAXN],inp[MAXN];
 int lca(int root, int x, int y){
 	memset(inp,0,sizeof(inp));
 	while(1){
-		inp[x=bs[x]]=true;
-		if(x==root)break;
+		inp[x=bs[x]]=true; if(x==root)break;
 		x=ft[mt[x]];
 	}
 	while(1){
@@ -15,7 +14,7 @@ int lca(int root, int x, int y){
 }
 void mark(int z, int x){
 	while(bs[x]!=z){
-		int y=mt[x]; inb[bs[x]]=inb[bs[y]]=true; x=ft[y];
+		int y=mt[x];inb[bs[x]]=inb[bs[y]]=true;x=ft[y];
 		if(bs[x]!=z)ft[x]=y;
 	}
 }
@@ -26,8 +25,7 @@ void contr(int s, int x, int y){
 	if(bs[x]!=z)ft[x]=y;
 	if(bs[y]!=z)ft[y]=x;
 	fore(x,0,n)if(inb[bs[x]]){
-		bs[x]=z;
-		if(!inq[x])inq[q[++qt]=x]=true;
+		bs[x]=z; if(!inq[x])inq[q[++qt]=x]=true;
 	}
 }
 int findp(int s){
@@ -50,7 +48,7 @@ int findp(int s){
 }
 int aug(int s, int t){
 	int x=t,y,z;
-	while(x>=0) y=ft[x], z=mt[y], mt[y]=x, mt[x]=y, x=z;
+	while(x>=0)y=ft[x],z=mt[y],mt[y]=x,mt[x]=y,x=z;
 	return t>=0;
 }
 int edmonds(){ // O(n^2 m)
