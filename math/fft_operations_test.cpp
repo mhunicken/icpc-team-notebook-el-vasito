@@ -114,19 +114,29 @@ poly add(poly &a, poly &b){
 	return ans;
 }
 
-poly invert(poly &b, int d){
- poly c = {inv(b[0])};
- while(SZ(c)<=d){
- 	int j=2*SZ(c);
-  auto bb=b; bb.resize(j);
-  poly cb=multiply(c,bb);
-  fore(i,0,SZ(cb)) cb[i]=submod(0,cb[i]);
-  cb[0]=addmod(cb[0],2);
-  c=multiply(c,cb);
-  c.resize(j);
- }
- c.resize(d+1);
- return c;
+// p % (x^n)
+poly takemod(poly &p, int n){
+	poly res=p;
+	res.resize(min(SZ(res),n));
+	while(SZ(res)>1&&res.back()==0) res.pop_back();
+	return res;
+}
+
+// first d terms of 1/p
+poly invert(poly &p, int d){
+	poly res={inv(p[0])};
+	int sz=1;
+	while(sz<d){
+		sz*=2;
+		poly pre(p.begin(), p.begin()+min(SZ(p),sz));
+		poly cur=multiply(res,pre);
+		fore(i,0,SZ(cur)) cur[i]=submod(0,cur[i]);
+		cur[0]=addmod(cur[0],2);
+		res=multiply(res,cur);
+		res=takemod(res,sz);
+	}
+	res.resize(d);
+	return res;
 }
 
 pair<poly,poly> divslow(poly &a, poly &b){
@@ -148,7 +158,7 @@ pair<poly,poly> divide(poly &a, poly &b){	//returns {quotient,remainder}
 	if(min(m-n,n)<MAGIC)return divslow(a,b);
 	poly ap=a; reverse(ALL(ap));
 	poly bp=b; reverse(ALL(bp));
-	bp=invert(bp,m-n);
+	bp=invert(bp,m-n+1);
 	poly q=multiply(ap,bp);
 	q.resize(SZ(q)+m-n-SZ(q)+1,0);
 	reverse(ALL(q));
