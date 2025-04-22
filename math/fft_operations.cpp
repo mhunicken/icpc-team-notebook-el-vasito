@@ -3,7 +3,7 @@
 // Polynomial interpolation: O(n*log^2(n))
 // Inverse: O(n*log(n))
 // Log: O(n*log(n))
-// Exp: O(n*log^2(n))
+// Exp: O(n*log(n))
 
 //Works with NTT. For FFT, just replace addmod,submod,mulmod,inv
 poly add(poly &a, poly &b){
@@ -38,6 +38,7 @@ poly takemod(poly &p, int n){
 
 // first d terms of 1/p
 poly invert(poly &p, int d){
+	assert(p[0]);
 	poly res={inv(p[0])};
 	int sz=1;
 	while(sz<d){
@@ -55,6 +56,7 @@ poly invert(poly &p, int d){
 
 // first d terms of log(p)
 poly log(poly &p, int d){
+	assert(p[0]==1);
 	poly cur=takemod(p,d);
 	poly a=invert(cur,d), b=derivate(cur);
 	auto res=multiply(a,b);
@@ -65,6 +67,7 @@ poly log(poly &p, int d){
 
 // first d terms of exp(p)
 poly exp(poly &p, int d){
+	assert(!p[0]);
 	poly res={1};
 	int sz=1;
 	while(sz<d){

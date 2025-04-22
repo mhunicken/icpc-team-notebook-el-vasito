@@ -100,7 +100,7 @@ poly multiply(poly& p1, poly& p2){
 
 //Polynomial division: O(n*log(n))
 //Multi-point polynomial evaluation: O(n*log^2(n))
-//Polynomial interpolation: O(n*log^2(n))
+//Polynomial interpolation: O(n*log(n))
 
 //Works with NTT. For FFT, just replace addmod,submod,mulmod,inv
 poly add(poly &a, poly &b){
@@ -124,6 +124,7 @@ poly takemod(poly &p, int n){
 
 // first d terms of 1/p
 poly invert(poly &p, int d){
+	assert(p[0]);
 	poly res={inv(p[0])};
 	int sz=1;
 	while(sz<d){

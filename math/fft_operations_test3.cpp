@@ -1,17 +1,19 @@
-// Stress test for exp/log functions - AC
+// Codeforces The Child and Binary Tree - AC
+// https://codeforces.com/contest/438/problem/E
+
 #include <bits/stdc++.h>
-#define fst first
-#define snd second
-#define fore(i,a,b) for(int i=a,ThxDem=b;i<ThxDem;++i)
 #define pb push_back
-#define ALL(s) s.begin(),s.end()
-#define FIN ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)
-#define SZ(s) int(s.size())
+#define fore(i,a,b) for(int i=a,jet=b;i<jet;++i)
+#define SZ(x) ((int)x.size())
+#define FIN ios::sync_with_stdio(0);cin.tie(0);cout.tie(0)
 using namespace std;
 typedef long long ll;
-typedef pair<int,int> ii;
 
-const int MAXN=1<<20;
+// Inverse: O(n*log(n))
+// Log: O(n*log(n))
+// Exp: O(n*log(n))
+
+const int MAXN=1<<18;
 typedef int tf;
 typedef vector<tf> poly;
 const tf MOD=998244353,RT=5;
@@ -144,45 +146,47 @@ poly exp(poly &p, int d){
 		res=multiply(res,cur);
 		res=takemod(res, sz);
 	}
-	
+
 	res.resize(d);
 	return res;
 }
-
-poly fast(vector<int> &a, int top){
-	// the answer is exp(sum (log(1+x^a[i])))
-	poly ans={0};
-	fore(i,0,SZ(a)){
-		poly p(a[i]+1);
-		p[0]=p[a[i]]=1;
-		poly now=log(p, top+1);
-		ans=add(ans, now);
-	}
-	
-	return exp(ans,top+1);
+poly operator*(tf c, poly p){
+	for(auto &i:p)i=mulmod(i,c);
+	return p;
 }
 
-poly brute(vector<int> &a, int top){
-	poly dp(top+1);
-	dp[0]=1;
-	for(auto x:a) for(int i=top;i>=x;i--) dp[i]=addmod(dp[i],dp[i-x]);
-	return dp;
-}
+// C = OGF of binary sequence c_i = 1 iff i is in the set
+// F = OGF of answer
+
+// F - 1 = C * F²
+// (bhaskara)
+// F = (1-√(1-4C)) / 2C
+// F = 4C  /  (2C * (1+√(1-4C)))
+// F = 2 / (1+√(1-4C))
 
 int main(){FIN;
-	fore(it,1,101){
-		int n=100;
-		int mx=100;
-		
-		auto rnd=bind(uniform_int_distribution<int>(1,mx), mt19937(time(0)));
-		
-		vector<int> a(n);
-		fore(i,0,n) a[i]=rnd();
-		
-		auto me=fast(a,mx);
-		auto he=brute(a,mx);
-		
-		assert(me==he);
-		cout<<"OK "<<it<<endl;
+	int n,m; cin>>n>>m; m++;
+	vector<int> c(m);
+	fore(i,0,n){
+		int x; cin>>x;
+		if(x<m)c[x]=1;
 	}
+	
+	auto tmp=(MOD-4)*c;
+	tmp[0]=addmod(tmp[0],1);
+	// tmp = 1-4C
+	
+	tmp=((MOD+1)/2)*log(tmp,m);
+	tmp=exp(tmp,m);
+	// tmp = √(1-4C)
+	
+	tmp[0]=addmod(tmp[0],1);
+	tmp=invert(tmp,m);
+	// tmp = 1 / (1+√(1-4C))
+	
+	tmp=2*tmp;
+	// tmp = 2 / (1+√(1-4C))
+	
+	fore(i,1,m)cout<<tmp[i]<<"\n";
+ 	return 0;
 }
