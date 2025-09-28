@@ -44,21 +44,24 @@ struct FFT {
 	}
 };
 
-// For modular convolutions modulo 998244353:
+// For modular convolutions modulo 998244353.
+// Replace with any NTT-friendly mod by doing:
+// FFT<uint32_t, uint64_t, MOD, primitiveRoot(MOD)>
 poly conv_small(const poly &as, const poly &bs) {
 	static uint32_t v[2<<LG];
 	static FFT<uint32_t, uint64_t, 998244353, 3> fft;
 	return fft.cv(as, bs, v);
 }
 
-// For modular convolutions modulo a 62 bit prime:
+// For modular convolutions modulo a 62 bit prime.
 poly conv_big(const poly &as, const poly &bs) {
 	static uint64_t v[2<<LG];
 	static FFT<uint64_t, __uint128_t, (1ull<<62)-(18ull<<32)+1, 3> fft;
 	return fft.cv(as, bs, v);
 }
 
-// For modular convolutions modulo an arbitrary 32-bit modulus:
+// For modular convolutions modulo an arbitrary 32-bit modulus.
+// Slightly slower than above versions, because it performs two calls to fft
 poly conv_sunzi(const poly &v1, const poly &v2, ll m) {
 	const uint64_t inv = 2703402103339935109ull,
 		mod1 = (1ull<<62)-(18ull<<32)+1,

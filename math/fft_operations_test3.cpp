@@ -70,7 +70,9 @@ struct FFT {
 	}
 };
 
-// For modular convolutions modulo 998244353:
+// For modular convolutions modulo 998244353.
+// Replace with any NTT-friendly mod by doing:
+// FFT<uint32_t, uint64_t, MOD, primitiveRoot(MOD)>
 poly multiply(const poly &as, const poly &bs) {
 	static uint32_t v[2<<LG];
 	static FFT<uint32_t, uint64_t, 998244353, 3> fft;
