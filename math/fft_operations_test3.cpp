@@ -13,15 +13,11 @@ typedef long long ll;
 // Log: O(n*log(n))
 // Exp: O(n*log(n))
 
-const int MAXN=1<<18;
+// The maximum length of the resulting convolution vector is 2^LG
+const int LG = 18, MOD=998244353;
 typedef int tf;
 typedef vector<tf> poly;
-const tf MOD=998244353,RT=5;
-struct CD {
-	tf x;
-	CD(tf x):x(x){}
-	CD(){}
-};
+
 int addmod(int a, int b){a+=b;if(a>=MOD)a-=MOD;return a;}
 int submod(int a, int b){a-=b;if(a<0)a+=MOD;return a;}
 int mulmod(ll a, ll b){return a*b%MOD;}
@@ -31,47 +27,54 @@ int fpow(int a, ll b){
 	return r;
 }
 int inv(int a){return fpow(a,MOD-2);}
-CD operator*(const CD& a, const CD& b){return CD(mulmod(a.x,b.x));}
-CD operator+(const CD& a, const CD& b){return CD(addmod(a.x,b.x));}
-CD operator-(const CD& a, const CD& b){return CD(submod(a.x,b.x));}
-vector<tf> rts(MAXN+9,-1);
-CD root(int n, bool inv){
-	tf r=rts[n]<0?rts[n]=fpow(RT,(MOD-1)/n):rts[n];
-	return CD(inv?fpow(r,MOD-2):r);
-}
-CD cp1[MAXN+9],cp2[MAXN+9];
-int R[MAXN+9];
-void dft(CD* a, int n, bool inv){
-	fore(i,0,n)if(R[i]<i)swap(a[R[i]],a[i]);
-	for(int m=2;m<=n;m*=2){
-		CD wi=root(m,inv);
-		for(int j=0;j<n;j+=m){
-			CD w(1);
-			for(int k=j,k2=j+m/2;k2<j+m;k++,k2++){
-				CD u=a[k];CD v=a[k2]*w;a[k]=u+v;a[k2]=u-v;w=w*wi;
-			}
+
+template<class u, class uu, u p, u root>
+struct FFT {
+	u r[1+(2<<LG)];
+	constexpr u m(u a, u b) {
+		uu k = uu(a)*b;
+		#define op(g) g*(g*p+2)
+		k += u(k) * (op(op(op(op(op(-p)))))) * uu(p);
+		#undef op
+		return u(k>>(8*sizeof(u)));
+	}
+	constexpr u red(u k, u a){return a-k*(a>=k);}
+	FFT() {
+		u k=r[2<<LG]=-p%p, b=root, e=p>>LG;
+		for(;e;e/=2,b=m(b,b)) if(e&1) k=m(k,b);
+		for(int i=(2<<LG)-1;i>=0;i--) r[i]=red(p, m(r[i+1], k)), i&(i-1)?0:k=m(k,k);
+	}
+	poly cv(const poly &as, const poly &bs, u *v) {
+		int c=max(SZ(as)+SZ(bs)-1, 0), n=1;
+		assert(c <= (1<<LG));
+		u h=u(uu(-p)*-p%p), a=m(h, p/2+1), x, y;
+		while(n<c) n*=2, h=red(p, m(h, a));
+		fore(i,0,n){
+			v[i]=i<SZ(as)?u(as[i]):0,
+			v[i+n]=i<SZ(bs)?u(bs[i]):0;
+
 		}
+		for(auto s:{v,v+n}) for(int j=n;j>=2;j--) for(int k=j&-j; k/=2;) fore(i,j-k,j){
+			x=s[i], y=s[i-k];
+			s[i-k] = red(2*p, x+y);
+			s[i] = m(2*p+y-x, r[3*k-j+i]);
+		}
+		fore(i,0,n) v[i]=m(v[i], v[i+n]);
+		fore(j,2,n+1) for(int k=1; !(k&j); k*=2) fore(i,j-k,j){
+			x = m(v[i], r[3*k+j-i]);
+			y = red(2*p, v[i-k]);
+			v[i-k]=x+y, v[i]=2*p+y-x;
+		}
+		fore(i,0,c) v[i]=red(p, m(v[i], h));
+		return poly(v, v+c);
 	}
-	if(inv){
-		CD z(fpow(n,MOD-2));
-		fore(i,0,n)a[i]=a[i]*z;
-	}
-}
-poly multiply(poly& p1, poly& p2){
-	int n=p1.size()+p2.size()+1;
-	int m=1,cnt=0;
-	while(m<=n)m+=m,cnt++;
-	fore(i,0,m){R[i]=0;fore(j,0,cnt)R[i]=(R[i]<<1)|((i>>j)&1);}
-	fore(i,0,m)cp1[i]=0,cp2[i]=0;
-	fore(i,0,p1.size())cp1[i]=p1[i];
-	fore(i,0,p2.size())cp2[i]=p2[i];
-	dft(cp1,m,false);dft(cp2,m,false);
-	fore(i,0,m)cp1[i]=cp1[i]*cp2[i];
-	dft(cp1,m,true);
-	poly res;
-	n-=2;
-	fore(i,0,n)res.pb(cp1[i].x);
-	return res;
+};
+
+// For modular convolutions modulo 998244353:
+poly multiply(const poly &as, const poly &bs) {
+	static uint32_t v[2<<LG];
+	static FFT<uint32_t, uint64_t, 998244353, 3> fft;
+	return fft.cv(as, bs, v);
 }
 
 poly add(poly &a, poly &b){

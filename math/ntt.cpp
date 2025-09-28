@@ -1,5 +1,6 @@
 // The maximum length of the resulting convolution vector is 2^LG
 const int LG = 20;
+typedef vector<ll> poly;
 
 template<class u, class uu, u p, u root>
 struct FFT {
@@ -17,7 +18,7 @@ struct FFT {
 		for(;e;e/=2,b=m(b,b)) if(e&1) k=m(k,b);
 		for(int i=(2<<LG)-1;i>=0;i--) r[i]=red(p, m(r[i+1], k)), i&(i-1)?0:k=m(k,k);
 	}
-	vector<ll> cv(const vector<ll> &as, const vector<ll> &bs, u *v) {
+	poly cv(const poly &as, const poly &bs, u *v) {
 		int c=max(SZ(as)+SZ(bs)-1, 0), n=1;
 		assert(c <= (1<<LG));
 		u h=u(uu(-p)*-p%p), a=m(h, p/2+1), x, y;
@@ -39,26 +40,26 @@ struct FFT {
 			v[i-k]=x+y, v[i]=2*p+y-x;
 		}
 		fore(i,0,c) v[i]=red(p, m(v[i], h));
-		return vector<ll>(v, v+c);
+		return poly(v, v+c);
 	}
 };
 
 // For modular convolutions modulo 998244353:
-vector<ll> conv_small(const vector<ll> &as, const vector<ll> &bs) {
+poly conv_small(const poly &as, const poly &bs) {
 	static uint32_t v[2<<LG];
 	static FFT<uint32_t, uint64_t, 998244353, 3> fft;
 	return fft.cv(as, bs, v);
 }
 
 // For modular convolutions modulo a 62 bit prime:
-vector<ll> conv_big(const vector<ll> &as, const vector<ll> &bs) {
+poly conv_big(const poly &as, const poly &bs) {
 	static uint64_t v[2<<LG];
 	static FFT<uint64_t, __uint128_t, (1ull<<62)-(18ull<<32)+1, 3> fft;
 	return fft.cv(as, bs, v);
 }
 
 // For modular convolutions modulo an arbitrary 32-bit modulus:
-vector<ll> conv_sunzi(const vector<ll> &v1, const vector<ll> &v2, ll m) {
+poly conv_sunzi(const poly &v1, const poly &v2, ll m) {
 	const uint64_t inv = 2703402103339935109ull,
 		mod1 = (1ull<<62)-(18ull<<32)+1,
 		mod2 = (1ull<<62)-(76ull<<32)+1;
