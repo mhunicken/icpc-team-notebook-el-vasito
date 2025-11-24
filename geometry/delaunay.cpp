@@ -1,6 +1,6 @@
 // Returns planar graph representing Delaunay's triangulation.
 // Edges for each vertex are in ccw order.
-// It can work with doubles, but also integers (replace long double in line 45)
+// It can work with doubles, but also integers (replace long double in line 51)
 typedef struct QuadEdge* Q;
 struct QuadEdge {
 	int id,used;
@@ -37,7 +37,9 @@ Q conn(Q a, Q b){
 	splice(e->rev(),b);
 	return e;
 }
+
 auto area(pt p, pt q, pt r){return (q-p)%(r-q);}
+
 // is p in circunference formed by (a,b,c)?
 bool in_c(pt a, pt b, pt c, pt p){
 	// Warning: this number is O(max_coord^4).

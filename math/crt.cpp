@@ -8,7 +8,7 @@ pair<ll,ll> crt(vector< tuple<ll,ll,ll> > cond) { // returns: (sol, lcm)
 	ll x1=0,m1=1,x2,m2;
 	for(auto t:cond){
 		tie(x2,m2)=sol(t);
-		if((x1-x2)%gcd(m1,m2))return {-1,-1};
+		if(m2<0||(x1-x2)%gcd(m1,m2))return {-1,-1};
 		if(m1==m2)continue;
 		ll k=diophantine(m2,-m1,x1-x2).fst.snd,l=m1*(m2/gcd(m1,m2));
 		x1=mod((__int128)m1*k+x1,l);m1=l;

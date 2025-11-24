@@ -63,7 +63,8 @@ void cut(Node x, Node y){mkR(x); exv(y); y->c[1]->p=0; y->c[1]=0;}
 Node father(Node x){
 	exv(x); Node r=x->c[1];
 	if(!r)return 0;
-	while(r->c[0])r=r->c[0];
+	r->push();
+	while(r->c[0])r=r->c[0],r->push();
 	return r;
 }
 void cut(Node x){ // cuts x from father keeping tree root

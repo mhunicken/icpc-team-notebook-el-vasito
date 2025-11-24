@@ -49,7 +49,7 @@
 %%% Configuracion de Listings
 \lstloadlanguages{C++}
 \lstnewenvironment{code}
-	{%\lstset{	numbers=none, frame=lines, basicstyle=\small\ttfamily, }%
+	{%\lstset{    numbers=none, frame=lines, basicstyle=\small\ttfamily, }%
 	 \csname lst@SetFirstLabel\endcsname}
 	{\csname lst@SaveFirstLabel\endcsname}
 \lstset{% general command to set parameter(s)
@@ -58,14 +58,14 @@
 	morekeywords={tint,forn,forsn,fore},
 	basewidth={0.47em,0.40em},
 	columns=fixed, fontadjust, resetmargins, xrightmargin=5pt, xleftmargin=15pt,
-	flexiblecolumns=false, tabsize=2, breaklines,	breakatwhitespace=false, extendedchars=true,
+	flexiblecolumns=false, tabsize=2, breaklines, breakatwhitespace=false, extendedchars=true,
 	numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=9pt,
 	frame=l, framesep=3pt,
-    basicstyle=\ttfamily,
-    keywordstyle=\color{darkblue}\ttfamily,
-    stringstyle=\color{magenta}\ttfamily,
-    commentstyle=\color{RedOrange}\ttfamily,
-    morecomment=[l][\color{OliveGreen}]{\#}
+	basicstyle=\ttfamily,
+	keywordstyle=\color{darkblue}\ttfamily,
+	stringstyle=\color{magenta}\ttfamily,
+	commentstyle=\color{RedOrange}\ttfamily,
+	morecomment=[l][\color{OliveGreen}]{\#}
 }
 
 \lstdefinestyle{C++}{
@@ -74,14 +74,14 @@
 	morekeywords={tint,forn,forsn,fore},
 	basewidth={0.47em,0.40em},
 	columns=fixed, fontadjust, resetmargins, xrightmargin=5pt, xleftmargin=15pt,
-	flexiblecolumns=false, tabsize=2, breaklines,	breakatwhitespace=false, extendedchars=true,
+	flexiblecolumns=false, tabsize=2, breaklines, breakatwhitespace=false, extendedchars=true,
 	numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=9pt,
 	frame=l, framesep=3pt,
-    basicstyle=\ttfamily,
-    keywordstyle=\color{darkblue}\ttfamily,
-    stringstyle=\color{magenta}\ttfamily,
-    commentstyle=\color{RedOrange}\ttfamily,
-    morecomment=[l][\color{OliveGreen}]{\#}
+	basicstyle=\ttfamily,
+	keywordstyle=\color{darkblue}\ttfamily,
+	stringstyle=\color{magenta}\ttfamily,
+	commentstyle=\color{RedOrange}\ttfamily,
+	morecomment=[l][\color{OliveGreen}]{\#}
 }
 
 %%% Macros
@@ -91,6 +91,6 @@
 \def\nbcoment#1{\begin{small}\textbf{#1}\end{small}}
 \newcommand{\comb}[2]{\left( \begin{array}{c} #1 \\ #2 \end{array}\right)}
 \def\complexity#1{\texorpdfstring{$\mathcal{O}(#1)$}{O(#1)}}
- \newcommand\cppfile[2][]{
-\lstinputlisting[style=C++,linerange={#1}]{#2}
+\newcommand\cppfile[2][]{
+	\lstinputlisting[style=C++]{#2}
 }

@@ -85,7 +85,8 @@
 
 \subsection{Dynamic connectivity}
 \cppfile{graphs/dynamic_connectivity.cpp}
-
+\subsection{Dominator tree}
+\cppfile{graphs/dominator_tree.cpp}
 \subsection{Edmond's blossom (matching in general graphs)}
 \cppfile{graphs/edmonds_blossom.cpp}
 
@@ -102,10 +103,37 @@
 \cppfile{graphs/edge_color.cpp}
 
 \section{Math}
+\subsection{Identities}
+{
+	$C_n = \frac{2(2n-1)}{n+1} C_{n-1}$
 
-% \subsection{Sieve}
-% \cppfile{math/sieve.cpp}
+	$C_n = \frac{1}{n+1} \binom{2n}{n}$
 
+	$C_n \sim \frac{4^n}{n^{3/2}\sqrt{\pi}}$
+
+	$\sigma(n) = O(\log(\log(n)))$ (number of divisors of $n$)
+
+	$F_{2n+1} = F_{n}^2 + F_{n+1}^2$
+@
+	$F_{2n} = F_{n+1}^2 - F_{n-1}^2$
+
+	$\sum_{i=1}^n F_i = F_{n+2}-1$
+
+	$F_{n+i}F_{n+j} - F_nF_{n+i+j} = (-1)^n F_iF_j$
+
+	(Möbius Inv. Formula)
+	Let $g(n) = \sum_{d\mid n} f(d)$, then $f(n)=\sum{d\mid n} g(d) \mu\left(\frac{n}{d})\right)$.
+}
+\subsection{Theorems}
+\cppfile{math/theorems.txt}
+\subsection{Integer floor division}
+\cppfile{math/floor_division.cpp}
+%\subsection{Extended Euclid} % allready in diophantine
+%\cppfile{math/extended_euclid.cpp}
+\subsection{Sieve of Eratosthenes}
+\cppfile{math/sieve.cpp}
+\subsection{Generate divisors}
+\cppfile{math/divisors.cpp}
 \subsection{Pollard's rho}
 \cppfile{math/pollard_rho.cpp}
 
@@ -117,10 +145,8 @@
 
 \subsection{Fast Fourier Transform}
 \cppfile{math/fft.cpp}
-
-\subsection{Fast Fourier Transform Operations}
+\subsection{FFT operations}
 \cppfile{math/fft_operations.cpp}
-
 \subsection{Fast Hadamard Transform}
 \cppfile{math/fht.cpp}
 
@@ -150,6 +176,8 @@
 
 \subsection{Tonelli Shanks}
 \cppfile{math/tonelli_shanks.cpp}
+\subsection{Prime count}
+\cppfile{math/prime_count.cpp}
 
 \subsection{Points Under Line}
 \cppfile{math/points_under_line.cpp}
@@ -185,6 +213,12 @@
 
 \subsection{Halfplane intersection}
 \cppfile{geometry/halfplanes.cpp}
+\subsection{KD tree}
+\cppfile{geometry/kdtree.cpp}
+\subsection{Minkowski sum}
+\cppfile{geometry/minkowski_sum.cpp}
+\subsection{Delaunay triangulation}
+\cppfile{geometry/delaunay.cpp}
 
 \subsection{KD Tree}
 \cppfile{geometry/kdtree.cpp}
@@ -286,4 +320,3 @@ Small-to-large;randomize;ver diferencias;berlekamp;
 \end{multicols}
 
 \end{document}
-
