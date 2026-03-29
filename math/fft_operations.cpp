@@ -1,5 +1,6 @@
 // Polynomial division: O(n*log(n))
-// Multi-point polynomial evaluation: O(n*log^2(n))
+// Multi-point polynomial evaluation for arbitrarily large points: O(n*log^2(n))
+// Multi-point polynomial evaluation for all points in [0, MOD): O((n+MOD)*log(n+MOD))
 // Polynomial interpolation: O(n*log^2(n))
 // Inverse: O(n*log(n))
 // Log: O(n*log(n))
@@ -121,6 +122,7 @@ void filltree(vector<tf> &x){
 	for(int i=k-1;i;i--) tree[i]=multiply(tree[2*i],tree[2*i+1]);
 }
 
+// Multi-point polynomial evaluation for arbitrarily large points
 vector<tf> evaluate(poly &a, vector<tf> &x){
 	filltree(x);
 	int k=SZ(x);
@@ -129,6 +131,59 @@ vector<tf> evaluate(poly &a, vector<tf> &x){
 	fore(i,2,2*k) ans[i]=divide(ans[i>>1],tree[i]).snd;
 	vector<tf> r; fore(i,0,k) r.pb(ans[i+k][0]);
 	return r;
+}
+
+int get_primitive_root(int p) {
+	if(p==2)return 1;
+	int phi=p-1, n=phi;
+    vector<int> fact;
+	for(int i=2;i*i<=n;i++) if(n%i==0){
+		fact.pb(i);
+		while(n%i==0) n/=i;
+	}
+	if(n>1) fact.pb(n);
+
+	fore(res,2,p+1){
+		int ok=1;
+		for(int f:fact){
+			if(fpow(res,phi/f)==1){
+				ok=false;
+				break;
+			}
+		}
+		if(ok)return res;
+    }
+    return -1;
+}
+
+// Multi-point polynomial evaluation for all points in [0, MOD)
+// MOD needs to be a prime number
+vector<int> evaluate_all_points(poly& p) {
+    int g=get_primitive_root(MOD), inv_g=inv(g), n=SZ(p)-1;
+
+    poly ap(n+1, 0), bp(n+MOD); 
+
+	fore(i,0,n+MOD-1){
+		ll exp=1ll*i*(i-1)/2%(MOD-1);
+        if(i<=n) ap[n-i]=mulmod(p[i],fpow(inv_g, exp));
+		bp[i]=fpow(g, exp);
+    }
+
+    poly cp=multiply(ap, bp);
+
+    vector<int> ans(MOD,cp[0]);
+    int gk=1;
+
+	fore(i,0,MOD-1){
+		ll exp=1ll*i*(i-1)/2%(MOD-1);
+        int val=0;
+		if(n+i<SZ(cp)) val=cp[n+i];
+		val=mulmod(val, fpow(inv_g,exp));
+        ans[gk] = val;
+        gk=mulmod(gk,g);
+    }
+
+    return ans;
 }
 
 poly interpolate(vector<tf> &x, vector<tf> &y){
