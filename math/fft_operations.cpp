@@ -133,10 +133,40 @@ vector<tf> evaluate(poly &a, vector<tf> &x){
 	return r;
 }
 
+// Given any number g, perform multi-point polynomial evaluation
+// for all points of the form g^k, for each k in [0, MOD)
+// in O((n+MOD) * log(n+MOD))
+vector<int> chirpTransform(poly& p, int g) {
+	int inv_g=inv(g), n=SZ(p)-1;
+	assert(g!=-1);
+	poly ap(n+1, 0), bp(n+MOD); 
+
+	fore(i,0,n+MOD-1){
+		ll exp=1ll*i*(i-1)/2%(MOD-1);
+		if(i<=n) ap[n-i]=mulmod(p[i],fpow(inv_g, exp));
+		bp[i]=fpow(g, exp);
+	}
+
+	poly cp=multiply(ap, bp);
+
+	vector<int> ans(MOD);
+	int gk=1;
+	fore(i,0,MOD-1){
+		ll exp=1ll*i*(i-1)/2%(MOD-1);
+		int val=0;
+		if(n+i<SZ(cp)) val=cp[n+i];
+		val=mulmod(val, fpow(inv_g,exp));
+		ans[i] = val;
+		gk=mulmod(gk,g);
+	}
+	ans.back()=ans[0];
+	return ans;
+}
+
 int get_primitive_root(int p) {
 	if(p==2)return 1;
 	int phi=p-1, n=phi;
-    vector<int> fact;
+	vector<int> fact;
 	for(int i=2;i*i<=n;i++) if(n%i==0){
 		fact.pb(i);
 		while(n%i==0) n/=i;
@@ -152,38 +182,22 @@ int get_primitive_root(int p) {
 			}
 		}
 		if(ok)return res;
-    }
-    return -1;
+	}
+	return -1;
 }
 
 // Multi-point polynomial evaluation for all points in [0, MOD)
 // MOD needs to be a prime number
 vector<int> evaluate_all_points(poly& p) {
-    int g=get_primitive_root(MOD), inv_g=inv(g), n=SZ(p)-1;
-	assert(g!=-1);
-    poly ap(n+1, 0), bp(n+MOD); 
+	int g=get_primitive_root(MOD), gk=1;
 
-	fore(i,0,n+MOD-1){
-		ll exp=1ll*i*(i-1)/2%(MOD-1);
-        if(i<=n) ap[n-i]=mulmod(p[i],fpow(inv_g, exp));
-		bp[i]=fpow(g, exp);
-    }
-
-    poly cp=multiply(ap, bp);
-
-    vector<int> ans(MOD,p[0]);
-    int gk=1;
-
+	vector<int> ch=chirpTransform(p,g), ans(MOD, p[0]);
+	
 	fore(i,0,MOD-1){
-		ll exp=1ll*i*(i-1)/2%(MOD-1);
-        int val=0;
-		if(n+i<SZ(cp)) val=cp[n+i];
-		val=mulmod(val, fpow(inv_g,exp));
-        ans[gk] = val;
-        gk=mulmod(gk,g);
-    }
-
-    return ans;
+		ans[gk] = ch[i];
+		gk=mulmod(gk,g);
+	}
+	return ans;
 }
 
 poly interpolate(vector<tf> &x, vector<tf> &y){
