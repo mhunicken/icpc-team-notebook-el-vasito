@@ -1,6 +1,5 @@
 // Test for multi-point evaluation for all points in range [0,MOD)
-// Universal cup - Season 4, stage 21, problem J - AC
-// https://contest.ucup.ac/contest/3542/problem/17428
+// Manual randomized brute force - AC
 #include <bits/stdc++.h>
 #define fst first
 #define snd second
@@ -13,8 +12,8 @@ using namespace std;
 typedef long long ll;
 typedef pair<int,int> ii;
 
+const int MAXN=10001;
 int MOD;
-const int MAXN=1e6+20;
 
 int addmod(int a, int b){a+=b;if(a>=MOD)a-=MOD;return a;}
 int submod(int a, int b){a-=b;if(a<0)a+=MOD;return a;}
@@ -26,14 +25,6 @@ int fpow(int a, ll b){
 }
 int inv(int a){
 	return fpow(a,MOD-2);
-}
-
-int f[MAXN],invv[MAXN],invf[MAXN];
-int cmb(int n, int k){return n<k?0:mulmod(f[n],mulmod(invf[k],invf[n-k]));}
-void init_facs(){	//call before using cmb!!
-	invv[1]=1; fore(i,2,MAXN) invv[i]=mulmod(submod(0,MOD/i),invv[MOD%i]);
-	f[0]=invf[0]=1;
-	fore(i,1,MAXN) f[i]=mulmod(f[i-1],i), invf[i]=mulmod(invf[i-1],invv[i]);
 }
 
 // The maximum length of the resulting convolution vector is 2^LG
@@ -168,44 +159,41 @@ poly dyc(vector<int> &a, int l, int r){
 	return multiply(aa,b);
 }
 
+auto rnd=bind(uniform_int_distribution<int>(0,1e9), mt19937(time(0)));
+
+int getRand(int l, int r){
+	return l+rnd()%(r-l+1);
+}
+
+int eval(poly &p, int x){
+	int pw=1, ans=0;
+	for(auto a:p){
+		ans=addmod(ans, mulmod(pw, a));
+		pw=mulmod(pw, x);
+	}
+	return ans;
+}
+
 int main(){FIN;
-	int n,pp; cin>>n>>pp;
-	MOD=pp;
-	init_facs();
-
-	vector<int> a(n);
-	fore(i,0,n) cin>>a[i];
-
-	auto den=dyc(a,0,n);
-
-	vector<int> res(MOD);
-
-	int m=0;
-	for(auto x:a) m=max(x,m);
-
-	vector<int> xx(MOD-m);
-	fore(i,0,MOD-m) xx[i]=m+i;
-
-	auto yy=evaluate_all_points(den);
-
-	res[m]=1;
-	fore(i,0,n) res[m]=mulmod(res[m], cmb(m, a[i]));
-
-	fore(i,m+1,MOD){
-		res[i]=mulmod(mulmod(fpow(i,n), res[i-1]), inv(yy[i]));
+	vector<int> spf(MAXN), pr;
+	fore(i,2,MAXN) if(!spf[i]){
+		pr.pb(i);
+		for(int j=i;j<MAXN;j+=i) if(!spf[j]) spf[j]=i;
 	}
 
-	poly asd(MOD);
-	fore(i,0,MOD) asd[i]=mulmod(fpow(MOD-1, i), invf[i]);
+	int it=100;
 
-	poly asd2(MOD);
-	fore(i,0,MOD) asd2[i]=mulmod(res[i], invf[i]);
-	poly vv=multiply(asd,asd2);
+	while(it--){
+		MOD=pr[getRand(0,SZ(pr)-1)];
+		int n=10000;
+		poly p(n+1);
+		fore(i,0,n+1) p[i]=getRand(0,MOD-1);
 
-	fore(i,0,SZ(vv)) vv[i]=mulmod(vv[i], f[i]);
+		auto res=evaluate_all_points(p);
+		vector<int> brute(MOD);
+		fore(i,0,MOD) brute[i]=eval(p,i);
 
-	int ans=0;
-	fore(i,0,SZ(vv)) ans=addmod(ans, vv[i]);
-
-	cout<<ans<<"\n";
+		cout<<"checking polynomial of degree "<<n<<" for MOD = "<<MOD<<": ";
+		cout<<(res==brute)<<endl;
+	}
 }
