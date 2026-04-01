@@ -158,7 +158,7 @@ int get_primitive_root(int p) {
 
 // Multi-point polynomial evaluation for all points in [0, MOD)
 // MOD needs to be a prime number
-vector<int> evaluate_all_points(poly& pp) {
+vector<int> evaluate_all_points(poly& p) {
     int g=get_primitive_root(MOD), inv_g=inv(g), n=SZ(p)-1;
 	assert(g!=-1);
     poly ap(n+1, 0), bp(n+MOD); 
