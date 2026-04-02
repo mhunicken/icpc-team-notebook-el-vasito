@@ -138,7 +138,7 @@ vector<tf> evaluate(poly &a, vector<tf> &x){
 // in O((n+k) * log(n+k))
 vector<int> chirpTransform(poly& p, int g, int k) {
 	int inv_g=inv(g), n=SZ(p)-1, sz=min(k,MOD-1), gk=1;
-	poly ap(n+1, 0), bp(n+sz+1); 
+	poly ap(n+1), bp(n+sz);
 
 	fore(i,0,n+sz){
 		ll exp=1ll*i*(i-1)/2%(MOD-1);
