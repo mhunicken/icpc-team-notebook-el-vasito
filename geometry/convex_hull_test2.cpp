@@ -17,7 +17,7 @@ struct pt {  // for 3D add z coordinate
 	pt(){}
 	double norm2(){return *this**this;}
 	double norm(){return sqrt(norm2());}
-	bool operator==(pt p){return abs(x-p.x)<EPS&&abs(y-p.y)<EPS;}
+	bool operator==(pt p){return abs(x-p.x)<EPS&&abs(y-p.y)<EPS&&id==p.id;}
 	pt operator+(pt p){return pt(x+p.x,y+p.y);}
 	pt operator-(pt p){return pt(x-p.x,y-p.y);}
 	pt operator*(double t){return pt(t*x,t*y);}
@@ -39,8 +39,10 @@ struct pt {  // for 3D add z coordinate
 // CCW order
 // Includes collinear points (change sign of EPS in left to exclude)
 vector<pt> chull(vector<pt> p){
-	vector<pt> r;
 	sort(p.begin(),p.end()); // first x, then y
+	p.erase(unique(p.begin(),p.end()), p.end());
+	if(p.size()<3)return p;
+	vector<pt> r;
 	fore(i,0,p.size()){ // lower hull
 		while(r.size()>=2&&r.back().left(r[r.size()-2],p[i]))r.pop_back();
 		r.pb(p[i]);
