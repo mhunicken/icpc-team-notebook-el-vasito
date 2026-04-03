@@ -40,20 +40,20 @@ struct pt {  // for 3D add z coordinate
 // CCW order
 // Includes collinear points (change sign of EPS in left to exclude)
 vector<pt> chull(vector<pt> p){
-	if(SZ(p)<3)return p;
 	vector<pt> r;
 	sort(p.begin(),p.end()); // first x, then y
+	p.erase(unique(p.begin(),p.end()), p.end());
 	fore(i,0,p.size()){ // lower hull
 		while(r.size()>=2&&r.back().left(r[r.size()-2],p[i]))r.pop_back();
 		r.pb(p[i]);
 	}
 	r.pop_back();
-	int k=r.size();
+	int k=r.size(),pr=k-1;
 	for(int i=p.size()-1;i>=0;--i){ // upper hull
 		while(r.size()>=k+2&&r.back().left(r[r.size()-2],p[i]))r.pop_back();
-		r.pb(p[i]);
+		while(pr>=0&&p[i]<r[pr]) pr--;
+		if(pr<0||!(p[i]==r[pr])) r.pb(p[i]);
 	}
-	r.pop_back();
 	return r;
 }
 

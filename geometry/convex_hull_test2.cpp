@@ -12,8 +12,8 @@ typedef long long ll;
 const double EPS=1e-12;
 
 struct pt {  // for 3D add z coordinate
-	double x,y;int id;
-	pt(double x, double y, int id=-1):x(x),y(y),id(id){}
+	double x,y;
+	pt(double x, double y):x(x),y(y){}
 	pt(){}
 	double norm2(){return *this**this;}
 	double norm(){return sqrt(norm2());}
@@ -41,17 +41,18 @@ struct pt {  // for 3D add z coordinate
 vector<pt> chull(vector<pt> p){
 	vector<pt> r;
 	sort(p.begin(),p.end()); // first x, then y
+	p.erase(unique(p.begin(),p.end()), p.end());
 	fore(i,0,p.size()){ // lower hull
 		while(r.size()>=2&&r.back().left(r[r.size()-2],p[i]))r.pop_back();
 		r.pb(p[i]);
 	}
 	r.pop_back();
-	int k=r.size();
+	int k=r.size(),pr=k-1;
 	for(int i=p.size()-1;i>=0;--i){ // upper hull
 		while(r.size()>=k+2&&r.back().left(r[r.size()-2],p[i]))r.pop_back();
-		r.pb(p[i]);
+		while(pr>=0&&p[i]<r[pr]) pr--;
+		if(pr<0||!(p[i]==r[pr])) r.pb(p[i]);
 	}
-	r.pop_back();
 	return r;
 }
 
@@ -63,16 +64,19 @@ int main(){
 	fore(i,0,n){
 		int x,y;
 		scanf("%d%d",&x,&y);
-		p.pb(pt(x,y,0));
+		p.pb(pt(x,y));
 	}
 	scanf("%d",&m);
+	vector<pt> q;
 	fore(i,0,m){
 		int x,y;
 		scanf("%d%d",&x,&y);
-		p.pb(pt(x,y,1));
+		p.pb(pt(x,y));
+		q.pb(pt(x,y));
 	}
 	vector<pt> c=chull(p);
-	for(auto p:c)if(p.id){puts("NO");return 0;}
+	set<pt> s(c.begin(),c.end());
+	for(pt p:q)if(s.count(p)){puts("NO");return 0;}
 	puts("YES");
 	return 0;
 }
