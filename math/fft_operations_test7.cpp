@@ -94,7 +94,7 @@ poly multiply(const poly v1, const poly v2, ll m=MOD) {
 // Given any number g, perform multi-point polynomial evaluation
 // for all points of the form g^i, for each i in [0, k)
 // in O((n+k) * log(n+k))
-vector<int> chirpTransform(poly& p, int g, int k) {
+vector<int> chirpTransform(const poly& p, int g, int k) {
 	int inv_g=inv(g), n=SZ(p)-1, sz=min(k,MOD-1);
 	poly ap(n+1), bp(n+sz);
 

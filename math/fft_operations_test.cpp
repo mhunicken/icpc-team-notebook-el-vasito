@@ -12,12 +12,9 @@ using namespace std;
 typedef long long ll;
 typedef pair<int,int> ii;
 
-// MAXN must be power of 2 !!
-// MOD-1 needs to be a multiple of MAXN !!
-// big mod and primitive root for NTT:
 typedef int tf;
 typedef vector<tf> poly;
-const tf MOD=998244353,RT=3,MAXN=1<<16;
+const tf MOD=998244353,RT=3,LG=16;
 
 tf addmod(tf a, tf b){tf r=a+b;if(r>=MOD)r-=MOD;return r;}
 tf submod(tf a, tf b){tf r=a-b;if(r<0)r+=MOD;return r;}
@@ -31,91 +28,91 @@ tf pm(ll a, ll b){
 	return r;
 }
 tf inv(tf a){return pm(a,MOD-2);}
-// FFT
-/*
-struct CD {
-	double r,i;
-	CD(double r=0, double i=0):r(r),i(i){}
-	double real()const{return r;}
-	void operator/=(const int c){r/=c, i/=c;}
-};
-CD operator*(const CD& a, const CD& b){
-	return CD(a.r*b.r-a.i*b.i,a.r*b.i+a.i*b.r);}
-CD operator+(const CD& a, const CD& b){return CD(a.r+b.r,a.i+b.i);}
-CD operator-(const CD& a, const CD& b){return CD(a.r-b.r,a.i-b.i);}
-const double pi=acos(-1.0);
-*/
-// NTT
-struct CD {
-	tf x;
-	CD(tf x):x(x){}
-	CD(){}
-};
-CD operator*(const CD& a, const CD& b){return CD(mulmod(a.x,b.x));}
-CD operator+(const CD& a, const CD& b){return CD(addmod(a.x,b.x));}
-CD operator-(const CD& a, const CD& b){return CD(submod(a.x,b.x));}
-vector<tf> rts(MAXN+9,-1);
-CD root(int n, bool inv){
-	tf r=rts[n]<0?rts[n]=pm(RT,(MOD-1)/n):rts[n];
-	return CD(inv?pm(r,MOD-2):r);
-}
-CD cp1[MAXN+9],cp2[MAXN+9];
-int R[MAXN+9];
-void dft(CD* a, int n, bool inv){
-	fore(i,0,n)if(R[i]<i)swap(a[R[i]],a[i]);
-	for(int m=2;m<=n;m*=2){
-		//double z=2*pi/m*(inv?-1:1); // FFT
-		//CD wi=CD(cos(z),sin(z)); // FFT
-		CD wi=root(m,inv); // NTT
-		for(int j=0;j<n;j+=m){
-			CD w(1);
-			for(int k=j,k2=j+m/2;k2<j+m;k++,k2++){
-				CD u=a[k];CD v=a[k2]*w;a[k]=u+v;a[k2]=u-v;w=w*wi;
-			}
+
+template<class u, class uu, u p, u root>
+struct FFT {
+	u r[1+(2<<LG)];
+	constexpr u m(u a, u b) {
+		uu k = uu(a)*b;
+		#define op(g) g*(g*p+2)
+		k += u(k) * (op(op(op(op(op(-p)))))) * uu(p);
+		#undef op
+		return u(k>>(8*sizeof(u)));
+	}
+	constexpr u red(u k, u a){return a-k*(a>=k);}
+	FFT() {
+		u k=r[2<<LG]=-p%p, b=root, e=p>>LG;
+		for(;e;e/=2,b=m(b,b)) if(e&1) k=m(k,b);
+		for(int i=(2<<LG)-1;i>=0;i--) r[i]=red(p, m(r[i+1], k)), i&(i-1)?0:k=m(k,k);
+	}
+	poly cv(const poly &as, const poly &bs, u *v) {
+		int c=max(SZ(as)+SZ(bs)-1, 0), n=1;
+		assert(c <= (1<<LG));
+		u h=u(uu(-p)*-p%p), a=m(h, p/2+1), x, y;
+		while(n<c) n*=2, h=red(p, m(h, a));
+		fore(i,0,n){
+			v[i]=i<SZ(as)?u(as[i]):0,
+			v[i+n]=i<SZ(bs)?u(bs[i]):0;
+
 		}
+		for(auto s:{v,v+n}) for(int j=n;j>=2;j--) for(int k=j&-j; k/=2;) fore(i,j-k,j){
+			x=s[i], y=s[i-k];
+			s[i-k] = red(2*p, x+y);
+			s[i] = m(2*p+y-x, r[3*k-j+i]);
+		}
+		fore(i,0,n) v[i]=m(v[i], v[i+n]);
+		fore(j,2,n+1) for(int k=1; !(k&j); k*=2) fore(i,j-k,j){
+			x = m(v[i], r[3*k+j-i]);
+			y = red(2*p, v[i-k]);
+			v[i-k]=x+y, v[i]=2*p+y-x;
+		}
+		fore(i,0,c) v[i]=red(p, m(v[i], h));
+		return poly(v, v+c);
 	}
-	//if(inv)fore(i,0,n)a[i]/=n; // FFT
-	if(inv){ // NTT
-		CD z(pm(n,MOD-2)); // pm: modular exponentiation
-		fore(i,0,n)a[i]=a[i]*z;
-	}
-}
-poly multiply(poly& p1, poly& p2){
-	int n=p1.size()+p2.size()+1;
-	int m=1,cnt=0;
-	while(m<=n)m+=m,cnt++;
-	fore(i,0,m){R[i]=0;fore(j,0,cnt)R[i]=(R[i]<<1)|((i>>j)&1);}
-	fore(i,0,m)cp1[i]=0,cp2[i]=0;
-	fore(i,0,p1.size())cp1[i]=p1[i];
-	fore(i,0,p2.size())cp2[i]=p2[i];
-	dft(cp1,m,false);dft(cp2,m,false);
-	fore(i,0,m)cp1[i]=cp1[i]*cp2[i];
-	dft(cp1,m,true);
-	poly res;
-	n-=2;
-	//fore(i,0,n)res.pb((tf)floor(cp1[i].real()+0.5)); // FFT
-	fore(i,0,n)res.pb(cp1[i].x); // NTT
-	return res;
+};
+
+// For modular convolutions modulo 998244353.
+// Replace with any NTT-friendly mod by doing:
+// FFT<uint32_t, uint64_t, MOD, primitiveRoot(MOD)>
+poly multiply(const poly &as, const poly &bs) {
+	static uint32_t v[2<<LG];
+	static FFT<uint32_t, uint64_t, 998244353, 3> fft;
+	return fft.cv(as, bs, v);
 }
 
-//Polynomial division: O(n*log(n))
-//Multi-point polynomial evaluation: O(n*log^2(n))
-//Polynomial interpolation: O(n*log(n))
+// Polynomial division: O(n*log(n))
+// Multi-point polynomial evaluation for arbitrarily large points: O(n+k*log^2(k))
+// Multi-point polynomial evaluation for all points in [0, MOD): O((n+MOD)*log(n+MOD))
+// Polynomial interpolation: O(n*log^2(n))
+// Inverse: O(n*log(n))
+// Log: O(n*log(n))
+// Exp: O(n*log(n))
 
 //Works with NTT. For FFT, just replace addmod,submod,mulmod,inv
-poly add(poly &a, poly &b){
+poly add(const poly &a, const poly &b){
 	int n=SZ(a),m=SZ(b);
 	poly ans(max(n,m));
-	fore(i,0,max(n,m)){
-		if(i<n) ans[i]=addmod(ans[i],a[i]);
-		if(i<m) ans[i]=addmod(ans[i],b[i]);	
-	}
+	fore(i,0,max(n,m)) ans[i]=addmod(i<SZ(a)?a[i]:0, i<SZ(b)?b[i]:0);
 	while(SZ(ans)>1&&!ans.back())ans.pop_back();
 	return ans;
 }
 
+// derivative of p
+poly derivative(const poly &p){
+	poly ans(max(1, SZ(p)-1));
+	fore(i,1,SZ(p)) ans[i-1]=mulmod(p[i],i);
+	return ans;
+}
+
+// integral of p
+poly integrate(const poly &p){
+	poly ans(SZ(p)+1);
+	fore(i,0,SZ(p)) ans[i+1]=mulmod(p[i], inv(i+1));
+	return ans;
+}
+
 // p % (x^n)
-poly takemod(poly &p, int n){
+poly takemod(const poly &p, int n){
 	poly res=p;
 	res.resize(min(SZ(res),n));
 	while(SZ(res)>1&&res.back()==0) res.pop_back();
@@ -123,7 +120,7 @@ poly takemod(poly &p, int n){
 }
 
 // first d terms of 1/p
-poly invert(poly &p, int d){
+poly invert(const poly &p, int d){
 	assert(p[0]);
 	poly res={inv(p[0])};
 	int sz=1;
@@ -133,6 +130,7 @@ poly invert(poly &p, int d){
 		poly cur=multiply(res,pre);
 		fore(i,0,SZ(cur)) cur[i]=submod(0,cur[i]);
 		cur[0]=addmod(cur[0],2);
+		cur=takemod(cur,sz);
 		res=multiply(res,cur);
 		res=takemod(res,sz);
 	}
@@ -140,7 +138,36 @@ poly invert(poly &p, int d){
 	return res;
 }
 
-pair<poly,poly> divslow(poly &a, poly &b){
+// first d terms of log(p)
+poly log(const poly &p, int d){
+	assert(p[0]==1);
+	poly cur=takemod(p,d);
+	poly a=invert(cur,d), b=derivative(cur);
+	auto res=multiply(a,b);
+	res=takemod(res,d-1);
+	res=integrate(res);
+	return res;
+}
+
+// first d terms of exp(p)
+poly exp(const poly &p, int d){
+	assert(!p[0]);
+	poly res={1};
+	int sz=1;
+	while(sz<d){
+		sz*=2;
+		poly lg=log(res, sz), cur(sz);
+		fore(i,0,sz) cur[i]=submod(i<SZ(p)?p[i]:0, i<SZ(lg)?lg[i]:0);
+		cur[0]=addmod(cur[0],1);
+		res=multiply(res,cur);
+		res=takemod(res, sz);
+	}
+
+	res.resize(d);
+	return res;
+}
+
+pair<poly,poly> divslow(const poly &a, const poly &b){
 	poly q,r=a;
 	while(SZ(r)>=SZ(b)){
 		q.pb(mulmod(r.back(),inv(b.back())));
@@ -153,15 +180,15 @@ pair<poly,poly> divslow(poly &a, poly &b){
 	return {q,r};
 }
 
-pair<poly,poly> divide(poly &a, poly &b){	//returns {quotient,remainder}
-	int m=SZ(a),n=SZ(b),MAGIC=750;
+pair<poly,poly> divide(const poly &a, const poly &b){	//returns {quotient,remainder}
+	int m=SZ(a),n=SZ(b),MAGIC=128;
 	if(m<n) return {{0},a};
 	if(min(m-n,n)<MAGIC)return divslow(a,b);
 	poly ap=a; reverse(ALL(ap));
 	poly bp=b; reverse(ALL(bp));
 	bp=invert(bp,m-n+1);
 	poly q=multiply(ap,bp);
-	q.resize(SZ(q)+m-n-SZ(q)+1,0);
+	q.resize(m-n+1,0);
 	reverse(ALL(q));
 	poly bq=multiply(b,q);
 	fore(i,0,SZ(bq)) bq[i]=submod(0,bq[i]);
@@ -169,34 +196,84 @@ pair<poly,poly> divide(poly &a, poly &b){	//returns {quotient,remainder}
 	return {q,r};
 }
 
-vector<poly> tree;
+struct EvalTree {
+	int k;
+	vector<poly> tree;
+	EvalTree(const vector<tf> &x): k(SZ(x)), tree(2*max(SZ(x),1)) {
+		fore(i,k,2*k) tree[i]={submod(0,x[i-k]),1};
+		for(int i=k-1;i;i--) tree[i]=multiply(tree[2*i],tree[2*i+1]);
+	}
+};
 
-void filltree(vector<tf> &x){
+poly mulT(const poly &M, const poly &a, int n){
+	poly c=multiply(M,a);
+	int m=SZ(M);
+	poly res(n);
+	fore(j,0,n) res[j]=(j+m-1<SZ(c))?c[j+m-1]:0;
+	return res;
+}
+
+void downsweep(const EvalTree &et, int v, poly q, vector<tf> &out){
+	if(v>=et.k){ out[v-et.k]=q[0]; return; }
+	poly ql=mulT(et.tree[2*v+1],q,SZ(et.tree[2*v])-1);
+	poly qr=mulT(et.tree[2*v],  q,SZ(et.tree[2*v+1])-1);
+	poly().swap(q);
+	downsweep(et,2*v,move(ql),out);
+	downsweep(et,2*v+1,move(qr),out);
+}
+
+vector<tf> evaluate(const poly &a, const EvalTree &et){
+	int k=et.k;
+	if(!k) return {};
+	poly f=SZ(a)>=SZ(et.tree[1])?divide(a,et.tree[1]).snd:a;
+	poly rm=et.tree[1]; reverse(ALL(rm));
+	poly h=invert(rm,SZ(f));
+	poly().swap(rm);
+	reverse(ALL(h));
+	poly q1=mulT(h,f,SZ(et.tree[1])-1);
+	poly().swap(h); poly().swap(f);
+	vector<tf> out(k);
+	downsweep(et,1,move(q1),out);
+	return out;
+}
+
+// Multi-point polynomial evaluation for arbitrarily large points
+vector<tf> evaluate(const poly &a, const vector<tf> &x){
+	if(x.empty()) return {};
+	EvalTree et(x);
+	return evaluate(a,et);
+}
+
+poly upsweep(EvalTree &et, int v, const vector<tf> &c){
+	if(v>=et.k) return {c[v-et.k]};
+	poly L=upsweep(et,2*v,c), R=upsweep(et,2*v+1,c);
+	poly p1=multiply(et.tree[2*v],R);   poly().swap(R);
+	poly p2=multiply(et.tree[2*v+1],L); poly().swap(L);
+	poly().swap(et.tree[2*v]); poly().swap(et.tree[2*v+1]);
+	poly res=add(p1,p2);
+	return res;
+}
+
+poly interpolate(const vector<tf> &x, const vector<tf> &y){
 	int k=SZ(x);
-	tree.resize(2*k);
-	fore(i,k,2*k) tree[i]={submod(0,x[i-k]),1};
-	for(int i=k-1;i;i--) tree[i]=multiply(tree[2*i],tree[2*i+1]);
+	if(!k) return {0};
+	EvalTree et(x);
+	vector<tf> d=evaluate(derivative(et.tree[1]),et);
+	vector<tf> pre(k+1); pre[0]=1;
+	fore(i,0,k) pre[i+1]=mulmod(pre[i],d[i]);
+	tf iv=inv(pre[k]);
+	vector<tf> c(k);
+	for(int i=k-1;i>=0;i--){
+		c[i]=mulmod(y[i],mulmod(iv,pre[i]));
+		iv=mulmod(iv,d[i]);
+	}
+	return upsweep(et,1,c);
 }
 
-vector<tf> evaluate(poly &a, vector<tf> &x){
-	filltree(x);
-	int k=SZ(x);
-	vector<poly> ans(2*k);
-	ans[1]=divide(a,tree[1]).snd;
-	fore(i,2,2*k) ans[i]=divide(ans[i>>1],tree[i]).snd;
-	vector<tf> r; fore(i,0,k) r.pb(ans[i+k][0]);
-	return r;
-}
-
-poly derivate(poly &p){
-	poly ans(SZ(p)-1);
-	fore(i,1,SZ(p)) ans[i-1]=mulmod(p[i],i);
-	return ans;
-}
-
-poly interpolate(vector<tf> &x, vector<tf> &y){
-	filltree(x);
-	poly p=derivate(tree[1]);
+poly interpolate(const vector<tf> &x, const vector<tf> &y){
+	EvalTree et(x);
+	auto &tree=et.tree;
+	poly p=derivative(tree[1]);
 	int k=SZ(y);
 	vector<tf> d=evaluate(p,x);
 	vector<poly> intree(2*k);

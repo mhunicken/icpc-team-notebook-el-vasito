@@ -55,7 +55,7 @@ void dft(CD* a, int n, bool inv){
 		fore(i,0,n)a[i]=a[i]*z;
 	}
 }
-poly multiply(poly& p1, poly& p2){
+poly multiply(const poly& p1, const poly& p2){
 	int n=p1.size()+p2.size()+1;
 	int m=1,cnt=0;
 	while(m<=n)m+=m,cnt++;
@@ -72,7 +72,16 @@ poly multiply(poly& p1, poly& p2){
 	return res;
 }
 
-poly add(poly &a, poly &b){
+// Polynomial division: O(n*log(n))
+// Multi-point polynomial evaluation for arbitrarily large points: O(n+k*log^2(k))
+// Multi-point polynomial evaluation for all points in [0, MOD): O((n+MOD)*log(n+MOD))
+// Polynomial interpolation: O(n*log^2(n))
+// Inverse: O(n*log(n))
+// Log: O(n*log(n))
+// Exp: O(n*log(n))
+
+//Works with NTT. For FFT, just replace addmod,submod,mulmod,inv
+poly add(const poly &a, const poly &b){
 	int n=SZ(a),m=SZ(b);
 	poly ans(max(n,m));
 	fore(i,0,max(n,m)) ans[i]=addmod(i<SZ(a)?a[i]:0, i<SZ(b)?b[i]:0);
@@ -81,21 +90,21 @@ poly add(poly &a, poly &b){
 }
 
 // derivative of p
-poly derivate(poly &p){
+poly derivative(const poly &p){
 	poly ans(max(1, SZ(p)-1));
 	fore(i,1,SZ(p)) ans[i-1]=mulmod(p[i],i);
 	return ans;
 }
 
 // integral of p
-poly integrate(poly &p){
+poly integrate(const poly &p){
 	poly ans(SZ(p)+1);
 	fore(i,0,SZ(p)) ans[i+1]=mulmod(p[i], inv(i+1));
 	return ans;
 }
 
 // p % (x^n)
-poly takemod(poly &p, int n){
+poly takemod(const poly &p, int n){
 	poly res=p;
 	res.resize(min(SZ(res),n));
 	while(SZ(res)>1&&res.back()==0) res.pop_back();
@@ -103,7 +112,7 @@ poly takemod(poly &p, int n){
 }
 
 // first d terms of 1/p
-poly invert(poly &p, int d){
+poly invert(const poly &p, int d){
 	assert(p[0]);
 	poly res={inv(p[0])};
 	int sz=1;
@@ -113,6 +122,7 @@ poly invert(poly &p, int d){
 		poly cur=multiply(res,pre);
 		fore(i,0,SZ(cur)) cur[i]=submod(0,cur[i]);
 		cur[0]=addmod(cur[0],2);
+		cur=takemod(cur,sz);
 		res=multiply(res,cur);
 		res=takemod(res,sz);
 	}
@@ -121,10 +131,10 @@ poly invert(poly &p, int d){
 }
 
 // first d terms of log(p)
-poly log(poly &p, int d){
+poly log(const poly &p, int d){
 	assert(p[0]==1);
 	poly cur=takemod(p,d);
-	poly a=invert(cur,d), b=derivate(cur);
+	poly a=invert(cur,d), b=derivative(cur);
 	auto res=multiply(a,b);
 	res=takemod(res,d-1);
 	res=integrate(res);
@@ -132,7 +142,7 @@ poly log(poly &p, int d){
 }
 
 // first d terms of exp(p)
-poly exp(poly &p, int d){
+poly exp(const poly &p, int d){
 	assert(!p[0]);
 	poly res={1};
 	int sz=1;
@@ -144,7 +154,7 @@ poly exp(poly &p, int d){
 		res=multiply(res,cur);
 		res=takemod(res, sz);
 	}
-	
+
 	res.resize(d);
 	return res;
 }

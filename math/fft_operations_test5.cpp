@@ -103,7 +103,7 @@ poly multiply(const poly v1, const poly v2, ll m=MOD) {
 // Given any number g, perform multi-point polynomial evaluation
 // for all points of the form g^i, for each i in [0, k)
 // in O((n+k) * log(n+k))
-vector<int> chirpTransform(poly& p, int g, int k) {
+vector<int> chirpTransform(const poly& p, int g, int k) {
 	int inv_g=inv(g), n=SZ(p)-1, sz=min(k,MOD-1), gk=1;
 	poly ap(n+1), bp(n+sz);
 
@@ -153,7 +153,7 @@ int get_primitive_root(int p) {
 
 // Multi-point polynomial evaluation for all points in [0, MOD)
 // MOD needs to be a prime number
-vector<int> evaluate_all_points(poly& p) {
+vector<int> evaluate_all_points(const poly& p) {
 	int g=get_primitive_root(MOD), gk=1;
 	assert(g!=-1);
 
