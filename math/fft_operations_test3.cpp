@@ -105,8 +105,16 @@ poly derivative(const poly &p){
 
 // integral of p
 poly integrate(const poly &p){
-	poly ans(SZ(p)+1);
-	fore(i,0,SZ(p)) ans[i+1]=mulmod(p[i], inv(i+1));
+	int n=SZ(p);
+	poly ans(n+1);
+	if(!n) return ans;
+	poly pre(n+1); pre[0]=1;
+	fore(i,1,n+1) pre[i]=mulmod(pre[i-1],i);
+	tf iv=inv(pre[n]);
+	for(int i=n;i>=1;i--){
+		ans[i]=mulmod(p[i-1], mulmod(iv,pre[i-1]));
+		iv=mulmod(iv,i);
+	}
 	return ans;
 }
 

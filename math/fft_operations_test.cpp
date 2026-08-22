@@ -106,8 +106,16 @@ poly derivative(const poly &p){
 
 // integral of p
 poly integrate(const poly &p){
-	poly ans(SZ(p)+1);
-	fore(i,0,SZ(p)) ans[i+1]=mulmod(p[i], inv(i+1));
+	int n=SZ(p);
+	poly ans(n+1);
+	if(!n) return ans;
+	poly pre(n+1); pre[0]=1;
+	fore(i,1,n+1) pre[i]=mulmod(pre[i-1],i);
+	tf iv=inv(pre[n]);
+	for(int i=n;i>=1;i--){
+		ans[i]=mulmod(p[i-1], mulmod(iv,pre[i-1]));
+		iv=mulmod(iv,i);
+	}
 	return ans;
 }
 
@@ -169,8 +177,9 @@ poly exp(const poly &p, int d){
 
 pair<poly,poly> divslow(const poly &a, const poly &b){
 	poly q,r=a;
+	tf ib=inv(b.back());
 	while(SZ(r)>=SZ(b)){
-		q.pb(mulmod(r.back(),inv(b.back())));
+		q.pb(mulmod(r.back(),ib));
 		if(q.back()) fore(i,0,SZ(b)){
 			r[SZ(r)-i-1]=submod(r[SZ(r)-i-1],mulmod(q.back(),b[SZ(b)-i-1]));
 		}
